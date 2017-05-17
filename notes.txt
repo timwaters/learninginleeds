@@ -5,3 +5,6 @@ Find courses which share the same subject as in a topic
 Course.where(subject: topic.subjects)
 # SELECT "subjects"."id" FROM "subjects" INNER JOIN "subjects_topics" ON "subjects"."id" = "subjects_topics"."subject_id" WHERE "subjects_topics"."topic_id" = ?  [["topic_id", 1]]    
 
+
+get time from time field
+course start_time.to_s(:time)

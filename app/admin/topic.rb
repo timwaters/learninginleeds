@@ -1,18 +1,20 @@
 ActiveAdmin.register Topic do
 
 
-  permit_params :name, :subject_ids => []
- 
+  permit_params :id, :name, :subject_ids => []
+
   form do | f| 
+
     f.inputs 'Details' do
       f.input :name
     end
+
     f.inputs do
-      f.has_many :subjects, heading: 'Themes', allow_destroy: false, new_record: true do |a|
-        a.input :code
-      end
+      f.input :subjects, as: :check_boxes, collection: Subject.all.order(:description).map {|u| ["#{u.code.to_s} #{u.description}", u.id]} 
     end
-     f.actions
+
+    f.actions
   end
 
 end
+

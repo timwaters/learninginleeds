@@ -31,6 +31,8 @@ gem 'activeadmin'
 gem 'devise'
 gem 'cancancan', '~> 1.10'
 
+gem 'activerecord-import'
+
 
 
 group :development, :test do

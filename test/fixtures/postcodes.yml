@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  postcode: MyString
+  easting: 1.5
+  northing: 1.5
+  latitude: 1.5
+  longitude: 1.5
+  postcode_no_space: MyString
+
+two:
+  postcode: MyString
+  easting: 1.5
+  northing: 1.5
+  latitude: 1.5
+  longitude: 1.5
+  postcode_no_space: MyString

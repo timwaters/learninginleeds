@@ -31,7 +31,7 @@ namespace :import do
                           hours: row[:learning_hours].to_f,
                           target_number: row[:target_no].to_i,
                           enrolment_count: row[:enrolment_count],
-                          lcc_code: row[:lcc_course_code],
+                          lcc_code: row[:lcc_course_code].strip,
                           provider_code: row[:provider_course_code],
                           academic_year: row[:academic_year],
                           start_date: row[:start_date],
@@ -55,11 +55,21 @@ namespace :import do
         existing[:venues] += 1
       else
         venue = Venue.new(name: row[:venue],
-                          postcode: row[:venue_postcode],
+                          postcode: row[:venue_postcode].strip,
                           area: row[:area], 
                           committee: row[:community_committee],
                           ward: row[:ward])
-        #geocode latitude and longitude
+        #geocode latitude and longitude, easting, northing, postcode_no_space also?
+        #from Postcode model
+        postcode_lookup = Postcode.where(postcode: row[:venue_postcode].strip).first
+        unless postcode_lookup.nil?
+          venue.postcode_no_space = postcode_lookup[:postcode_no_space]
+          venue.latitude = postcode_lookup[:latitude]
+          venue.longitude = postcode_lookup[:longitude]
+          venue.easting = postcode_lookup[:easting]
+          venue.northing = postcode_lookup[:northing]
+        end
+        
         venue.save
       end
 

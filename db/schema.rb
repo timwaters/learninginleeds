@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170522151203) do
+ActiveRecord::Schema.define(version: 20170522163415) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -71,8 +71,8 @@ ActiveRecord::Schema.define(version: 20170522151203) do
 
   create_table "postcodes", force: :cascade do |t|
     t.string "postcode"
-    t.float "easting"
-    t.float "northing"
+    t.integer "easting"
+    t.integer "northing"
     t.float "latitude"
     t.float "longitude"
     t.string "postcode_no_space"
@@ -118,6 +118,9 @@ ActiveRecord::Schema.define(version: 20170522151203) do
     t.datetime "updated_at", null: false
     t.float "latitude"
     t.float "longitude"
+    t.integer "easting"
+    t.integer "northing"
+    t.string "postcode_no_space"
   end
 
 end

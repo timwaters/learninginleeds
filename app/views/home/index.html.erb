@@ -1,0 +1,38 @@
+<% content_for :title, 'Find courses near you in Leeds' %>
+
+<!-- search form -->
+<div class="row">
+  <div class="col-md-12">
+    <!-- search form --> 
+    <div class="search-form ">
+      <%= render partial: 'shared/search_form' %>
+    </div>
+  </div>
+</div>
+
+<!-- topics -->
+<div class="row">
+
+  <% ['Caring for Others', 
+      'Computing',
+      'Language',
+      'Maths & Numbers',
+      'Life and Work',
+      'Life and Work'].each do | topic | %>
+      
+    <div class="col-md-2">
+      <div class="topic">
+        <%= image_tag 'generic.png', width: 50, height: 50 %>
+        <br />
+        <%= topic %>
+      </div>
+     </div>
+  <% end %>
+
+</div>
+
+<!-- recommendations -->
+<%= render partial: 'shared/recommendations' %>
+ 
+<!-- recent searches -->
+<%= render partial: 'shared/recent_searches' %>

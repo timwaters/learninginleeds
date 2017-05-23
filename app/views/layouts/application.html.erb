@@ -1,18 +1,59 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Learninginleeds</title>
-    <%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="UTF-8">
+    
+    <title>
+      <%= (yield(:title) + " - " unless yield(:title).blank?).to_s + "Adult Learning in Leeds" %>
+    </title>
 
+    <%= csrf_meta_tags %>
+    
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <div class="flash">
-       <p class="notice"><%= notice %></p>
-       <p class="alert"><%= alert %></p>
+    <div class="container container-fluid">
+      
+      <div class="row">
+        <div class="col-md-12">
+          
+          <div class="page-header">
+            <h1><span class="slight">Adult</span> Learning in Leeds! <span class="slight smaller">Find courses near you in Leeds.</span></h1>
+          </div>
+          
+           <div class="flash">
+             <% if notice %>
+               <p class="alert alert-success alert-dismissable"><%= notice %>
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times;</button>
+               </p>
+             <% end %>
+             <% if alert %>
+               <p class="alert alert-danger alert-dismissable"><%= alert %>
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times;</button>
+               </p>
+             <% end %>
+          </div>
+          
+        </div>
+      </div>
+            
+      <div class="content">
+        <%= yield %>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-12">
+          <div class="footer">
+           links, about, etc <%= link_to "about", about_path %>
+          </div>
+        </div>  
+      </div>  
     </div>
-    <%= yield %>
+
   </body>
 </html>

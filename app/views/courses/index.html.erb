@@ -1,0 +1,10 @@
+<h1>Courses List</h1>
+
+
+<% if @topic %>
+ <h2>Topic: <%= @topic.name %></h2> 
+<% end %>
+
+<% @courses.each do | course | %>
+  <%= course.title %>   <%= course.start_time.to_s(:time)  %><br />
+<% end %>

@@ -13,18 +13,13 @@
 <!-- topics -->
 <div class="row">
 
-  <% ['Caring for Others', 
-      'Computing',
-      'Language',
-      'Maths & Numbers',
-      'Life and Work',
-      'Life and Work'].each do | topic | %>
+  <% @topics.each do | topic | %>
       
     <div class="col-md-2">
       <div class="topic">
         <%= image_tag 'generic.png', width: 50, height: 50 %>
         <br />
-        <%= topic %>
+        <%= topic.name %>
       </div>
      </div>
   <% end %>

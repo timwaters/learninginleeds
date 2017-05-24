@@ -1,9 +1,14 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  code: MyString
+  code: Subject One
   description: MyString
 
+#is empty
 two:
-  code: MyString
+  code: Subject Two
   description: MyString
+  
+three:
+  code: Subject Three
+  description: Foo

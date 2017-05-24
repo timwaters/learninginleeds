@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
-  #home/index is /
+
   get 'about', :as => '/about', to: 'home#about'
+  root to: "home#index"   #home/index is /
+
+  get 'courses/:id', to: 'courses#show', as: 'course'
+  get 'courses', to: 'courses#index', :as => 'courses'
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root to: "home#index"
 
 end

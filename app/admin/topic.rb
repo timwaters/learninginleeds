@@ -16,5 +16,13 @@ ActiveAdmin.register Topic do
     f.actions
   end
 
+  sidebar "Subjects", only: :show do
+    ul do
+      resource.subjects.each do | u |
+        li  link_to("#{u.code.to_s} #{u.description}", admin_subject_path(u)) 
+      end
+    end #ul
+  end #sidebar
+
 end
 

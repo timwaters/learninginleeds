@@ -3,7 +3,7 @@
 }
 
 .smaller {
-    font-size: smaller;
+    font-size: small;
 }
 
 .topic {
@@ -15,8 +15,13 @@
 padding-top: 20px;
 }
 
-h3.title {
+h.title {
     margin-top: 0px;
+}
+
+h2.search-heading {
+    font-style: italic;
+
 }
 
 .footer {
@@ -28,7 +33,7 @@ h3.title {
 .course-result {
     padding-top: 5px;
     border-radius: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     margin-left: 15px;
     margin-right: 15px;
     background-color: rgb(246, 243, 243);
@@ -39,7 +44,7 @@ h3.title {
     border-radius: 10px;
     margin-bottom: 15px;
     margin-left: 15px;
-    margin-right: 15px;
+    margin-right:15px;
     background-color: rgb(246, 243, 243);
 }
 
@@ -48,8 +53,7 @@ h3.title {
     padding-bottom: 10px;
     border-radius: 10px;
     margin-bottom: 15px;
-    margin-left: 15px;
-    margin-right: 15px;
+
     background-color: rgb(246, 243, 243);
 }
 

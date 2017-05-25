@@ -12,8 +12,20 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
     get courses_url
     assert_response :success
-    
+  
     assert_select 'h1', "/Adult Learning in Leeds/"
   end
+  
+  #topics
+  
+  #search
+  
+  #search with postcode / location
+  
+  #venue
+  
+  #provider
+  
+  
 
 end

@@ -1,2 +1,50 @@
-<h1>Courses#show</h1>
-<p>Find me in app/views/courses/show.html.erb</p>
+<% content_for :title, @course.title %>
+
+<div class="row course-main">
+  <div class="col-md-12">
+    <h2><%= @course.title %></h2>
+  </div>
+  <div class="col-md-12">
+    <p><%= @course.description %></p>
+  </div>
+</div>
+  
+<div class="row course-main">
+  <div class="col-md-12">
+  <p>
+    <%= @course.start_date.strftime("%a, %b %d, %Y") %> to <%= @course.end_date.strftime("%a, %b %d %Y") %> <br />
+    At <%= @course.start_time.strftime("%I:%M %p") %>
+    <br />
+      
+    Where: <%= link_to @course.venue.name.titlecase, @course.venue %> <br />
+    <%= @course.venue.postcode %>
+  </p>
+  
+  <div id="venue-map">
+    <%= image_tag "map.png", width: 400 %>
+  </div>
+
+  <p>
+    Course Provided by:  <%= link_to @course.provider.name, @course.provider %> <br />
+    Website: <%= link_to @course.provider.url %><br />
+    Telephone: <%= @course.provider.telephone %> 
+  </p>
+  </div>
+
+</div>
+
+
+<div class="row course-directions">
+  <div class="col-md-12">
+       <h4>Journey Plan To Arrive At 12:30 </h4>
+       <p>From LS27 9DY to Beeston Joeseph Priestly Centre <br />
+         <%= image_tag 'bus2.png' %>26 Mins by Bus. (<a href="#"><%= image_tag 'foot.png' %>Walking Directions</a>)</p>
+  </div>
+  
+  <div class="col-md-12">
+    <%= image_tag 'route.png' %>
+      
+  </div>
+  
+</div>
+

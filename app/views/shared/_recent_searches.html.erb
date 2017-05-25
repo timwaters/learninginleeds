@@ -44,7 +44,7 @@
         if (i >= limit) {
           break;
         }
-        $('#searches').append('<div class="col-md-3"><p><a href="courses?q='+searches[i]+'">'+searches[i]+'</a></p></div>');
+        $('.recent-searches').append('<div class="col-md-3"><p><a href="courses?q='+searches[i]+'">'+searches[i]+'</a></p></div>');
       }
       
     }
@@ -53,12 +53,8 @@
 </script>
 
 <div class="row recent-searches">
- <div id="searches" class="col-md-12">
+ <div class="col-md-12">
     <h4>Recent Searches</h4>
   </div>
-  <div id="searches">
-
-  </div>
-    
-
+  
 </div>

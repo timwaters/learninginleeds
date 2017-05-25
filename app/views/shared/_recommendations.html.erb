@@ -5,12 +5,9 @@
   </div>
   <% recommendations.each do | course |  %>
 
-
-  
-  
   <div class="col-md-4 smaller">
     <h4>
-      <%= link_to course.title %>
+      <%= link_to course.title, course%>
     </h4>
     <p>
       <%= snippet(course.description, 20) %>
@@ -20,7 +17,8 @@
       Provided by <%= link_to course.provider.name, course.provider %>
     </p>
   </div>
-      <% end %>
+  
+  <% end %>
   
 
 </div>

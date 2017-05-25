@@ -1,18 +1,63 @@
+<script type="text/javascript">
+  //TODO only save searches when they have useful records
+  $( document ).ready(function() {
+    var cookie_name = "lil-searches";
+    var limit = 4;
+    <% save = params[:q].nil? ? "false" : "true" %>
+    var save_cookie = <%= save %>;
+    var searches = JSON.parse(readCookie(cookie_name));
+    if (searches == null){
+      searches = [];
+      $('.recent-searches').hide();
+    }
+      
+    if (save_cookie) {
+      $('.recent-searches').show();
+      var query = '<%= params[:q] %>';
+ 
+      if (searches.indexOf(query) === -1){
+        searches.unshift(query);
+        if (searches.length > limit) {
+          searches.pop();
+        }
+        
+      }
+      var json_str = JSON.stringify(searches);
+      createCookie(cookie_name, json_str, 60);
+    } // save_cookie
+
+    //read cookies now
+    
+    var searches = JSON.parse(readCookie(cookie_name));
+    if (searches != null) {
+      console.log(searches);
+      updateRecentSearches(searches);
+    }
+    
+    function updateRecentSearches(searches){
+      if (searches == null){
+        return false;
+      }
+      var searchDiv = document.getElementById("searches");
+      for(i=0;i<searches.length;i++){
+        console.log(searches[i]);
+        if (i >= limit) {
+          break;
+        }
+        $('#searches').append('<div class="col-md-3"><p><a href="courses?q='+searches[i]+'">'+searches[i]+'</a></p></div>');
+      }
+      
+    }
+      
+  });
+</script>
+
 <div class="row recent-searches">
- <div class="col-md-12">
-  <h4>Recent Searches</h4>
+ <div id="searches" class="col-md-12">
+    <h4>Recent Searches</h4>
   </div>
-  <div class="col-md-3">
-    abc
-  </div>
-    <div class="col-md-3">
-      def
-  </div>
-    <div class="col-md-3">
-      geh
-  </div>
-    <div class="col-md-3">
-      jlk
+  <div id="searches">
+
   </div>
     
 

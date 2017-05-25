@@ -4,6 +4,7 @@ class CoursesController < ApplicationController
   end
 
   def index
+    @recommended = Course.all.limit(3)
 #pagination etc
     if params[:topic_id]
       @topic = Topic.find(params[:topic_id])

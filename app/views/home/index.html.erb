@@ -19,7 +19,7 @@
       <div class="topic">
         <%= image_tag 'generic.png', width: 50, height: 50 %>
         <br />
-        <%= topic.name %>
+        <%= link_to topic.name, topic %>
       </div>
      </div>
   <% end %>
@@ -27,7 +27,7 @@
 </div>
 
 <!-- recommendations -->
-<%= render partial: 'shared/recommendations' %>
+<%= render partial: 'shared/recommendations', :object => @recommended %>
  
 <!-- recent searches -->
 <%= render partial: 'shared/recent_searches' %>

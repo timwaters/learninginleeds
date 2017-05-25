@@ -1,14 +1,22 @@
-<% content_for :title, 'Courses' %>
-
 <%= render partial: 'shared/search_form' %>
 
 <h2 class="search-heading">Found <%= pluralize(@courses.count, "course") %></h2>
 
-<% if @topic %>
- <h2>Topic: <%= @topic.name %></h2> 
-<% end %>
+<% 
+  heading = ""
+  if @topic
+    heading = "Topic: #{@topic.name}"
+  elsif @provider
+    heading = "Provider: #{@provider.name}"
+  elsif @venue
+    heading = "Venue: #{@venue.name}"
+  end
+  title = heading == "" ? "Courses" : heading.titlecase
+  heading = heading == "" ? "" : "<h2>#{heading.titlecase}</h2>".html_safe
+  content_for :title, title
+ %>
 
-
+<h2><%= heading %></h2>
 
 <% @courses.each do | course | %>
  
@@ -23,7 +31,7 @@
       <p>
         <%= course.start_date.strftime("%a, %b %d, %Y") %> to <%= course.end_date.strftime("%a, %b %d %Y") %> <br />
 
-        <%= course.start_time.strftime("%I:%M %p") %> at <%= link_to course.venue.name.titlecase, course.venue %> <br />
+        <%= course.start_time.strftime("%-I:%M %p") %> at <%= link_to course.venue.name.titlecase, course.venue %> <br />
         Provided by <%= link_to course.provider.name, course.provider %>
       </p>
       <p> <%= image_tag "bus.png", width: 50, height:20 %> 2 Km</p>

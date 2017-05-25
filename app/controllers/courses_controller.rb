@@ -4,12 +4,18 @@ class CoursesController < ApplicationController
   end
 
   def index
-  #for venue
-  #for provider
-  #for topic
-    if params[:topic]
-      @topic = Topic.find(params[:topic])
+#pagination etc
+    if params[:topic_id]
+      @topic = Topic.find(params[:topic_id])
       @courses = Course.where(subject: @topic.subjects)
+    elsif params[:provider_id]
+      @provider = Provider.find(params[:provider_id])
+      @courses  = @provider.courses
+    elsif params[:venue_id]
+      @venue = Venue.find(params[:venue_id])
+      @courses = @venue.courses
+    elsif params[:q]
+      @courses = Course.where('title LIKE ?', "%#{params[:q]}%")
     else
       @courses = Course.all.limit(50)
     end

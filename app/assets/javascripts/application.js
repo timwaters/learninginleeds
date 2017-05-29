@@ -16,3 +16,4 @@
 //= require jquery
 //= require bootstrap-sprockets
 //= require cookies_helper
+//= require leaflet

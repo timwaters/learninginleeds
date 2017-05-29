@@ -21,7 +21,14 @@
   </p>
   
   <div id="venue-map">
-    <%= image_tag "map.png", width: 400 %>
+    <% if @course.venue.latitude && @course.venue.longitude %>
+      <%= map(center:  {
+        latlng: [@course.venue.latitude, @course.venue.longitude],
+        zoom: 18 
+        },
+        markers: [{ latlng: [@course.venue.latitude, @course.venue.longitude] }]
+        ) %>
+    <% end %>
   </div>
 
   <p>

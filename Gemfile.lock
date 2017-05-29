@@ -133,6 +133,8 @@ GEM
       activerecord
       kaminari-core (= 1.0.1)
     kaminari-core (1.0.1)
+    leaflet-rails (1.0.3)
+      rails (>= 4.2.0)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.5)
@@ -249,6 +251,7 @@ DEPENDENCIES
   capybara (~> 2.13)
   devise
   jbuilder (~> 2.5)
+  leaflet-rails
   rails (~> 5.1.1)
   rails-controller-testing
   sass-rails (~> 5.0)

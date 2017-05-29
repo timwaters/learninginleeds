@@ -30,7 +30,7 @@
     
     var searches = JSON.parse(readCookie(cookie_name));
     if (searches != null) {
-      console.log(searches);
+      //console.log(searches);
       updateRecentSearches(searches);
     }
     
@@ -40,16 +40,22 @@
       }
       var searchDiv = document.getElementById("searches");
       for(i=0;i<searches.length;i++){
-        console.log(searches[i]);
+        //console.log(searches[i]);
         if (i >= limit) {
           break;
         }
-        $('.recent-searches').append('<div class="col-md-3"><p><a href="courses?q='+searches[i]+'">'+searches[i]+'</a></p></div>');
+        $('.recent-searches').append('<div class="col-md-3"><p><a href="courses?q='+searches[i]+'">'+ truncate(searches[i], 23) +'</a></p></div>');
       }
       
     }
       
   });
+  
+  function truncate(str, n){
+    str = (str.length > n) ? str.substr(0, n-1) + "..." : str;
+    return str
+  } 
+
 </script>
 
 <div class="row recent-searches">

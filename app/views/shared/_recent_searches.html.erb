@@ -3,7 +3,7 @@
   $( document ).ready(function() {
     var cookie_name = "lil-searches";
     var limit = 4;
-    <% save = params[:q].nil? ? "false" : "true" %>
+    <% save = params[:q].blank?  ? "false" : "true" %>
     var save_cookie = <%= save %>;
     var searches = JSON.parse(readCookie(cookie_name));
     if (searches == null){

@@ -5,7 +5,7 @@ class CoursesController < ApplicationController
 
   def index
     @recommended = Course.all.limit(3)
-#pagination etc
+#TODO pagination etc
     if params[:topic_id]
       @topic = Topic.find(params[:topic_id])
       @courses = Course.where(subject: @topic.subjects)
@@ -16,7 +16,7 @@ class CoursesController < ApplicationController
       @venue = Venue.find(params[:venue_id])
       @courses = @venue.courses
     elsif params[:q]
-      @courses = Course.where('title LIKE ?', "%#{params[:q]}%")
+      @courses = Course.search(params[:q])
     else
       @courses = Course.all.limit(50)
     end

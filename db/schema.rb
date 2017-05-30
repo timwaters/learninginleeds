@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170522163415) do
+ActiveRecord::Schema.define(version: 20170529162452) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -67,6 +67,26 @@ ActiveRecord::Schema.define(version: 20170522163415) do
     t.index ["provider_id"], name: "index_courses_on_provider_id"
     t.index ["subject_id"], name: "index_courses_on_subject_id"
     t.index ["venue_id"], name: "index_courses_on_venue_id"
+  end
+
+# Could not dump table "fts_courses" because of following StandardError
+#   Unknown type '' for column 'title'
+
+# Could not dump table "fts_courses_content" because of following StandardError
+#   Unknown type '' for column 'c0title'
+
+  create_table "fts_courses_segdir", primary_key: ["level", "idx"], force: :cascade do |t|
+    t.integer "level"
+    t.integer "idx"
+    t.integer "start_block"
+    t.integer "leaves_end_block"
+    t.integer "end_block"
+    t.binary "root"
+    t.index ["level", "idx"], name: "sqlite_autoindex_fts_courses_segdir_1", unique: true
+  end
+
+  create_table "fts_courses_segments", primary_key: "blockid", force: :cascade do |t|
+    t.binary "block"
   end
 
   create_table "postcodes", force: :cascade do |t|

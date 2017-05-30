@@ -5,6 +5,13 @@ class Course < ApplicationRecord
 
   validates :lcc_code, uniqueness: { case_sensitive: false }
   
+    acts_as_mappable :default_units => :kms,
+                    :default_formula => :flat,
+                    :distance_field_name => :distance,
+                    :lat_column_name => :latitude,
+                    :lng_column_name => :longitude
+
+                    
   #reindexes all records into the fts_courses table based on existing courses
   #returns the number of reindexed records
   def self.fts_reindex
@@ -61,16 +68,31 @@ class Course < ApplicationRecord
     matches
   end
   
-  def self.search(q)
+  def self.search(q, near=nil, sort=nil)
     matches = Course.fts_search(q)
     return Course.none if matches.rows.empty?
-    
-    #ordered by relevance = sort by ids returned
+    origin = Course.get_origin(near) unless near.nil?
     courses_ids = matches.rows.map { | r | r[0]  }
-   # #courses = Course.where(id: courses_ids)  <- unordered
-    courses = Course.find_ordered(courses_ids)
+    
+    if near.nil?
+      courses = Course.find_ordered(courses_ids)
+    elsif sort == "distance"
+      courses =  Course.where(id: courses_ids).by_distance({:origin => origin})
+    else sort == "relevance"
+      courses =  Course.find_ordered(courses_ids).by_distance({:origin => origin})
+    end
     
     courses
+  end
+  
+  def self.get_origin(near)
+    postcode = Postcode.find_postcode(near)
+    origin = nil
+    logger.debug postcode.inspect
+    if postcode
+      origin = [postcode.first.latitude, postcode.first.longitude]
+    end
+    return  origin
   end
 
 end

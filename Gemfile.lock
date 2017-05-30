@@ -101,6 +101,10 @@ GEM
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
     formtastic_i18n (0.6.0)
+    geokit (1.11.0)
+    geokit-rails (2.2.0)
+      geokit (~> 1.5)
+      rails (>= 3.0)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     has_scope (0.7.1)
@@ -251,6 +255,7 @@ DEPENDENCIES
   cancancan (~> 1.10)
   capybara (~> 2.13)
   devise
+  geokit-rails
   jbuilder (~> 2.5)
   leaflet-rails
   rails (~> 5.1.1)

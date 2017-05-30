@@ -81,10 +81,13 @@ namespace :import do
         subject = Subject.new(code: row[:sector_subject_area], description: row[:sector_subject_area_description])
         subject.save
       end
-    
+
       course.venue = venue
       course.provider = provider
       course.subject = subject
+      
+      course.latitude = venue.latitude
+      course.longitude = venue.longitude
 
       course.save
       count += 1
@@ -144,3 +147,4 @@ namespace :import do
 
 
 end
+

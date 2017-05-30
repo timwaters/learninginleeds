@@ -7,10 +7,6 @@ CREATE TABLE "topics" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" v
 CREATE TABLE "subjects_topics" ("topic_id" integer, "subject_id" integer);
 CREATE INDEX "index_subjects_topics_on_topic_id" ON "subjects_topics" ("topic_id");
 CREATE INDEX "index_subjects_topics_on_subject_id" ON "subjects_topics" ("subject_id");
-CREATE TABLE "courses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar DEFAULT NULL, "description" text DEFAULT NULL, "target_group" varchar DEFAULT NULL, "status" varchar DEFAULT NULL, "qualification" varchar DEFAULT NULL, "start_date" date DEFAULT NULL, "end_date" date DEFAULT NULL, "start_time" time DEFAULT NULL, "end_time" time DEFAULT NULL, "hours" float DEFAULT NULL, "target_number" integer DEFAULT NULL, "enrolment_count" integer DEFAULT NULL, "lcc_code" varchar DEFAULT NULL, "provider_code" varchar DEFAULT NULL, "academic_year" varchar DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "venue_id" integer DEFAULT NULL, "provider_id" integer DEFAULT NULL, "subject_id" integer DEFAULT NULL);
-CREATE INDEX "index_courses_on_venue_id" ON "courses" ("venue_id");
-CREATE INDEX "index_courses_on_provider_id" ON "courses" ("provider_id");
-CREATE INDEX "index_courses_on_subject_id" ON "courses" ("subject_id");
 CREATE TABLE "admin_users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar DEFAULT '' NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "reset_password_token" varchar, "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar, "last_sign_in_ip" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL);
 CREATE UNIQUE INDEX "index_admin_users_on_email" ON "admin_users" ("email");
 CREATE UNIQUE INDEX "index_admin_users_on_reset_password_token" ON "admin_users" ("reset_password_token");
@@ -23,6 +19,10 @@ CREATE VIRTUAL TABLE fts_courses USING fts3(title, description, soundex, tokeniz
 CREATE TABLE 'fts_courses_content'(docid INTEGER PRIMARY KEY, 'c0title', 'c1description', 'c2soundex');
 CREATE TABLE 'fts_courses_segments'(blockid INTEGER PRIMARY KEY, block BLOB);
 CREATE TABLE 'fts_courses_segdir'(level INTEGER,idx INTEGER,start_block INTEGER,leaves_end_block INTEGER,end_block INTEGER,root BLOB,PRIMARY KEY(level, idx));
+CREATE TABLE "courses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar DEFAULT NULL, "description" text DEFAULT NULL, "target_group" varchar DEFAULT NULL, "status" varchar DEFAULT NULL, "qualification" varchar DEFAULT NULL, "start_date" date DEFAULT NULL, "end_date" date DEFAULT NULL, "start_time" time DEFAULT NULL, "end_time" time DEFAULT NULL, "hours" float DEFAULT NULL, "target_number" integer DEFAULT NULL, "enrolment_count" integer DEFAULT NULL, "lcc_code" varchar DEFAULT NULL, "provider_code" varchar DEFAULT NULL, "academic_year" varchar DEFAULT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "venue_id" integer DEFAULT NULL, "provider_id" integer DEFAULT NULL, "subject_id" integer DEFAULT NULL, "latitude" float, "longitude" float);
+CREATE INDEX "index_courses_on_venue_id" ON "courses" ("venue_id");
+CREATE INDEX "index_courses_on_provider_id" ON "courses" ("provider_id");
+CREATE INDEX "index_courses_on_subject_id" ON "courses" ("subject_id");
 INSERT INTO "schema_migrations" (version) VALUES
 ('20170516152940'),
 ('20170516153814'),
@@ -38,6 +38,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170522151203'),
 ('20170522162847'),
 ('20170522163415'),
-('20170529162452');
+('20170529162452'),
+('20170530122550');
 
 

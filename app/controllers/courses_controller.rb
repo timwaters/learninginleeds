@@ -16,7 +16,7 @@ class CoursesController < ApplicationController
       @venue = Venue.find(params[:venue_id])
       @courses = @venue.courses
     elsif params[:q]
-      @courses = Course.search(params[:q])
+      @courses = Course.search(params[:q], params[:near])
     else
       @courses = Course.all.limit(50)
     end

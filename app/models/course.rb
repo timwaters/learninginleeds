@@ -69,10 +69,16 @@ class Course < ApplicationRecord
   end
   
   def self.search(q, near=nil, sort=nil)
-    matches = Course.fts_search(q)
-    return Course.none if matches.rows.empty?
+    if q.blank?
+      matches = Course.all 
+      courses_ids = matches.pluck(:id)
+    else
+      matches = Course.fts_search(q) 
+      return Course.none if matches.rows.empty?
+      courses_ids = matches.rows.map { | r | r[0]  }
+    end
     origin = Course.get_origin(near) unless near.blank?
-    courses_ids = matches.rows.map { | r | r[0]  }
+    
     
     if near.blank?
       courses = Course.find_ordered(courses_ids)
@@ -82,13 +88,15 @@ class Course < ApplicationRecord
       courses =  Course.find_ordered(courses_ids).by_distance({:origin => origin})
     end
     
+    logger.debug courses.inspect
+    
     courses
   end
   
   def self.get_origin(near)
     postcode = Postcode.find_postcode(near)
     origin = nil
-    logger.debug postcode.inspect
+    
     if postcode
       origin = [postcode.first.latitude, postcode.first.longitude]
     end

@@ -1,6 +1,21 @@
 <%= render partial: 'shared/search_form' %>
 
 <h2 class="search-heading">Found <%= pluralize(@courses.size, "course") %></h2>
+<%
+sorting = nil
+unless params[:near].blank?
+  sorting = params[:sort] == "distance" ? "distance" : "relevance"
+  alt_sort = sorting == "distance" ? "relevance"  : "distance"
+end
+ %>
+ 
+<% if sorting %>
+  <div class="row">
+  <div class="col-md-12">
+    Sorted by: <%= sorting.titlecase %> | <%= link_to alt_sort.titlecase, courses_url(near: params[:near], q: params[:q], sort: alt_sort) %>
+  </div>
+  </div>
+<% end %>
 
 <% 
   heading = ""

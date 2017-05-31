@@ -16,6 +16,7 @@
     <%= label_tag(:near, "Near", class:"col-sm-2 control-label") %>
     <div class="col-sm-8 input-group">
        <%= text_field_tag(:near, params[:near], class:"form-control gimme-rounds", placeholder: "Postcode or address") %>
+       <%= hidden_field_tag(:sort, params[:sort]) %>
     </div>
 
   </div>

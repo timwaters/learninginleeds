@@ -20,5 +20,6 @@ class CoursesController < ApplicationController
     else
       @courses = Course.all.limit(50)
     end
+    
   end
 end

@@ -71,10 +71,10 @@ class Course < ApplicationRecord
   def self.search(q, near=nil, sort=nil)
     matches = Course.fts_search(q)
     return Course.none if matches.rows.empty?
-    origin = Course.get_origin(near) unless near.nil?
+    origin = Course.get_origin(near) unless near.blank?
     courses_ids = matches.rows.map { | r | r[0]  }
     
-    if near.nil?
+    if near.blank?
       courses = Course.find_ordered(courses_ids)
     elsif sort == "distance"
       courses =  Course.where(id: courses_ids).by_distance({:origin => origin})

@@ -1,6 +1,6 @@
 <%= render partial: 'shared/search_form' %>
 
-<h2 class="search-heading">Found <%# pluralize(@courses.count, "course") %></h2>
+<h2 class="search-heading">Found <%= pluralize(@courses.size, "course") %></h2>
 
 <% 
   heading = ""
@@ -38,7 +38,9 @@
         <%= course.start_time.strftime("%-I:%M %p") %> at <%= link_to course.venue.name.titlecase, course.venue %> <br />
         Provided by <%= link_to course.provider.name, course.provider %>
       </p>
-      <p> <%= image_tag "bus.png", width: 50, height:20 %> <%= "#{distance} Km" if distance %> </p>
+      <% if distance %>
+      <p> <%= image_tag "bus.png", width: 50, height:20 %> <%= "#{distance} Km" %> </p>
+      <% end %>
     </div>
   </div>
 

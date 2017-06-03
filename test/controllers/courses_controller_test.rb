@@ -13,7 +13,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
     get courses_url
     assert_response :success
   
-    assert_select 'h1', "/Adult Learning in Leeds/"
+    assert_select 'h1', /Adult Learning in Leeds/
   end
   
   #topics

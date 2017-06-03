@@ -17,6 +17,8 @@ one:
   provider_code: MyString
   academic_year: MyString
   subject: one
+  venue: one
+  provider: one
 
 two:
   title: Course Two
@@ -35,3 +37,5 @@ two:
   provider_code: MyString
   academic_year: MyString
   subject: two
+  venue: two
+  provider: two

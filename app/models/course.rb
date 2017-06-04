@@ -13,6 +13,7 @@ class Course < ApplicationRecord
                               :tsearch => {:prefix => true, :dictionary => "english", :any_word => true}
                             }
 
+  self.per_page = 30  #will paginate
 
   #reindexes all records and returns the number of reindexed records
   def self.fts_reindex
@@ -21,7 +22,12 @@ class Course < ApplicationRecord
   end
   
 
-  def self.search(q, near=nil, sort=nil)
+  def self.search(q, options = {})
+    page = options[:page] || 1
+    sort = options[:sort] || "relevance"
+    near = options[:near] || nil
+
+    page = 1 if options[:page].blank?
    
     origin = Course.get_origin(near)
     
@@ -35,9 +41,9 @@ class Course < ApplicationRecord
     end
     
     if q.blank?
-     courses = Course.includes([:venue, :provider]).all.select(columns_select).order(distance_sort)
+     courses = Course.includes([:venue, :provider]).all.page(page).select(columns_select).order(distance_sort)
     else
-      courses = Course.includes([:venue, :provider]).select(columns_select).order(distance_sort).full_search(q)
+      courses = Course.includes([:venue, :provider]).page(page).select(columns_select).order(distance_sort).full_search(q)
     end
 
     

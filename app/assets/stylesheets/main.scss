@@ -89,3 +89,13 @@ h2.search-heading {
     height: 400px;
     margin-bottom: 10px;
 }
+
+.pagination {
+    float: left !important;
+}
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus,
+.pagination > .active > span,
+.pagination > .active > span:hover,
+.pagination > .active > span:focus {
+  color: #000 !important;
+}

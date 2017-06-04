@@ -62,6 +62,15 @@ end
   
 <% end %>
 
+<div class="row">
+  <div id="pagination-div">
+    <%= will_paginate @courses %>
+  </div>
+</div>
+
+
+
+
 <!-- recommendations -->
 <%= render partial: 'shared/recommendations', :object => @recommended %>
 

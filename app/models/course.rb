@@ -8,10 +8,12 @@ class Course < ApplicationRecord
   include PgSearch
   pg_search_scope :full_search, 
                   :against =>  {:title => 'A', :description => 'B'} , 
-                  :using => {:tsearch => {:prefix => true, :dictionary => "english", :any_word => true}}
+                  :using => { :dmetaphone => {:only => [:title]},
+                              :trigram => {},
+                              :tsearch => {:prefix => true, :dictionary => "english", :any_word => true}
+                            }
 
 
-                    
   #reindexes all records and returns the number of reindexed records
   def self.fts_reindex
      PgSearch::Multisearch.rebuild(Course)

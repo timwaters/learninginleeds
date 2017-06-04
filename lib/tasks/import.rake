@@ -88,6 +88,7 @@ namespace :import do
       
       course.latitude = venue.latitude
       course.longitude = venue.longitude
+      course.lonlat = "POINT(#{venue.longitude} #{venue.latitude})" unless venue.longitude.nil?
 
       course.save
       count += 1

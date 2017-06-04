@@ -21,6 +21,34 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 --
+-- Name: fuzzystrmatch; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS fuzzystrmatch WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION fuzzystrmatch; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION fuzzystrmatch IS 'determine similarities and distance between strings';
+
+
+--
+-- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pg_trgm; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching based on trigrams';
+
+
+--
 -- Name: postgis; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -35,6 +63,17 @@ COMMENT ON EXTENSION postgis IS 'PostGIS geometry, geography, and raster spatial
 
 
 SET search_path = public, pg_catalog;
+
+--
+-- Name: pg_search_dmetaphone(text); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION pg_search_dmetaphone(text) RETURNS text
+    LANGUAGE sql IMMUTABLE STRICT
+    AS $_$
+  SELECT array_to_string(ARRAY(SELECT dmetaphone(unnest(regexp_split_to_array($1, E'\\s+')))), ' ')
+$_$;
+
 
 SET default_tablespace = '';
 
@@ -629,6 +668,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170522162847'),
 ('20170522163415'),
 ('20170530122550'),
-('20170603155228');
+('20170603155228'),
+('20170604152510'),
+('20170604153719');
 
 

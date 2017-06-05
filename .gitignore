@@ -28,3 +28,5 @@ nbproject
 
 #vagrant local
 .vagrant
+
+config/application.yml

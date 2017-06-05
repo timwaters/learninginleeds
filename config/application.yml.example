@@ -1,0 +1,11 @@
+default: &default
+  general_telephone: 1234567890
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default

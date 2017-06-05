@@ -1,5 +1,6 @@
 default: &default
-  general_telephone: 1234567890
+  general_tel: "0113123456"
+  general_tel_formatted: "0113 123456"
 
 development:
   <<: *default

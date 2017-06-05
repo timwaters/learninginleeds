@@ -1,0 +1,1 @@
+ AppConfig = Rails.application.config_for(:application)

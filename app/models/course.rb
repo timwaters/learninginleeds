@@ -50,15 +50,32 @@ class Course < ApplicationRecord
   courses
   end 
 
-  
+  #postcode, lat,lon, place/address
   def self.get_origin(near)
     return nil if near.blank?
-    postcode = Postcode.find_postcode(near)
     origin = nil
+
+    #match lon,lat string e.g. "-1.6813015,153.9s037866"
+    if near.match(/^(\-?\d+(\.\d+)?),\s*(\-?\d+(\.\d+)?)$/)
+      lon = near.split(",")[0]
+      lat = near.split(",")[1]
+      origin = "POINT (#{lon} #{lat})"
+
+      #match UK postcode e.g. LS12 1DE from https://stackoverflow.com/a/7259020
+    elsif near.match(/^(([gG][iI][rR] {0,}0[aA]{2})|((([a-pr-uwyzA-PR-UWYZ][a-hk-yA-HK-Y]?[0-9][0-9]?)|(([a-pr-uwyzA-PR-UWYZ][0-9][a-hjkstuwA-HJKSTUW])|([a-pr-uwyzA-PR-UWYZ][a-hk-yA-HK-Y][0-9][abehmnprv-yABEHMNPRV-Y]))) {0,}[0-9][abd-hjlnp-uw-zABD-HJLNP-UW-Z]{2}))$/)
   
-    unless postcode.empty?
-      origin  = "POINT (#{postcode.first.longitude} #{postcode.first.latitude})"
+      postcode = Postcode.find_postcode(near)
+
+      unless postcode.empty?
+        origin  = "POINT (#{postcode.first.longitude} #{postcode.first.latitude})"
+      end
+
+    else
+      origin = nil
+
     end
+
+
 
     return  origin
   end

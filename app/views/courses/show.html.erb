@@ -14,12 +14,12 @@
   <p>
     <%= @course.start_date.strftime("%a, %b %d, %Y") %> to <%= @course.end_date.strftime("%a, %b %d %Y") %> <br />
     At <%= @course.start_time.strftime("%I:%M %p") %>
-    <br />
+    <%= render :partial => "calendar"%>
       
     Where: <%= link_to @course.venue.name.titlecase, @course.venue %> <br />
     <%= @course.venue.postcode %>
   </p>
-  
+ 
   <div id="venue-map">
     <% if @course.venue.latitude && @course.venue.longitude %>
       <%= map(center:  {

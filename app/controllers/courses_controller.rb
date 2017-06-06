@@ -8,13 +8,13 @@ class CoursesController < ApplicationController
 #TODO pagination etc
     if params[:topic_id]
       @topic = Topic.find(params[:topic_id])
-      @courses = Course.where(subject: @topic.subjects)
+      @courses = Course.where(subject: @topic.subjects).page(params[:page])
     elsif params[:provider_id]
       @provider = Provider.find(params[:provider_id])
-      @courses  = @provider.courses
+      @courses  = @provider.courses.page(params[:page])
     elsif params[:venue_id]
       @venue = Venue.find(params[:venue_id])
-      @courses = @venue.courses
+      @courses = @venue.courses.page(params[:page])
     elsif params[:q]
       @courses = Course.search(params[:q], {near: params[:near], sort: params[:sort], page: params[:page]})
     else

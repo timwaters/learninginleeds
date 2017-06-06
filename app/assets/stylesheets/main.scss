@@ -90,15 +90,14 @@ h2.search-heading {
     margin-bottom: 10px;
 }
 
-.pagination a, .pagination span.page.current {
-  border-radius: 0px;
-  margin-right: 4px;
-  padding: 7px 16px 6px;  
-}
-
-
 .pagination {
     float: left !important;
+}
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus,
+.pagination > .active > span,
+.pagination > .active > span:hover,
+.pagination > .active > span:focus {
+  color: #000 !important;
 }
 
 .sort-links{

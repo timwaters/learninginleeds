@@ -36,7 +36,7 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'rails-controller-testing'
 gem 'leaflet-rails'
 gem 'text'
-gem 'kaminari'
+gem 'will_paginate', '~> 3.1.0'
 
 gem 'pg'
 gem 'activerecord-postgis-adapter'

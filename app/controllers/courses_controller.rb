@@ -5,20 +5,20 @@ class CoursesController < ApplicationController
 
   def index
     @recommended = Course.all.limit(3)
-    
+#TODO pagination etc
     if params[:topic_id]
       @topic = Topic.find(params[:topic_id])
-      @courses = Course.where(subject: @topic.subjects).page
+      @courses = Course.where(subject: @topic.subjects)
     elsif params[:provider_id]
       @provider = Provider.find(params[:provider_id])
-      @courses  = @provider.courses.page
+      @courses  = @provider.courses
     elsif params[:venue_id]
       @venue = Venue.find(params[:venue_id])
-      @courses = @venue.courses.page
+      @courses = @venue.courses
     elsif params[:q]
       @courses = Course.search(params[:q], {near: params[:near], sort: params[:sort], page: params[:page]})
     else
-      @courses = Course.all.page
+      @courses = Course.all.limit(50)
     end
     
   end

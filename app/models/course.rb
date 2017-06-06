@@ -13,7 +13,7 @@ class Course < ApplicationRecord
                               :tsearch => {:prefix => true, :dictionary => "english", :any_word => true}
                             }
 
-  self.per_page = 30  #will paginate
+  paginates_per 30
 
   #reindexes all records and returns the number of reindexed records
   def self.fts_reindex

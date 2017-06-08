@@ -1,6 +1,9 @@
 default: &default
   general_tel: "0113123456"
   general_tel_formatted: "0113 123456"
+  transportapi_id: abc
+  transportapi_key: abc
+  mapzen_key: abc
 
 development:
   <<: *default

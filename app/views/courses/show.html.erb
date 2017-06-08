@@ -43,16 +43,8 @@
 
 <div class="row course-directions">
   <div class="col-md-12">
-       <h4>Journey Plan To Arrive At 12:30 </h4>
-       <p>From LS27 9DY to Beeston Joeseph Priestly Centre <br />
-         <%= image_tag 'bus2.png' %>26 Mins by Bus. (<a href="#"><%= image_tag 'foot.png' %>Walking Directions</a>)</p>
-  </div>
-  
-  <div class="col-md-12">
-    <%= image_tag 'route.png' %>
-      
-  </div>
-  
+    <%= render :partial => 'directions', object: @directions unless params[:near].blank? || @directions.nil? %>
+  </div>  
 </div>
 
  

@@ -1,0 +1,66 @@
+<% if @directions[:type] == "transit"%>
+
+  <h4>Journey Plan to Arrive At <%= @course.start_time.strftime("%I:%M %p") %></h4>
+
+  <p>From <%= params[:near] %> to <%= @course.venue.name.titlecase %></p>
+  <% time = @directions[:duration].to_time 
+      time_in_words = distance_of_time_in_words("00:00:00".to_time, time)
+    %>
+  <p><%= image_tag 'bus-blue.png', :height=>20 %> <%= time_in_words%> by Bus. (<%= link_to image_tag('foot-blue.png', :height=>20)+"Walking Directions", course_url(@course, :near => params[:near], :route => "walk") %>)</p>
+  <table class="table-striped table-bordered table-hovered">
+    <th colspan="3">
+      Start: <%= @directions[:departure_time] %>  End: <%= @directions[:arrival_time] %>  Duration: <%= @directions[:duration].to_time.strftime("%H:%M")%>
+    </th>
+    <% @directions[:parts].each do | part | %>
+      <tr>
+        <td class="text-center"><%= image_tag "foot-blue.png" if part["mode"] == "foot" %><%= image_tag 'bus-blue.png' if part["mode"] == "bus" %></td>
+        <td><span class="line_name"><%= "Bus  #{part['line_name']}."  unless part['line_name'].blank? %></span>  
+          <%= "Walk from " if part["mode"] == "foot"%>
+        <%= part["from"] %> to <%= part["to"] %><br />
+          <span class="approx">approx <%= part["duration"].to_time.strftime("%-M")  %> minutes</span>
+        </td>
+        <td>
+          <% if part == @directions[:parts].first%> depart <% end %>
+          at <%= part["departure_time"].to_time.strftime("%H:%M") %>
+          <% if part == @directions[:parts].last%> <br />
+            to arrive at <%= part["arrival_time"].to_time.strftime("%H:%M") %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+    
+  <div class="direction_links">
+    For more detailed directions: <%= link_to "West Yorkshire Metro Journey Planner", "http://planner.wymetro.com/lts/#/travelInfo" %>
+  </div>
+
+<%elsif @directions[:type] == "foot"%>
+
+  <h4>Journey Plan to Arrive At <%= @course.start_time.strftime("%I:%M %p") %></h4>
+
+  <p>From <%= params[:near] %> to <%= @course.venue.name.titlecase %></p>
+  <p><%= image_tag('foot-blue.png', :height=>15) %> <%= distance_of_time_in_words(@directions[:duration])%> by Walking. (<%= link_to image_tag('bus-blue.png', :height=>20)+" By Bus", course_url(@course, :near => params[:near], :route => "bus") %>)</p>
+  <table class="table-striped table-bordered table-hovered">
+    <th colspan="3">
+      Start: <%= @directions[:departure_time] %>  End: <%= @directions[:arrival_time] %>  Duration: <%= distance_of_time_in_words(@directions[:duration])%>.
+      <%= @directions[:length] %> km
+    </th>
+    <% @directions[:parts].each do | part | %>
+      <tr>
+        <td class="text-center"><%= image_tag "foot-blue.png" if part["mode"] == "foot" %></td>
+        <td><%= part["pre_instruction"] %>
+          <%= part["post_instruction"] %>
+          <br />
+          <span class="approx">approx <%= distance_of_time_in_words(part["duration"]) %> </span>
+        </td>
+        <td>
+          <%= distance_of_time_in_words(part["duration"])%>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <div class="direction_links">
+    For detailed directions and a map: <%= link_to "Google Maps", "https://maps.google.co.uk" %>
+  </div>
+
+<% end %>

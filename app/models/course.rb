@@ -89,8 +89,9 @@ class Course < ApplicationRecord
 
   def walk_route(params={})
 
-    params[:origin] ||=  "-1.5359008,53.797678"  #-1.5359008,53.797678  bus station!
+    params[:origin] ||= {:lat =>53.797678, :lon =>-1.5359008} #-1.5359008,53.797678  bus station!
     lon_lat = Course.get_lon_lat(params[:near])
+    
     params[:origin] = {:lat =>lon_lat[:latitude], :lon =>lon_lat[:longitude]} if lon_lat
 
      params[:start_time]  ||= self.start_time.strftime("%H:%M")
@@ -101,7 +102,7 @@ class Course < ApplicationRecord
     end
 
     time = params[:start_date]+"T"+params[:start_time]
-    
+    logger.debug params.inspect
     json = {"locations" => [{"lat"=>params[:origin][:lat], "lon"=>params[:origin][:lon]},{"lat"=>self.latitude, "lon"=> self.longitude}], "directions_options"=>{"units"=>"kilometers"},"costing" => "pedestrian"  }.to_json
     
     url="https://valhalla.mapzen.com/route?json=#{json}&api_key=#{AppConfig['mapzen_key']}"

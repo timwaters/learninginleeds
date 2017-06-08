@@ -3,6 +3,7 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
 
     route = params[:route] || "bus"
+    #todo check for geocoding first and return if cannot find
     if params[:near]
       if route == "walk"
        @directions = Rails.cache.fetch(@course.id.to_s + params[:near] + route, :expires => 2.days) do

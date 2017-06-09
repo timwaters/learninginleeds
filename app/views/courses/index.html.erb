@@ -39,7 +39,12 @@
   %>
   <div class="row course-result">
     <div class="col-md-12">
-      <h3 class="title"><%= link_to course.title, course %></h3>
+    <% 
+      params[:near] = nil if params[:near].blank?
+      params[:lon_lat] = nil
+      params[:lon_lat] = "#{@lon_lat[:longitude]},#{@lon_lat[:latitude]}" if @lon_lat
+    %>
+      <h3 class="title"><%= link_to course.title, course_url(course, :near => params[:near], :lon_lat => params[:lon_lat])  %></h3>
       <p class="description">
         <%= snippet(course.description, 50, course) %>
       </p>

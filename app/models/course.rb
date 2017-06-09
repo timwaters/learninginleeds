@@ -15,24 +15,17 @@ class Course < ApplicationRecord
 
   self.per_page = 30  #will paginate
 
-  #reindexes all records and returns the number of reindexed records
-  def self.fts_reindex
-     PgSearch::Multisearch.rebuild(Course)
-     return Course.count
-  end
-  
-
   def self.search(q, options = {})
     page = options[:page] || 1
     sort = options[:sort] || "relevance"
-    near = options[:near] || nil
-
+    lon_lat = options[:lon_lat] || nil
     page = 1 if options[:page].blank?
-   
-    origin = Course.get_origin(near)
-    
+  
+    origin = nil
+    origin = "POINT (#{lon_lat[:longitude]} #{lon_lat[:latitude]})" if lon_lat
+
     columns_select = "*"
-    columns_select = "*, ST_Distance(lonlat, ST_GeomFromText('#{origin}',4326), true) / 1000 as distance"  unless near.blank? || origin.blank?
+    columns_select = "*, ST_Distance(lonlat, ST_GeomFromText('#{origin}',4326), true) / 1000 as distance"  unless lon_lat.blank? || origin.blank?
     
     distance_sort = nil
 
@@ -45,9 +38,8 @@ class Course < ApplicationRecord
     else
       courses = Course.includes([:venue, :provider]).page(page).select(columns_select).order(distance_sort).full_search(q)
     end
-
-    
-  courses
+  
+    return courses
   end 
 
   #postcode, lat,lon, place/address
@@ -71,26 +63,51 @@ class Course < ApplicationRecord
       end
 
     else
-      lon_lat = nil
+      lon_lat = Rails.cache.fetch(near, :expires => 60.days) do
+        Course.geocode(near)
+      end
     end
 
     return lon_lat
   end
 
-  def self.get_origin(near)
-    origin = nil
-    lon_lat = Course.get_lon_lat(near)
-    origin = "POINT (#{lon_lat[:longitude]} #{lon_lat[:latitude]})" if lon_lat
-
-    return origin
-  end
 
   require 'httparty'
 
+  def self.geocode(near)
+
+    query_params = "?" + {
+      "text" => near,
+      "api_key" => AppConfig['mapzen_key'],
+      "size" => "1",
+      "boundary.country" => "GBR",
+      "focus.point.lat" => "53.797678",
+      "focus.point.lon" => "-1.5359008",
+      "boundary.circle.lat"  => "53.797678",
+      "boundary.circle.lon" =>  "-1.5359008",
+      "boundary.circle.radius" => "50"
+    }.map {|k,v| "#{k}=#{CGI.escape(v)}"}*"&"
+    base_url = "https://search.mapzen.com/v1/search"
+   
+    url=URI.parse(base_url+query_params)
+    logger.debug "calling #{url}"
+    
+    response = HTTParty.get(url)
+
+    return nil unless response.code == 200
+   
+    body = JSON.parse(response.body)
+
+    lon_lat = {:longitude => body["features"][0]["geometry"]["coordinates"][0], :latitude =>body["features"][0]["geometry"]["coordinates"][1]} if body["features"].size > 0
+
+    return lon_lat
+  end
+
+  #gets a walking route based using mapzen
   def walk_route(params={})
 
     params[:origin] ||= {:lat =>53.797678, :lon =>-1.5359008} #-1.5359008,53.797678  bus station!
-    lon_lat = Course.get_lon_lat(params[:near])
+    lon_lat = Course.get_lon_lat(params[:lon_lat])
     
     params[:origin] = {:lat =>lon_lat[:latitude], :lon =>lon_lat[:longitude]} if lon_lat
 
@@ -106,7 +123,7 @@ class Course < ApplicationRecord
     json = {"locations" => [{"lat"=>params[:origin][:lat], "lon"=>params[:origin][:lon]},{"lat"=>self.latitude, "lon"=> self.longitude}], "directions_options"=>{"units"=>"kilometers"},"costing" => "pedestrian"  }.to_json
     
     url="https://valhalla.mapzen.com/route?json=#{json}&api_key=#{AppConfig['mapzen_key']}"
-
+    logger.debug "calling #{url}"
     response = HTTParty.get(url)
 
     return nil unless response.code == 200
@@ -136,9 +153,9 @@ class Course < ApplicationRecord
   end
 
 
-
+   #gets a bus route based using transport API
   def transit_route(params={})
-    lon_lat = Course.get_lon_lat(params[:near])
+    lon_lat = Course.get_lon_lat(params[:lon_lat])
     lon_lat = "lonlat:#{lon_lat[:longitude]},#{lon_lat[:latitude]}" if lon_lat
     origin = params[:origin] || lon_lat || "postcode:LS2+9DY"  #lonlat:-1.5359008,53.797678  bus station!
 
@@ -162,10 +179,8 @@ class Course < ApplicationRecord
       "service" => "southeast"
     }.map {|k,v| "#{k}=#{CGI.escape(v)}"}*"&"
   
-  #  puts query_params.inspect
     url=URI.parse(base_url+rest_params+query_params)
-  #  puts "calling url #{url}"
-    
+    logger.debug "calling #{url}"
     response = HTTParty.get(url)
   
     return nil unless response.code == 200

@@ -1,8 +1,9 @@
 <script type="text/javascript">
   //TODO only save searches when they have useful records
   $( document ).ready(function() {
-    var cookie_name = "lil-searches";
+    var cookie_name = "lil-searches-1";
     var limit = 4;
+
     <% save = params[:q].blank?  ? "false" : "true" %>
     var save_cookie = <%= save %>;
     var searches = JSON.parse(readCookie(cookie_name));
@@ -10,18 +11,27 @@
       searches = [];
       $('.recent-searches').hide();
     }
-      
-    if (save_cookie) {
-      $('.recent-searches').show();
-      var query = '<%= params[:q] %>';
- 
-      if (searches.indexOf(query) === -1){
-        searches.unshift(query);
-        if (searches.length > limit) {
-          searches.pop();
-        }
-        
+    
+    var q_param = '<%= params[:q] %>';
+    var sort_param = '<%= params[:sort] ||= "" %>';
+    var near_param = '<%= params[:near] ||= "" %>';
+    var search_obj = {'q': q_param, 'near': near_param, 'sort': sort_param };
+
+    $.each(searches, function(i, search_item){
+      if(search_item.q == q_param && search_item.near == near_param ){
+        save_cookie = false;
       }
+    });
+
+    if (save_cookie) {
+           
+      if (searches.indexOf(search_obj) === -1){
+          searches.unshift(search_obj);
+          if (searches.length > limit) {
+            searches.pop();
+          }
+          
+        }
       var json_str = JSON.stringify(searches);
       createCookie(cookie_name, json_str, 60);
     } // save_cookie
@@ -31,6 +41,7 @@
     var searches = JSON.parse(readCookie(cookie_name));
     if (searches != null) {
       //console.log(searches);
+      $('.recent-searches').show();
       updateRecentSearches(searches);
     }
     
@@ -38,13 +49,18 @@
       if (searches == null){
         return false;
       }
+      $("search-item").remove(); //delete all entries first
       var searchDiv = document.getElementById("searches");
       for(i=0;i<searches.length;i++){
-        //console.log(searches[i]);
+       // console.log(searches[i]);
         if (i >= limit) {
           break;
         }
-        $('.recent-searches').append('<div class="col-md-3"><p><a href="/courses?q='+searches[i]+'">'+ truncate(searches[i], 23) +'</a></p></div>');
+        var near = "";
+        if (searches[i].near.length > 0){
+          near = "near "+ searches[i].near;
+        }
+        $('.recent-searches').append('<div class="col-md-3 search-item"><p><a href="/courses?utf8=✓&q='+searches[i].q+'&sort='+searches[i].sort+'&near='+searches[i].near+'">'+ truncate(searches[i].q, 23) +' ' +truncate(near, 20)+'</a></p></div>');
       }
       
     }

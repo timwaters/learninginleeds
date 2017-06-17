@@ -78,7 +78,7 @@
     margin: 0;
     padding: 7px 25px;
     color: #fff;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
     text-decoration: none;
     outline: none;
@@ -118,7 +118,7 @@
 .atc-style-blue .atcb-item-link:focus
 {
     color: #000;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
     text-decoration: none;
     outline: none;

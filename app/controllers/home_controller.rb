@@ -8,6 +8,5 @@ class HomeController < ApplicationController
     @topics =  Topic.all.select { | t | t.has_courses? }
   end
 
-  def about
-  end
+
 end

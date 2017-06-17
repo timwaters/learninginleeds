@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  get 'about', :as => '/about', to: 'home#about'
+  get 'about', :as => '/about', to: 'pages#about'
   root to: "home#index"   #home/index is /
 
   get 'courses/:id', to: 'courses#show', as: 'course'

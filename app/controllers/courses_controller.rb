@@ -38,7 +38,7 @@ class CoursesController < ApplicationController
 
       @courses = Course.search(params[:q], {lon_lat: @lon_lat, sort: params[:sort], page: params[:page]})
     else
-      @courses = Course.all.limit(50)
+      @courses = Course.all.page(params[:page])
     end
     
   end

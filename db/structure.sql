@@ -250,6 +250,38 @@ ALTER SEQUENCE news_id_seq OWNED BY news.id;
 
 
 --
+-- Name: pages; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE pages (
+    id bigint NOT NULL,
+    name character varying,
+    body text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: pages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE pages_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: pages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE pages_id_seq OWNED BY pages.id;
+
+
+--
 -- Name: postcodes; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -472,6 +504,13 @@ ALTER TABLE ONLY news ALTER COLUMN id SET DEFAULT nextval('news_id_seq'::regclas
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY pages ALTER COLUMN id SET DEFAULT nextval('pages_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY postcodes ALTER COLUMN id SET DEFAULT nextval('postcodes_id_seq'::regclass);
 
 
@@ -541,6 +580,14 @@ ALTER TABLE ONLY courses
 
 ALTER TABLE ONLY news
     ADD CONSTRAINT news_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY pages
+    ADD CONSTRAINT pages_pkey PRIMARY KEY (id);
 
 
 --
@@ -717,6 +764,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170603155228'),
 ('20170604152510'),
 ('20170604153719'),
-('20170617155911');
+('20170617155911'),
+('20170617161821');
 
 

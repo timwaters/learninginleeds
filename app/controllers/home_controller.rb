@@ -4,7 +4,7 @@ class HomeController < ApplicationController
     # flash[:notice] = "notice ! fasac"
     # get recommendations 
     # get topics
-    @recommended = Course.all.limit(3)
+    @news = News.all.order(updated_at: :desc).limit(3)
     @topics =  Topic.all.select { | t | t.has_courses? }
   end
 

@@ -1,0 +1,16 @@
+<div class="row rec">
+  
+  <div class="col-md-12">
+    <h3>News & Events</h3>
+  </div>
+  <% news.each do | news_item |  %>
+
+    <div class="col-md-4 smaller">
+      <%= sanitize news_item.body %>
+    </div>
+  
+  <% end %>
+  
+
+</div>
+

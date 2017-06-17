@@ -21,7 +21,7 @@ class CoursesController < ApplicationController
   end
 
   def index
-    @recommended = Course.all.limit(3)
+    @news = News.all.order(updated_at: :desc).limit(3)
     @lon_lat = nil
     if params[:topic_id]
       @topic = Topic.find(params[:topic_id])

@@ -195,7 +195,9 @@ CREATE TABLE courses (
     subject_id bigint,
     latitude double precision,
     longitude double precision,
-    lonlat geography(Point,4326)
+    lonlat geography(Point,4326),
+    category_1 character varying,
+    category_2 character varying
 );
 
 
@@ -489,7 +491,10 @@ CREATE TABLE venues (
     longitude double precision,
     easting integer,
     northing integer,
-    postcode_no_space character varying
+    postcode_no_space character varying,
+    address_1 character varying,
+    address_2 character varying,
+    address_3 character varying
 );
 
 
@@ -823,6 +828,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170617161821'),
 ('20170618140016'),
 ('20170618140708'),
-('20170618142535');
+('20170618142535'),
+('20170618160653');
 
 

@@ -17,6 +17,9 @@
     <%= render :partial => "calendar"%>
       
     Where: <%= link_to @course.venue.name.titlecase, @course.venue %> <br />
+    <%= @course.venue.address_1.titlecase %><br />
+    <%= "#{@course.venue.address_2.titlecase} <br />".html_safe unless @course.venue.address_2.blank? %>
+    <%= @course.venue.address_3.titlecase %><br />
     <%= @course.venue.postcode %>
   </p>
  

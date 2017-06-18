@@ -57,7 +57,9 @@ class Import < ApplicationRecord
                           start_date: row[:start_date],
                           end_date: row[:end_date],
                           start_time: row[:start_time],
-                          end_time: row[:end_time]
+                          end_time: row[:end_time],
+                          category_1: row[:category_1],
+                          category_2: row[:category_2]
       })
       unless updated
         log_error "Could not update course: #{course.inspect}" 
@@ -65,13 +67,24 @@ class Import < ApplicationRecord
       end
 
       provider = Provider.find_or_create_by(name: row[:provider])
+      telephone = row[:contact_tel_no]
+      telephone = nil if telephone[0] == "?"
+
       updated = provider.update({ url: row[:provider_url], telephone: row[:contact_tel_no]})
       unless updated
         log_error "Could not update provider: #{provider.inspect}" 
       end
   
       venue = Venue.find_or_create_by(name: row[:venue])
-      updated = venue.update({postcode: row[:venue_postcode].strip, area: row[:area], committee: row[:community_committee], ward: row[:ward]})
+      updated = venue.update({
+        postcode: row[:venue_postcode].strip,
+        area: row[:area],
+        committee: row[:community_committee],
+        ward: row[:ward], 
+        address_1: row[:address_1],
+        address_2: row[:address_2],
+        address_3: row[:address_3]
+      })
 
       if updated
         postcode_lookup = Postcode.where(postcode: row[:venue_postcode].strip).first
@@ -79,8 +92,6 @@ class Import < ApplicationRecord
           venue.postcode_no_space = postcode_lookup[:postcode_no_space]
           venue.latitude = postcode_lookup[:latitude]
           venue.longitude = postcode_lookup[:longitude]
-          venue.easting = postcode_lookup[:easting]
-          venue.northing = postcode_lookup[:northing]
         end
         
         venue.save

@@ -43,6 +43,7 @@ gem 'activerecord-postgis-adapter'
 gem 'pg_search'
 
 gem 'httparty'
+gem "paperclip", "~> 5.0.0"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

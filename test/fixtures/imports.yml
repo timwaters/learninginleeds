@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  status: MyString
+  course_count: 1
+  filename: MyString
+
+two:
+  status: MyString
+  course_count: 1
+  filename: MyString

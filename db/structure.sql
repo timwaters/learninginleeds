@@ -219,6 +219,46 @@ ALTER SEQUENCE courses_id_seq OWNED BY courses.id;
 
 
 --
+-- Name: imports; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE imports (
+    id bigint NOT NULL,
+    status character varying,
+    course_count integer,
+    filename character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    csv_file_file_name character varying,
+    csv_file_content_type character varying,
+    csv_file_file_size integer,
+    csv_file_updated_at timestamp without time zone,
+    finished_at timestamp without time zone,
+    imported_num integer,
+    note text
+);
+
+
+--
+-- Name: imports_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE imports_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: imports_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE imports_id_seq OWNED BY imports.id;
+
+
+--
 -- Name: news; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -497,6 +537,13 @@ ALTER TABLE ONLY courses ALTER COLUMN id SET DEFAULT nextval('courses_id_seq'::r
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY imports ALTER COLUMN id SET DEFAULT nextval('imports_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY news ALTER COLUMN id SET DEFAULT nextval('news_id_seq'::regclass);
 
 
@@ -572,6 +619,14 @@ ALTER TABLE ONLY ar_internal_metadata
 
 ALTER TABLE ONLY courses
     ADD CONSTRAINT courses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: imports_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY imports
+    ADD CONSTRAINT imports_pkey PRIMARY KEY (id);
 
 
 --
@@ -765,6 +820,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170604152510'),
 ('20170604153719'),
 ('20170617155911'),
-('20170617161821');
+('20170617161821'),
+('20170618140016'),
+('20170618140708'),
+('20170618142535');
 
 

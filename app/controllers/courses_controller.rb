@@ -4,7 +4,16 @@ class CoursesController < ApplicationController
 
     route = params[:route] || "bus"
     #todo check for geocoding first and return if cannot find
-    if params[:near] &&  params[:lon_lat]
+    if params[:near] && params[:lon_lat].blank?
+      lon_lat =  Course.get_lon_lat(params[:near])
+      
+      if lon_lat.nil?
+        params[:lon_lat] = nil
+      else
+        params[:lon_lat] = "#{lon_lat[:longitude]},#{lon_lat[:latitude]}"
+      end
+    end
+    if params[:near] && params[:lon_lat]
       if route == "walk"
         @directions = Rails.cache.fetch(@course.id.to_s + params[:lon_lat] + route, :expires => 14.days) do
           @course.walk_route({:lon_lat => params[:lon_lat]}) if route == "walk"

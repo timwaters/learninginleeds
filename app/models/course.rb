@@ -186,6 +186,8 @@ class Course < ApplicationRecord
     return nil unless response.code == 200
    
     body = JSON.parse(response.body)
+
+    return nil unless body["error"].blank?
    
     route = body["routes"][0]
 

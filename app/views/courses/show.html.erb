@@ -46,7 +46,39 @@
 
 <div class="row course-directions">
   <div class="col-md-12">
-    <%= render :partial => 'directions', object: @directions unless params[:near].blank? || @directions.nil? %>
+    <% if !params[:near].blank? && !@directions.nil? %>
+      <%= render :partial => 'directions', object: @directions %>
+    <% elsif !params[:near].blank? && @directions.nil? %>
+      <h4>Journey Plan</h4>
+      <p class="alert alert-success alert-dismissable">Sorry couldn't find a journey plan for <%= params[:near] %>
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times;</button>
+      </p>
+      <div class="direction_links">
+       For public transport planning visit the <%= link_to "West Yorkshire Metro Journey Planner", "http://planner.wymetro.com/lts/#/travelInfo" %> <br />
+       For walking, driving directions visit: <%= link_to "Google Maps", "https://maps.google.co.uk" %>
+      </div>
+
+    <% else %>
+      <h4>Journey Plan</h4>
+      <p>Type in a place, postcode or address to show a journey plan by bus and by foot to arrive for the course start.</p>
+
+      <%= form_tag("", method: "get", class: 'form-horizontal ', role: 'form') do %>
+        
+        <%= text_field_tag(:near, params[:near], placeholder: "Postcode or place") %>
+        <div class="input-group-btn">
+          <button class="btn btn-default" type="submit" title="Search"><i class="glyphicon glyphicon-search">Search</i></button>
+        </div>
+       <!-- 
+        <button id="geobutton" class="btn btn-default" type="button" title="Find Your Location"><i class="glyphicon glyphicon-globe" ></i></button>
+       -->
+      <% end #form %>
+
+      <div class="direction_links">
+       For public transport planning visit the <%= link_to "West Yorkshire Metro Journey Planner", "http://planner.wymetro.com/lts/#/travelInfo" %> <br />
+       For walking, driving directions and maps visit: <%= link_to "Google Maps", "https://maps.google.co.uk" %>
+      </div>
+
+    <% end %>
   </div>  
 </div>
 

@@ -6,7 +6,7 @@
     <var class="atc_event">
       <var class="atc_privacy">private</var>
       <var class="atc_date_start"><%= "#{@course.start_date.strftime('%Y-%m-%d')} #{@course.start_time.strftime('%H:%M:00')}" %></var>
-      <var class="atc_date_end"><%= "#{@course.end_date.strftime('%Y-%m-%d')} #{@course.end_time.strftime('%H:%M:00')}" %></var>
+      <var class="atc_date_end"><%= "#{@course.start_date.strftime('%Y-%m-%d')} #{@course.end_time.strftime('%H:%M:00')}" %></var>
       <var class="atc_timezone">Europe/London</var>
       <var class="atc_title"><%= @course.title %> - Adult Learning in Leeds</var>
       <var class="atc_description"><%= @course.description %></var>

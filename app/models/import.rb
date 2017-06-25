@@ -87,11 +87,13 @@ class Import < ApplicationRecord
       })
 
       if updated
-        postcode_lookup = Postcode.where(postcode: row[:venue_postcode].strip).first
-        unless postcode_lookup.nil?
-          venue.postcode_no_space = postcode_lookup[:postcode_no_space]
-          venue.latitude = postcode_lookup[:latitude]
-          venue.longitude = postcode_lookup[:longitude]
+        lookup_address = [row[:venue],row[:address_1],row[:address_2],row[:address_3],row[:venue_postcode].strip].select {|a| !a.blank?}.join(", ")
+        log_error lookup_address.inspect
+        lon_lat = Course.get_lon_lat(lookup_address, "google")
+        
+        unless lon_lat.nil?
+          venue.latitude = lon_lat[:latitude]
+          venue.longitude = lon_lat[:longitude]
         end
         
         venue.save

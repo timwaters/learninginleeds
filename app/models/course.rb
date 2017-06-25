@@ -43,7 +43,7 @@ class Course < ApplicationRecord
   end 
 
   #postcode, lat,lon, place/address
-  def self.get_lon_lat(near)
+  def self.get_lon_lat(near, geocode_service="mapzen")
     return nil if near.blank?
     lon_lat = nil
 
@@ -64,7 +64,7 @@ class Course < ApplicationRecord
 
     else
       lon_lat = Rails.cache.fetch(near, :expires => 60.days) do
-        Course.geocode(near)
+        Course.geocode(near, geocode_service)
       end
     end
 
@@ -74,32 +74,71 @@ class Course < ApplicationRecord
 
   require 'httparty'
 
-  def self.geocode(near)
+  def self.geocode(near, service="mapzen")
 
-    query_params = "?" + {
-      "text" => near,
-      "api_key" => AppConfig['mapzen_key'],
-      "size" => "1",
-      "boundary.country" => "GBR",
-      "focus.point.lat" => "53.797678",
-      "focus.point.lon" => "-1.5359008",
-      "boundary.circle.lat"  => "53.797678",
-      "boundary.circle.lon" =>  "-1.5359008",
-      "boundary.circle.radius" => "50"
-    }.map {|k,v| "#{k}=#{CGI.escape(v)}"}*"&"
-    base_url = "https://search.mapzen.com/v1/search"
-   
-    url=URI.parse(base_url+query_params)
-    logger.debug "calling #{url}"
+    lon_lat = nil
+
+    if service == "google"
     
-    response = HTTParty.get(url)
+      query_params = "?" + {
+      "address" => near,
+      "sensor" => "false",
+      "language" => "en-GB",
+      "key" => AppConfig['google_key'],
+      "components" => "country:GB",
+      "bounds" => "53.661323,-1.777039|53.950025,-1.244202"
+      }.map {|k,v| "#{k}=#{CGI.escape(v)}"}*"&"
+      base_url = "https://maps.googleapis.com/maps/api/geocode/json"
+    
+      url=URI.parse(base_url+query_params)
+      logger.debug "calling #{url}"
+      
+      response = HTTParty.get(url)
 
-    return nil unless response.code == 200
-   
-    body = JSON.parse(response.body)
+      return nil unless response.code == 200
+    
+      body = JSON.parse(response.body)
 
-    lon_lat = {:longitude => body["features"][0]["geometry"]["coordinates"][0], :latitude =>body["features"][0]["geometry"]["coordinates"][1]} if body["features"].size > 0
+      if body["status"] != "OK"
+        logger.error "Problem with Google Geocoding: " + body["status"].inspect
+        return nil 
+      end
 
+      lon_lat = {:longitude => body["results"][0]["geometry"]["location"]["lng"].round(6), :latitude =>body["results"][0]["geometry"]["location"]["lat"].round(6)} if body["results"].size > 0
+
+    elsif service == "mapzen"
+
+      query_params = "?" + {
+        "text" => near,
+        "api_key" => AppConfig['mapzen_key'],
+        "size" => "1",
+        "boundary.country" => "GBR",
+        "focus.point.lat" => "53.797678",
+        "focus.point.lon" => "-1.5359008",
+        "boundary.circle.lat"  => "53.797678",
+        "boundary.circle.lon" =>  "-1.5359008",
+        "boundary.circle.radius" => "50"
+      }.map {|k,v| "#{k}=#{CGI.escape(v)}"}*"&"
+      base_url = "https://search.mapzen.com/v1/search"
+    
+      url=URI.parse(base_url+query_params)
+      logger.debug "calling #{url}"
+      
+      response = HTTParty.get(url)
+
+      if response.code != 200
+        logger.error "Problem with Mapzen Geocoding: " + response.body.inspect
+        return nil 
+      end
+    
+      body = JSON.parse(response.body)
+
+      lon_lat = {:longitude => body["features"][0]["geometry"]["coordinates"][0].round(6), :latitude =>body["features"][0]["geometry"]["coordinates"][1].round(6)} if body["features"].size > 0
+
+    else
+      lon_lat = nil
+    end
+  
     return lon_lat
   end
 

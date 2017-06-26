@@ -1,4 +1,13 @@
 class Topic < ApplicationRecord
+
+  has_attached_file :icon,
+    :styles => {:thumb => ["50x50>", :png]},
+    :url => '/icons/:id/:style/:basename.:extension',
+    preserve_files: false,
+    default_url: ->(attachment) { ActionController::Base.helpers.asset_path('generic.png') }
+
+  validates_attachment :icon, content_type: { content_type: ["image/jpg", "image/jpeg","image/pjpeg", "image/png","image/x-png", "image/gif"] }
+
   before_save :update_count
 
   def category_1=(values)

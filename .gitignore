@@ -32,3 +32,4 @@ nbproject
 config/application.yml
 
 public/lil/*
+public/icons

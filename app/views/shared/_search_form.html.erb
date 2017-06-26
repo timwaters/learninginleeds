@@ -46,8 +46,8 @@ function geoFindMe() {
     </div>
     
     <div class="col-sm-3">
-      Use current location
-      <button id="geobutton" class="geobutton btn btn-default" type="button" title="Find Your Location"> <%= image_tag 'location.png' %></button>
+      <span class="location-hint">Use current location</span>
+      <button id="geobutton" class="geobutton btn btn-default" type="button" title="Use current location"> <%= image_tag 'location.png', width: 25, height: 25 %></button>
     </div>
 
 </div>
@@ -55,7 +55,7 @@ function geoFindMe() {
   <div class="form-group ">
     <div class="col-sm-8 col-sm-offset-2">
         <div class="input-group-btn">
-        <button class="btn btn-default" type="submit" title="Search"><i class="glyphicon glyphicon-search"></i> Search</button>
+        <button class="btn btn-primary " type="submit" title="Search"><i class="glyphicon glyphicon-search"></i> Search</button>
         </div>
         </div>  
  </div>

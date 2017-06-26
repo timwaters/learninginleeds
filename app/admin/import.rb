@@ -1,9 +1,10 @@
 ActiveAdmin.register Import do
-  permit_params :csv_file, :filename, :note
+  permit_params :csv_file, :filename, :note, :upload_url
   
    form do |f|
     f.inputs "Upload" do
-      f.input :note
+      f.input :note, :label => "Any notes about this import", :input_html => { :class => 'autogrow', :rows => 5 } 
+      f.input :upload_url, :label => "URL for CSV File", :input_html => { :value=> AppConfig["csv_upload_url"]} 
       f.input :csv_file, required: true, as: :file
     end
     f.actions

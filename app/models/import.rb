@@ -6,9 +6,14 @@ class Import < ApplicationRecord
     preserve_files: false
 
   validates_attachment :csv_file,   content_type: { content_type: ["text/csv", "text/plain"] }
-  validates_presence_of :csv_file, :message => "Sorry the CSV File needs to be present"
+  #validates_presence_of :csv_file, :message => "Sorry the CSV File needs to be present", :on => :create
 
+  before_create :download_remote_image, :if => :upload_url_provided?
   after_initialize :default_values
+
+  def upload_url_provided?
+    !self.upload_url.blank?
+  end
 
   def run_import!
     prepare_run
@@ -130,6 +135,38 @@ class Import < ApplicationRecord
 
 
   protected
+
+  def download_remote_image
+    csv_upload = do_download_remote_image
+    unless csv_upload
+      errors.add(:upload_url, "error with CSV URL")  
+      return false
+    end
+    self.csv_file = csv_upload
+      
+  end
+
+  def do_download_remote_image
+    begin
+      io = open(URI.parse(upload_url))
+      def io.original_filename
+        filename =  base_uri.path.split('/').last
+        
+        if  !filename.blank?
+          basename = File.basename(filename,File.extname(filename)) + '_'+('a'..'z').to_a.shuffle[0,8].join
+          extname = File.extname(filename)
+          filename = basename + extname
+        end
+        
+        filename
+      end
+      io.original_filename.blank? ? nil : io
+    rescue => e
+      logger.debug "Error with URL upload"
+      logger.debug e
+      return false
+    end
+  end
   
 
   def log_info(msg)

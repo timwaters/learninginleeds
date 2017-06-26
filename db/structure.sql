@@ -237,7 +237,8 @@ CREATE TABLE imports (
     csv_file_updated_at timestamp without time zone,
     finished_at timestamp without time zone,
     imported_num integer,
-    note text
+    note text,
+    upload_url character varying
 );
 
 
@@ -833,6 +834,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170618140708'),
 ('20170618142535'),
 ('20170618160653'),
-('20170626133952');
+('20170626133952'),
+('20170626162151');
 
 

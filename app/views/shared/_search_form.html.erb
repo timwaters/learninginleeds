@@ -32,15 +32,15 @@ function geoFindMe() {
 <div id="out"></div>
 <%= form_tag("/courses", method: "get", class: 'form-horizontal ', role: 'form') do %>
   <div class="form-group ">
-    <%= label_tag(:q, "Find", class:"col-sm-2 control-label") %>
-    <div class="col-sm-8">
+    <%= label_tag(:q, "Find", class:"col-sm-1 control-label") %>
+    <div class="col-sm-11">
       <%= text_field_tag(:q, params[:q], class:"form-control", placeholder: "Courses, Subjects, Topics") %>
     </div>
   </div>
 
   <div class="form-group ">
-    <%= label_tag(:near, "Near", class:"col-sm-2 control-label") %>
-    <div class="col-sm-4">
+    <%= label_tag(:near, "Near", class:"col-sm-1 control-label") %>
+    <div class="col-sm-5">
       <%= text_field_tag(:near, params[:near], class:"form-control near-field", placeholder: "Postcode, Place, Address") %>
       <%= hidden_field_tag(:sort, params[:sort]) %>   
     </div>
@@ -53,7 +53,7 @@ function geoFindMe() {
 </div>
 
   <div class="form-group ">
-    <div class="col-sm-8 col-sm-offset-2">
+    <div class="col-sm-8 col-sm-offset-1">
         <div class="input-group-btn">
         <button class="btn btn-primary " type="submit" title="Search"><i class="glyphicon glyphicon-search"></i> Search</button>
         </div>

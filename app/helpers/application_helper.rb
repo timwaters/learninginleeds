@@ -17,4 +17,15 @@ module ApplicationHelper
     end
   end
 
+
+  def phone_format(number)
+    if number.starts_with?("0113") 
+      return number.insert(4," ")
+    elsif number.starts_with?("07") || number.starts_with?("01226")
+      return number.insert(5," ")
+    else
+      return number
+    end
+  end
+
 end

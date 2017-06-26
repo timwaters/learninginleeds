@@ -106,17 +106,9 @@ class Import < ApplicationRecord
         log_error "Could not update venue: #{venue.inspect}" 
       end
 
-      subject = Subject.find_or_create_by(code: row[:sector_subject_area])
-      updated = subject.update({description: row[:sector_subject_area_description]})
-
-      unless updated
-        log_error "Could not update subject: #{subject.inspect}" 
-      end
-
       course.venue = venue
       course.provider = provider
-      course.subject = subject
-      
+
       course.latitude = venue.latitude
       course.longitude = venue.longitude
       course.lonlat = "POINT(#{venue.longitude} #{venue.latitude})" unless venue.longitude.nil?

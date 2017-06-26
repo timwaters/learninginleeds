@@ -5,7 +5,7 @@ class Import < ApplicationRecord
     url:  ":rails_root/tmp/:class/:attachment/:id_partition/:filename",
     preserve_files: false
 
-  validates_attachment :csv_file,   content_type: { content_type: ["text/csv", "text/plain"] }
+  validates_attachment :csv_file,   content_type: { content_type: ["text/plain", "text/csv", "application/vnd.ms-excel", "application/octet-stream"] }
   #validates_presence_of :csv_file, :message => "Sorry the CSV File needs to be present", :on => :create
 
   before_create :download_remote_image, :if => :upload_url_provided?

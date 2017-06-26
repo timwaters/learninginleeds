@@ -1,5 +1,4 @@
 class Course < ApplicationRecord
-  belongs_to :subject, required: false
   belongs_to :venue, required: false
   belongs_to :provider, required: false
   

@@ -451,7 +451,10 @@ CREATE TABLE topics (
     id bigint NOT NULL,
     name character varying,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    category_1 text[] DEFAULT '{}'::text[],
+    category_2 text[] DEFAULT '{}'::text[],
+    count_courses integer
 );
 
 
@@ -829,6 +832,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170618140016'),
 ('20170618140708'),
 ('20170618142535'),
-('20170618160653');
+('20170618160653'),
+('20170626133952');
 
 

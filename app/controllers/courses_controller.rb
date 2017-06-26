@@ -34,7 +34,7 @@ class CoursesController < ApplicationController
     @lon_lat = nil
     if params[:topic_id]
       @topic = Topic.find(params[:topic_id])
-      @courses = Course.where(subject: @topic.subjects).page(params[:page])
+      @courses = Course.category_search(@topic.categories).page(params[:page])
     elsif params[:provider_id]
       @provider = Provider.find(params[:provider_id])
       @courses  = @provider.courses.page(params[:page])

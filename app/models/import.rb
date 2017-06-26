@@ -122,6 +122,7 @@ class Import < ApplicationRecord
     end
 
     self.update_attribute(:imported_num, count)
+    Topic.update_counts
 
     log_info " "
     log_info "count: #{count} rows processed"

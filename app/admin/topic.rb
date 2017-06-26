@@ -1,7 +1,6 @@
 ActiveAdmin.register Topic do
 
-
-  permit_params :id, :name, :subject_ids => []
+  permit_params :id, :name, :category_1 => [], :category_2 => []
 
   form do | f| 
 
@@ -10,19 +9,12 @@ ActiveAdmin.register Topic do
     end
 
     f.inputs do
-      f.input :subjects, as: :check_boxes, collection: Subject.all.order(:description).map {|u| ["#{u.code.to_s} #{u.description}", u.id]} 
+      f.input :category_1, as: :check_boxes, collection: Course.pluck(:category_1).uniq.map {|a| a.split(",")}.flatten.uniq.sort
+      f.input :category_2, as: :check_boxes, collection: Course.pluck(:category_2).uniq.map {|a| a.split(",")}.flatten.uniq.sort
     end
 
     f.actions
   end
-
-  sidebar "Subjects", only: :show do
-    ul do
-      resource.subjects.each do | u |
-        li  link_to("#{u.code.to_s} #{u.description}", admin_subject_path(u)) 
-      end
-    end #ul
-  end #sidebar
 
 end
 

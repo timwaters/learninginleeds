@@ -7,11 +7,15 @@ class Course < ApplicationRecord
   
   include PgSearch
   pg_search_scope :full_search, 
-                  :against =>  {:title => 'A', :description => 'B'} , 
+                  :against =>  {:title => 'A', :description => 'B', :category_1 => 'C', :category_2 => 'C'} , 
                   :using => { :dmetaphone => {:only => [:title]},
-                              :trigram => {},
+                              :trigram => {:only => [:title, :description]},
                               :tsearch => {:prefix => true, :dictionary => "english", :any_word => true}
                             }
+
+  pg_search_scope :category_search,
+                  :against => [:category_1, :category_2],
+                  :using => { :tsearch => { :dictionary => "simple", :any_word => true}  }
 
   self.per_page = 30  #will paginate
 

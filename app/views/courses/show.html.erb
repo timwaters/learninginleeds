@@ -36,8 +36,13 @@
 
   <p>
     Course Provided by:  <%= link_to @course.provider.name, @course.provider %> <br />
-    <% unless @course.provider.url.blank?  %>
-      Website: <%= link_to @course.provider.url %><br />
+    <% unless @course.provider.url.blank? 
+      url = @course.provider.url
+         unless url.split(':')[0] == 'http' || url.split(':')[0] == 'https'
+          url = "http://" + url
+        end
+     %>
+      Website: <%= link_to url, url %><br />
     <% end %>
     <% unless @course.provider.telephone.blank? %>
       Telephone: <%= link_to phone_format(@course.provider.telephone), "tel:#{@course.provider.telephone}" %>

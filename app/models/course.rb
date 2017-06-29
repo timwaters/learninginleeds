@@ -174,9 +174,8 @@ class Course < ApplicationRecord
    
     duration = body["trip"]["summary"]["time"] 
     length = body["trip"]["summary"]["length"]
-    #TODO work out time to leave etc
-    departure_time = nil
-    arrival_time = nil
+    departure_time = self.start_time - duration
+    arrival_time = self.start_time 
    
     parts = body["trip"]["legs"][0]["maneuvers"].map {| part | 
                 {"mode" => "foot",

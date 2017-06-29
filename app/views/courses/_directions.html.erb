@@ -9,7 +9,7 @@
   <p><%= image_tag 'bus-blue.png', :height=>20 %> <%= time_in_words%> by Bus. (<%= link_to image_tag('foot-blue.png', :height=>20)+"Walking Directions", course_url(@course, :lon_lat => params[:lon_lat], :near => params[:near], :route => "walk") %>)</p>
   <table class="table-striped table-bordered table-hovered">
     <th colspan="3">
-      Start: <%= @directions[:departure_time] %>  End: <%= @directions[:arrival_time] %>  Duration: <%= @directions[:duration].to_time.strftime("%H:%M")%>
+      Start: <%= @directions[:departure_time] %>  End: <%= @directions[:arrival_time] %>  Duration: <%= time_in_words %>
     </th>
     <% @directions[:parts].each do | part | %>
       <tr>
@@ -43,7 +43,7 @@
   <p><%= image_tag('foot-blue.png', :height=>15) %> <%= distance_of_time_in_words(@directions[:duration])%> by Walking. (<%= link_to image_tag('bus-blue.png', :height=>20)+" By Bus", course_url(@course, :lon_lat => params[:lon_lat], :near => params[:near], :route => "bus") %>)</p>
   <table class="table-striped table-bordered table-hovered">
     <th colspan="3">
-      Start: <%= @directions[:departure_time] %>  End: <%= @directions[:arrival_time] %>  Duration: <%= distance_of_time_in_words(@directions[:duration])%>.
+      Start: <%= @directions[:departure_time].to_time.strftime("%H:%M") %>  End: <%= @directions[:arrival_time].to_time.strftime("%H:%M") %>  Duration: <%= distance_of_time_in_words(@directions[:duration])%>.
       <%= @directions[:length] %> km
     </th>
     <% @directions[:parts].each do | part | %>

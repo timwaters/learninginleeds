@@ -40,7 +40,7 @@
       Website: <%= link_to @course.provider.url %><br />
     <% end %>
     <% unless @course.provider.telephone.blank? %>
-      Telephone: <%= phone_format(@course.provider.telephone) %> 
+      Telephone: <%= link_to phone_format(@course.provider.telephone), "tel:#{@course.provider.telephone}" %>
     <% end %>
   </p>
   </div>

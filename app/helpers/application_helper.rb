@@ -18,7 +18,8 @@ module ApplicationHelper
   end
 
 
-  def phone_format(number)
+  def phone_format(num)
+    number = num.clone
     if number.starts_with?("0113") 
       return number.insert(4," ")
     elsif number.starts_with?("07") || number.starts_with?("01226")

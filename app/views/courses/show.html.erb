@@ -36,8 +36,12 @@
 
   <p>
     Course Provided by:  <%= link_to @course.provider.name, @course.provider %> <br />
-    Website: <%= link_to @course.provider.url %><br />
-    Telephone: <%= phone_format(@course.provider.telephone) %> 
+    <% unless @course.provider.url.blank?  %>
+      Website: <%= link_to @course.provider.url %><br />
+    <% end %>
+    <% unless @course.provider.telephone.blank? %>
+      Telephone: <%= phone_format(@course.provider.telephone) %> 
+    <% end %>
   </p>
   </div>
 

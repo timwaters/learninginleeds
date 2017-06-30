@@ -52,7 +52,7 @@
     %>
       <h3 class="title"><%= link_to course.title, course_url(course, :lcc_code => course.lcc_code, :near => params[:near], :lon_lat => params[:lon_lat])  %></h3>
       <p class="description">
-        <%= snippet(course.description, 50, course) %>
+        <%= snippet(course.description, 50,  course_url(course, :lcc_code => course.lcc_code, :near => params[:near], :lon_lat => params[:lon_lat])) %>
       </p>
     </div>
     <div class="col-md-12 ">

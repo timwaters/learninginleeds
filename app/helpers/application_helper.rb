@@ -1,14 +1,14 @@
 module ApplicationHelper
 
-  def snippet(text, wordcount, resource=nil)
+  def snippet(text, wordcount, url=nil)
     if text
       main_text = text.split[0..(wordcount-1)].join(" ")
       
       ending_text = ""
       if text.split.size > wordcount
         ending_text = "..."
-        if resource
-          ending_text = "..." + link_to("(more)", resource)
+        if url
+          ending_text = "..." + link_to("(more)", url)
         end
       end
 

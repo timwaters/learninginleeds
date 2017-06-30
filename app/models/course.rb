@@ -7,7 +7,7 @@ class Course < ApplicationRecord
   include PgSearch
   pg_search_scope :full_search, 
                   :against =>  {:title => 'A', :description => 'B', :category_1 => 'C', :category_2 => 'C'} , 
-                  :using => { :dmetaphone => {:only => [:title]},
+                  :using => { :dmetaphone => {:only => [:title, :description]},
                               :trigram => {:only => [:title, :description]},
                               :tsearch => {:prefix => true, :dictionary => "english", :any_word => true}
                             }

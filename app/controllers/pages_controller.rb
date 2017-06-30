@@ -3,7 +3,7 @@ class PagesController < ApplicationController
   caches_page :about
   
   def about
-    @page = Page.where(name: 'about').first
+    @page = Page.find_by(name: 'about')
   end
 
 end

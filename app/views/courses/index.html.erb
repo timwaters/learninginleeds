@@ -50,7 +50,7 @@
       params[:lon_lat] = nil
       params[:lon_lat] = "#{@lon_lat[:longitude]},#{@lon_lat[:latitude]}" if @lon_lat
     %>
-      <h3 class="title"><%= link_to course.title, course_url(course, :near => params[:near], :lon_lat => params[:lon_lat])  %></h3>
+      <h3 class="title"><%= link_to course.title, course_url(course, :lcc_code => course.lcc_code, :near => params[:near], :lon_lat => params[:lon_lat])  %></h3>
       <p class="description">
         <%= snippet(course.description, 50, course) %>
       </p>

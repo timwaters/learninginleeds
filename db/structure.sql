@@ -742,6 +742,13 @@ CREATE UNIQUE INDEX index_admin_users_on_reset_password_token ON admin_users USI
 
 
 --
+-- Name: index_courses_on_lcc_code; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_courses_on_lcc_code ON courses USING btree (lcc_code);
+
+
+--
 -- Name: index_courses_on_lonlat; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -840,6 +847,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170618160653'),
 ('20170626133952'),
 ('20170626162151'),
-('20170626164734');
+('20170626164734'),
+('20170630190403');
 
 

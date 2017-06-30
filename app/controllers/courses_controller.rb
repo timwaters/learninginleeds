@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
   def show
-    @course = Course.find(params[:id])
+    @course = Course.find_by(lcc_code: params[:lcc_code])
 
     route = params[:route] || "bus"
     #todo check for geocoding first and return if cannot find

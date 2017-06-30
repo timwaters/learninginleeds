@@ -20,9 +20,17 @@ padding-top: 20px;
 h.title {
     margin-top: 0px;
 }
+h1 {
+    font-family: 'Lato', sans-serif !important;
+    font-style: italic;
+}
 
 h1 a.rootlink {
     text-decoration: none;
+    font-size: 40px;
+}
+h1 a.rootlink:hover {
+    text-decoration: underline;
 }
 
 h2.search-heading {
@@ -141,4 +149,16 @@ td.text-center img {
 }
 .location-hint{
     color: grey;
+}
+
+
+
+/* lato-700italic - latin */
+@font-face {
+  font-family: 'Lato';
+  font-style: italic;
+  font-weight: 700;
+  src: local('Lato Bold Italic'), local('Lato-BoldItalic'),
+       font-url('lato-v13-latin-700italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       font-url('lato-v13-latin-700italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }

@@ -22,12 +22,21 @@ ActiveAdmin.register_page "Dashboard" do
           end
         end
       end
-
       column do
-        panel "Info" do
-          para "Welcome to ActiveAdmin."
-        end
+        panel "Last 5 Recently Updated Imports" do
+          ul do
+            Import.order("updated_at desc").limit(5).map do |import|
+              li link_to(import.note, admin_import_path(import)) 
+              span "#{time_ago_in_words(import.updated_at)} ago."
+              span " #{import.imported_num} Courses imported"
+             end
+            end
+          end
+
+
       end
+
+
     end
   end # content
 end

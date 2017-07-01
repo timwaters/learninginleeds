@@ -22,10 +22,24 @@ ActiveAdmin.register Topic do
     attributes_table do
       row :name
       row :icon do
-        image_tag(t.icon.url(:thumb))
+        image_tag(t.icon.url(:thumb), width:50)
       end
+      row :category_1
+      row :category_2
       # Will display the image on show object page
+    end
   end
+
+  index do
+    selectable_column
+    id_column
+    column :name
+    column :icon do | t |
+        image_tag(t.icon.url(:thumb), width:50)
+      end
+    column :category_1
+    column :category_2
+    actions
   end
 
 end

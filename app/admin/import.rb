@@ -19,4 +19,18 @@ ActiveAdmin.register Import do
     link_to 'Run Import!', run_import_admin_import_path(import) if import.status == "ready"
   end
 
+  index do
+    selectable_column
+    id_column
+    column :note
+    column :status
+    column :imported_num
+    column :upload_url
+    column :csv_file_file_name
+    column :created_at
+    column :finished_at
+
+    actions
+  end
+
 end

@@ -1,5 +1,5 @@
 ActiveAdmin.register Venue do
-  permit_params :name, :postcode, :area, :committee, :ward, :latitude, :longitude
+  permit_params :name, :postcode, :area, :committee, :ward, :latitude, :longitude, :address_1, :address_2, :address_3
 
   index do
     selectable_column
@@ -9,9 +9,10 @@ ActiveAdmin.register Venue do
     column :name do |v|
       link_to v.name, admin_venue_path(v)
     end
+    column :address_1
+    column :address_2
+    column :address_3
     column :postcode
-    column :area
-    column :ward 
     column :latitude
     column :longitude
     column :created_at
@@ -27,5 +28,7 @@ ActiveAdmin.register Venue do
       end
     end #ul
   end #sidebar
+
+  
 
 end

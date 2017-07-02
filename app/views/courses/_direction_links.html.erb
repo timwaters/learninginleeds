@@ -1,0 +1,6 @@
+For public transport planning visit the <%= link_to "West Yorkshire Metro Journey Planner", "http://planner.wymetro.com/lts/#/travelInfo" %> <br />
+<% if @course.venue.latitude && @course.venue.longitude %>
+  For walking, driving directions visit: <%= link_to("Google Maps", "https://maps.google.co.uk/?q=#{@course.venue.latitude},#{@course.venue.longitude}") %>
+<% else %>
+  For walking, driving directions visit: <%= link_to "Google Maps", "https://maps.google.co.uk" %>
+<% end %>

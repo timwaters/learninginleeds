@@ -23,7 +23,7 @@
     <%= @course.venue.postcode %>
   </p>
  
-  <div id="venue-map">
+  <div class="venue-map">
     <% if @course.venue.latitude && @course.venue.longitude %>
       <%= map(center:  {
         latlng: [@course.venue.latitude, @course.venue.longitude],
@@ -31,6 +31,13 @@
         },
         markers: [{ latlng: [@course.venue.latitude, @course.venue.longitude] }]
         ) %>
+ 
+      <% if browser.device.mobile? %>
+        <%= link_to("Open Location on Your Mobile Maps", "geo://#{@course.venue.latitude},#{@course.venue.longitude};u=10")  %>
+      <% else %>
+        <%= link_to("Open Location on Google Maps", "https://maps.google.com/?q=#{@course.venue.latitude},#{@course.venue.longitude}") %>
+      <% end %>
+
     <% end %>
   </div>
 
@@ -63,8 +70,7 @@
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times;</button>
       </p>
       <div class="direction_links">
-       For public transport planning visit the <%= link_to "West Yorkshire Metro Journey Planner", "http://planner.wymetro.com/lts/#/travelInfo" %> <br />
-       For walking, driving directions visit: <%= link_to "Google Maps", "https://maps.google.co.uk" %>
+        <%= render partial: 'courses/direction_links' %>
       </div>
 
     <% else %>
@@ -83,8 +89,7 @@
       <% end #form %>
 
       <div class="direction_links">
-       For public transport planning visit the <%= link_to "West Yorkshire Metro Journey Planner", "http://planner.wymetro.com/lts/#/travelInfo" %> <br />
-       For walking, driving directions and maps visit: <%= link_to "Google Maps", "https://maps.google.co.uk" %>
+        <%= render partial: 'courses/direction_links' %>
       </div>
 
     <% end %>

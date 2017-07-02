@@ -3,7 +3,7 @@ class CoursesController < ApplicationController
     @course = Course.find_by(lcc_code: params[:lcc_code])
 
     route = params[:route] || "bus"
-    #todo check for geocoding first and return if cannot find
+
     if params[:near] && params[:lon_lat].blank?
       lon_lat =  Course.get_lon_lat(params[:near])
       
@@ -15,13 +15,22 @@ class CoursesController < ApplicationController
     end
     if params[:near] && params[:lon_lat]
       if route == "walk"
+
         @directions = Rails.cache.fetch(@course.id.to_s + params[:lon_lat] + route, :expires => 14.days) do
-          @course.walk_route({:lon_lat => params[:lon_lat]}) if route == "walk"
+          @course.walk_route({:lon_lat => params[:lon_lat]}) 
         end
+
       elsif route == "bus"
-        @directions = Rails.cache.fetch(@course.id.to_s + params[:lon_lat] + route, :expires => 14.days) do
-          @course.transit_route({:lon_lat => params[:lon_lat]}) if route == "bus"
+        if AppConfig["transit_routing"] == "bing"
+          @directions = Rails.cache.fetch(@course.id.to_s + params[:lon_lat] + route + "bing", :expires => 14.days) do
+              @course.transit_route_bing({:lon_lat => params[:lon_lat]}) 
+          end 
+        else
+          @directions = Rails.cache.fetch(@course.id.to_s + params[:lon_lat] + route + "tapi", :expires => 14.days) do
+              @course.transit_route_tapi({:lon_lat => params[:lon_lat]}) 
+          end 
         end
+        
       else
         @directions = nil
       end

@@ -196,7 +196,7 @@ class Course < ApplicationRecord
 
 
    #gets a bus route based using transport API
-  def transit_route(params={})
+  def transit_route_tapi(params={})
     lon_lat = Course.get_lon_lat(params[:lon_lat])
     lon_lat = "lonlat:#{lon_lat[:longitude]},#{lon_lat[:latitude]}" if lon_lat
     origin = params[:origin] || lon_lat || "postcode:LS2+9DY"  #lonlat:-1.5359008,53.797678  bus station!
@@ -249,6 +249,81 @@ class Course < ApplicationRecord
     
     return  {:type => "transit",
             :duration => duration,
+            :date => params[:start_date],
+            :departure_time => departure_time,
+            :arrival_time => arrival_time,
+            :parts => parts }
+  end
+
+  def transit_route_bing(params={})
+    lon_lat = Course.get_lon_lat(params[:lon_lat])
+    lat_lon = "#{lon_lat[:latitude]},#{lon_lat[:longitude]}" if lon_lat
+    origin = params[:origin] || lat_lon || "53.797678,-1.5359008"  #lonlat:-1.5359008,53.797678  bus station!
+
+    params[:destination] ||= "#{self.latitude},#{self.longitude}"
+
+    if self.start_date < Time.now
+      params[:start_date] ||= Time.now.strftime("%Y-%m-%d")
+    else
+      params[:start_date] ||= self.start_date.strftime("%Y-%m-%d")
+    end
+
+    params[:start_time]  ||= self.start_time.strftime("%H:%M")
+
+    # http://dev.virtualearth.net/REST/V1/Routes/Transit?wp.0=headingley%20leeds&wp.1=leeds%20bus%20station&timeType=Departure&dateTime=3:00:00PM&output=json&key=AlpdOPpl38Mpyue6eqx2dr7EgH2MBtjE8zuutBQjVVRLh3JzydzUIWU7DtL_ON2P
+      
+    base_url="https://dev.virtualearth.net/REST/V1/Routes/Transit"
+
+    query_params = "?" + {
+      "userRegion" => "GB",
+      "wp.0" => origin,
+      "wp.1" => params[:destination],
+      "timeType" => "Arrival",
+      "dateTime" => params[:start_time],
+      "maxSolutions" => "1",
+      "key" => AppConfig["bing_maps_key"]
+    }.map {|k,v| "#{k}=#{CGI.escape(v)}"}*"&"
+  
+    url=URI.parse(base_url+query_params)
+    logger.debug "calling #{url}"
+    response = HTTParty.get(url)
+ 
+    return nil unless response.code == 200
+   
+    body = JSON.parse(response.body)
+    #logger.debug body.inspect
+   
+    route = body["resourceSets"][0]["resources"][0]
+
+    length = route["travelDistance"]
+    duration = route["travelDuration"].to_i 
+
+    departure_time =  Time.strptime(route["routeLegs"][0]["startTime"], "/Date(%Q%z)/")
+    arrival_time = Time.strptime(route["routeLegs"][0]["endTime"], "/Date(%Q%z)/") 
+
+
+    parts = route["routeLegs"][0]["itineraryItems"].map {| part | 
+      from = nil
+      to = nil
+      unless part["childItineraryItems"].blank?
+        from = part["childItineraryItems"][0]["details"][0]["names"][0]
+        to = part["childItineraryItems"][1]["details"][0]["names"][0]
+      end
+
+       line_name = part["transitLine"].blank? ? nil : part["transitLine"]["abbreviatedName"]
+       instruction = part["instruction"]["text"]
+       instruction = part["transitLine"].blank? ? instruction : part["transitLine"]["verboseName"]
+                {"mode" => part["details"][0]["maneuverType"],
+                 "instruction" => instruction,
+                 "from"=> from, 
+                 "to" => to, 
+                 "line_name" => line_name, 
+                 "length" => part["travelDistance"],
+                 "duration" => part["travelDuration"]}    }
+    
+    return  {:type => "transit_bing",
+            :duration => duration,
+            :length => length,
             :date => params[:start_date],
             :departure_time => departure_time,
             :arrival_time => arrival_time,

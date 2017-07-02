@@ -1,6 +1,7 @@
 class Course < ApplicationRecord
   belongs_to :venue, required: false
   belongs_to :provider, required: false
+  belongs_to :import, required: false
   
   validates :lcc_code, uniqueness: { case_sensitive: false }
   

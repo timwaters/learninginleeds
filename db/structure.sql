@@ -197,7 +197,8 @@ CREATE TABLE courses (
     longitude double precision,
     lonlat geography(Point,4326),
     category_1 character varying,
-    category_2 character varying
+    category_2 character varying,
+    import_id bigint
 );
 
 
@@ -742,6 +743,13 @@ CREATE UNIQUE INDEX index_admin_users_on_reset_password_token ON admin_users USI
 
 
 --
+-- Name: index_courses_on_import_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_courses_on_import_id ON courses USING btree (import_id);
+
+
+--
 -- Name: index_courses_on_lcc_code; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -815,6 +823,14 @@ ALTER TABLE ONLY courses
 
 
 --
+-- Name: fk_rails_c3e6349cb8; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY courses
+    ADD CONSTRAINT fk_rails_c3e6349cb8 FOREIGN KEY (import_id) REFERENCES imports(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -848,6 +864,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170626133952'),
 ('20170626162151'),
 ('20170626164734'),
-('20170630190403');
+('20170630190403'),
+('20170701173218');
 
 

@@ -1,4 +1,5 @@
 class Import < ApplicationRecord
+  has_many :courses
   
   has_attached_file :csv_file,
     path: ":rails_root/tmp/:class/:attachment/:id_partition/:filename", 
@@ -28,13 +29,13 @@ class Import < ApplicationRecord
 
   def prepare_run
     self.update_attribute(:status, "running")
-    Course.destroy_all # TODO make this optional?
   end
 
   def finish_import
     self.status = "finished"
     self.finished_at = Time.now
     self.save
+    Course.where.not(import_id: self.id).destroy_all  #delete old courses
     log_info "Finished import #{Time.now}"
   end
 
@@ -112,10 +113,12 @@ class Import < ApplicationRecord
       course.latitude = venue.latitude
       course.longitude = venue.longitude
       course.lonlat = "POINT(#{venue.longitude} #{venue.latitude})" unless venue.longitude.nil?
-
+     
       course.save
       count += 1
       print "."
+
+      self.courses << course
     end
 
     self.update_attribute(:imported_num, count)

@@ -1,0 +1,20 @@
+   <% 
+   marks = []
+   Venue.all.each do | v |
+    if v.latitude
+      marks << { 
+        :latlng => [v.latitude, v.longitude],
+        :popup => link_to(v.name, admin_venue_path(v))
+        }
+      end
+   end
+
+   %>
+   
+   <%= map(:center => {
+    :latlng => [53.797678, -1.5359008],
+    :zoom => 7,
+    },
+    :markers => marks
+    )  %>
+  

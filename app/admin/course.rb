@@ -1,6 +1,21 @@
 ActiveAdmin.register Course do
 
-  permit_params :title, :description, :target_group, :status, :qualification, :start_date, :end_date, :hours, :target_number, :enrolment_count, :academic_year
+  permit_params :title, :description, :category_1, :category_2, :lonlat, :venue_id, :provider_id
+
+  form do | f| 
+
+    f.inputs do
+      f.input :title
+      f.input :description
+      f.input :category_1
+      f.input :category_2
+      f.input :lonlat
+      f.input :venue
+      f.input :provider
+    end
+
+    f.actions
+  end
 
   index do
     selectable_column

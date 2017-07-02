@@ -52,14 +52,8 @@ class Import < ApplicationRecord
 
       updated = course.update({title: row[:course_title], 
                           description: row[:course_description],
-                          target_group: row[:target_group],
-                          status: row[:course_status],
-                          qualification: row[:qualification],
                           hours: row[:learning_hours].to_f,
-                          target_number: row[:target_no].to_i,
-                          enrolment_count: row[:enrolment_count],
                           provider_code: row[:provider_course_code],
-                          academic_year: row[:academic_year],
                           start_date: row[:start_date],
                           end_date: row[:end_date],
                           start_time: row[:start_time],
@@ -74,7 +68,7 @@ class Import < ApplicationRecord
 
       provider = Provider.find_or_create_by(name: row[:provider])
       telephone = row[:contact_tel_no]
-      telephone = nil if telephone[0] == "?"
+      telephone = nil if telephone && telephone[0] == "?"
 
       updated = provider.update({ url: row[:provider_url], telephone: row[:contact_tel_no]})
       unless updated
@@ -82,28 +76,27 @@ class Import < ApplicationRecord
       end
   
       venue = Venue.find_or_create_by(name: row[:venue])
+
       updated = venue.update({
         postcode: row[:venue_postcode].strip,
-        area: row[:area],
-        committee: row[:community_committee],
-        ward: row[:ward], 
         address_1: row[:address_1],
         address_2: row[:address_2],
         address_3: row[:address_3]
       })
 
-      if updated
+      if venue.saved_changes?
         lookup_address = [row[:venue],row[:address_1],row[:address_2],row[:address_3],row[:venue_postcode].strip].select {|a| !a.blank?}.join(", ")
-        log_error lookup_address.inspect
         lon_lat = Course.get_lon_lat(lookup_address, "google")
-        
+        log_error "venue changed #{venue.name}"
         unless lon_lat.nil?
           venue.latitude = lon_lat[:latitude]
           venue.longitude = lon_lat[:longitude]
         end
         
         venue.save
-      else
+      end
+
+      unless updated
         log_error "Could not update venue: #{venue.inspect}" 
       end
 

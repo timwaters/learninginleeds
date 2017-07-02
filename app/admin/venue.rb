@@ -20,15 +20,6 @@ ActiveAdmin.register Venue do
     actions
   end
 
-ActiveAdmin.register_page "Venuemap" do
-  content do
-    render partial: 'venuemap'
-  end
-end
-
-
-
-
   sidebar "Courses", only: :show do
     ul do
       resource.courses.each do | course |
@@ -38,5 +29,10 @@ end
   end #sidebar
 
   
+end
 
+ActiveAdmin.register_page "Venuemap" do
+  content do
+    render partial: 'venuemap'
+  end
 end

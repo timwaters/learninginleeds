@@ -33,7 +33,7 @@
         ) %>
  
       <% if browser.device.mobile? %>
-        <%= link_to("Open Location on Your Mobile Maps", "geo://#{@course.venue.latitude},#{@course.venue.longitude};u=10")  %>
+        <%= link_to("Open Location on Your Mobile Maps", "geo:#{@course.venue.latitude},#{@course.venue.longitude};u=10")  %>
       <% else %>
         <%= link_to("Open Location on Google Maps", "https://maps.google.com/?q=#{@course.venue.latitude},#{@course.venue.longitude}") %>
       <% end %>

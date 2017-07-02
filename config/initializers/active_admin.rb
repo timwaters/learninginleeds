@@ -291,3 +291,11 @@ ActiveAdmin.setup do |config|
   #
   # config.order_clause = MyOrderClause
 end
+
+class GeographyInput < Formtastic::Inputs::StringInput
+  def input_html_options
+    {
+      class: 'geography-input'
+    }
+  end
+end

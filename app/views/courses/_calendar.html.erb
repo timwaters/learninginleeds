@@ -1,8 +1,29 @@
 <%= stylesheet_link_tag    'atc-style-blue.css', media: 'all' %>
 <%= javascript_include_tag  'addtocalendar.min.js' %>
+<script type="text/javascript">
+ function analytics_open(mouseEvent){
+   
+    ga('send', {
+      hitType: 'event',
+      eventCategory: 'Calendar',
+      eventAction: 'open'
+    });
+
+    }
+
+  function analytics_calendar(mouseEvent){
+ 
+   ga('send', {
+      hitType: 'event',
+      eventCategory: 'Calendar',
+      eventAction: 'click',
+      eventLabel:  mouseEvent.target.innerHTML
+    });
+  }
+</script>
 
 <div class="cal">
-  <span class="addtocalendar atc-style-blue">
+  <span class="addtocalendar atc-style-blue"  data-on-button-click="analytics_open" data-on-calendar-click="analytics_calendar">
     <var class="atc_event">
       <var class="atc_privacy">private</var>
       <var class="atc_date_start"><%= "#{@course.start_date.strftime('%Y-%m-%d')} #{@course.start_time.strftime('%H:%M:00')}" %></var>

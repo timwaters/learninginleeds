@@ -20,6 +20,7 @@
     display: block;
     outline: none!important;
     cursor: pointer;
+    color: white !important;
 }
 
 .atcb-link:focus~ul,
@@ -84,7 +85,7 @@
     outline: none;
     line-height: 20px;
     vertical-align: middle;
-    background: rgb(66,129,244);
+    background: #92B558;
     box-shadow: 0 0 40px rgba(0, 0, 0, .13) inset;
     border-radius: 4px;
     zoom: 1;
@@ -117,7 +118,7 @@
 .atc-style-blue .atcb-item-link:active,
 .atc-style-blue .atcb-item-link:focus
 {
-    color: #000;
+    color: white;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
     text-decoration: none;
@@ -134,6 +135,6 @@
 
 .atc-style-blue .atcb-item.hover,
 .atc-style-blue .atcb-item:hover {
-    background: rgb(66,129,244);
+    background: #92B558;
 }
 

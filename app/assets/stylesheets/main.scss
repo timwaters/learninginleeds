@@ -1,9 +1,41 @@
+
+$camo:#92B558;
+$slight:#7a8990;
+$box-background: #edeffc ;
+$box-border: #3f4f5e;
+$button: #90a7d0;
+$links: #444a9e;
+
+a {
+    color: $links !important;
+ }
+
+
+a:hover, a.hover{
+     color: #1621b1 !important;
+}
+
+.btn-lil {
+  color: #fff;
+  background-color: $camo !important;
+  border-color: #66648b !important;
+  text-shadow:  #516b2c 0 1px 0;
+}
+
+
+.btn-lil:hover, .btn-lil:focus, .btn-lil.focus{
+ background-image: linear-gradient(180deg, $camo, #476a30) !important;
+  text-decoration: none;
+  background-color: #476a30 !important;
+  color: white !important;
+}
+
 body {
      -ms-overflow-style: scrollbar;
 }
 
 .slight {
-    color: grey;
+    color: $slight;
 }
 
 .smaller {
@@ -12,7 +44,7 @@ body {
 
 .topic {
     border-radius: 10px;
-    background-color: rgb(246, 243, 243);
+    background-color: $box-background;
     text-align: center;
     margin-bottom: 5px;
 }
@@ -27,15 +59,18 @@ h.title {
 h1 {
     font-family: 'Lato', sans-serif !important;
     font-style: italic;
+    color: $camo !important;
 }
 
 h1 a.rootlink {
     text-decoration: none;
     font-size: 40px;
+    color: $camo !important;
 }
 h1 a.rootlink:hover {
     text-decoration: underline;
 }
+
 
 .skyline {
     padding-bottom:20px;
@@ -46,9 +81,9 @@ h2.search-heading {
 }
 
 .footer {
-    border-top: 1px #b7b7b7 solid;
+    border-top: 1px $slight solid;
     margin-top: 40px;
-    color: grey;
+    color: $slight;
 }
 
 .course-result {
@@ -57,7 +92,7 @@ h2.search-heading {
     margin-bottom: 10px;
     margin-left: 15px;
     margin-right: 15px;
-    background-color: rgb(246, 243, 243);
+    background-color: $box-background;
 }
 
 .course-main {
@@ -66,7 +101,7 @@ h2.search-heading {
     margin-bottom: 15px;
     margin-left: 15px;
     margin-right:15px;
-    background-color: rgb(246, 243, 243);
+    background-color: $box-background;
 }
 
 .course-directions {
@@ -75,7 +110,7 @@ h2.search-heading {
     border-radius: 10px;
     margin-bottom: 15px;
 
-    background-color: rgb(246, 243, 243);
+    background-color: $box-background;
 }
 
 .rotate {
@@ -163,7 +198,7 @@ td.text-center img {
     padding-top: 5px;
     border-radius: 10px;
     margin-bottom: 10px;
-    background-color: #f6f3f3;
+    background-color: $box-background;
     padding-left: 5px;
     padding-right: 5px;
     padding-bottom: 5px;

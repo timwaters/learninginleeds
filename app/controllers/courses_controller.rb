@@ -1,9 +1,12 @@
 class CoursesController < ApplicationController
   def show
     @course = Course.find_by(lcc_code: params[:lcc_code])
+    if @course.nil?
+      flash[:notice] = "Sorry. Could not find that course."
+      redirect_to :action => :index and return
+    end
 
     route = params[:route] || "bus"
-
     if params[:near] && params[:lon_lat].blank?
       lon_lat =  Course.get_lon_lat(params[:near])
       
@@ -61,4 +64,6 @@ class CoursesController < ApplicationController
     end
     
   end
+
+
 end

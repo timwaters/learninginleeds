@@ -57,8 +57,16 @@ class CoursesController < ApplicationController
       
       @lon_lat = Course.get_lon_lat(params[:near])
       flash.now[:notice] = "Sorry could not find a location for '#{params[:near]}' please try again" if !params[:near].blank? && @lon_lat.nil?
-      params[:sort] = params[:sort].blank? ? "distance" : params[:sort]
-      @courses = Course.search(params[:q], {lon_lat: @lon_lat, sort: params[:sort], page: params[:page]})
+      
+      sort = "relevance"
+      if params[:sort].blank? && !@lon_lat.nil?
+        sort = "distance"
+      elsif !params[:sort].blank?
+        sort = params[:sort]
+      end
+      params[:sort] = sort
+      
+      @courses = Course.search(params[:q], {lon_lat: @lon_lat, sort: sort, page: params[:page]})
     else
       @courses = Course.all.page(params[:page])
     end

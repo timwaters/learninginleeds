@@ -8,11 +8,11 @@ class Course < ApplicationRecord
   include PgSearch
   pg_search_scope :full_search, 
                   :against =>  {:title => 'A', :description => 'B', :category_1 => 'C', :category_2 => 'C'} , 
-                  :using => { :dmetaphone => {:only => [:title, :description]},
+                  :using => { #:dmetaphone => {:only => [:title, :description]},
                               :trigram => {:only => [:title, :description]},
                               :tsearch => {:prefix => true, :dictionary => "english", :any_word => true}
                             }
-
+                            
   pg_search_scope :category_search,
                   :against => [:category_1, :category_2],
                   :using => { :tsearch => { :dictionary => "simple", :any_word => true}  }
@@ -31,16 +31,18 @@ class Course < ApplicationRecord
     columns_select = "*"
     columns_select = "*, ST_Distance(lonlat, ST_GeomFromText('#{origin}',4326), true) / 1000 as distance"  unless lon_lat.blank? || origin.blank?
     
-    distance_sort = nil
+    extra_sort = nil
 
     if origin && sort == "distance"
-      distance_sort = "distance ASC" 
+      extra_sort = "distance ASC" 
+    elsif sort == "start_date"
+      extra_sort = "start_date ASC"
     end
     
     if q.blank?
-     courses = Course.includes([:venue, :provider]).all.page(page).select(columns_select).order(distance_sort)
+     courses = Course.includes([:venue, :provider]).all.page(page).select(columns_select).order(extra_sort)
     else
-      courses = Course.includes([:venue, :provider]).page(page).select(columns_select).order(distance_sort).full_search(q)
+      courses = Course.includes([:venue, :provider]).page(page).select(columns_select).order(extra_sort).full_search(q)
     end
   
     return courses

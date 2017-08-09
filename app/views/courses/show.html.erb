@@ -12,8 +12,14 @@
 <div class="row course-main">
   <div class="col-md-12">
   <p>
-    <%= @course.start_date.strftime("%a, %b %d, %Y") %> to <%= @course.end_date.strftime("%a, %b %d %Y") %> <br />
-    At <%= @course.start_time.strftime("%I:%M %p") %> to <%= @course.end_time.strftime("%I:%M %p") %> <br />
+    This course starts on <strong><%= @course.start_date.strftime("%a, %b %d, %Y") %></strong>
+    <% if @course.start_date != @course.end_date %>
+      and ends on <strong><%= @course.end_date.strftime("%a, %b %d %Y") %> </strong>
+    <% end %>
+    <br />
+    The start time is <strong><%= @course.start_time.strftime("%I:%M %p") %></strong> and the finish time is <strong><%= @course.end_time.strftime("%I:%M %p") %></strong>
+    (<%= distance_of_time_in_words(@course.start_time, @course.end_time,  scope: 'datetime.distance_in_words.short') %>)
+     <br />
     <%= render :partial => "calendar"%>
       
     Where: <%= link_to @course.venue.name.titlecase, @course.venue %> <br />

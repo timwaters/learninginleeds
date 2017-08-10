@@ -8,11 +8,15 @@ class Course < ApplicationRecord
   include PgSearch
   pg_search_scope :full_search, 
                   :against =>  {:title => 'A', :description => 'B', :category_1 => 'C', :category_2 => 'C'} , 
-                  :using => { #:dmetaphone => {:only => [:title, :description]},
-                              :trigram => {:only => [:title, :description]},
+                  :using => { :trigram => {:only => [:title, :description]},
                               :tsearch => {:prefix => true, :dictionary => "english", :any_word => true}
                             }
-                            
+
+  pg_search_scope :sounds_like_search, 
+                  :against =>  {:title => 'A', :description => 'B'} , 
+                  :using => { :dmetaphone => {:only => [:title, :description]}
+                            }
+
   pg_search_scope :category_search,
                   :against => [:category_1, :category_2],
                   :using => { :tsearch => { :dictionary => "simple", :any_word => true}  }
@@ -43,6 +47,9 @@ class Course < ApplicationRecord
      courses = Course.includes([:venue, :provider]).all.page(page).select(columns_select).order(extra_sort)
     else
       courses = Course.includes([:venue, :provider]).page(page).select(columns_select).order(extra_sort).full_search(q)
+      if courses.empty?
+        courses = Course.includes([:venue, :provider]).page(page).select(columns_select).order(extra_sort).sounds_like_search(q)
+      end
     end
   
     return courses

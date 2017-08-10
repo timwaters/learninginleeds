@@ -4,7 +4,7 @@ ActiveAdmin.register Page do
 
   form do |f|
     f.inputs "" do
-      f.input :name, input_html: { value: "about"}
+      f.input :name, input_html: { placeholder: "about / welcome"}
       f.input :body
     end
   f.actions

@@ -27,8 +27,11 @@
 
 </div>
 
+<!-- welcome  -->
+<%= render(partial: 'shared/welcome', :object => @welcome) if @welcome %>
+
 <!-- news -->
-<%= render partial: 'shared/news', :object => @news %>
+<%= render(partial: 'shared/news', :object => @news) unless @news.empty?  %>
  
 <!-- recent searches -->
 <%= render partial: 'shared/recent_searches' %>

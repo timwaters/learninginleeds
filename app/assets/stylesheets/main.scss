@@ -35,11 +35,14 @@ body {
 }
 
 .slight {
-    color: $slight;
+    color: $camo;
 }
 
 .smaller {
     font-size: small;
+}
+.larger-head {
+ font-size: 50px;
 }
 
 .topic {
@@ -47,6 +50,9 @@ body {
     background-color: $box-background;
     text-align: center;
     margin-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: 120px;
 }
 
 .rec {
@@ -56,16 +62,22 @@ padding-top: 20px;
 h.title {
     margin-top: 0px;
 }
+
+.page-head {
+padding-top: 5px;
+padding-bottom: 5px;
+}
 h1 {
     font-family: 'Lato', sans-serif !important;
     font-style: italic;
-    color: $camo !important;
+    color: $slight !important;
+    padding-top: 25px;
 }
 
 h1 a.rootlink {
     text-decoration: none;
     font-size: 40px;
-    color: $camo !important;
+    color: $slight !important;
 }
 
 h1 a.rootlink:hover {
@@ -80,6 +92,12 @@ h1 a.rootlink:hover {
          margin-top: 0px !important;
         font-size: 30px !important;
     }
+    .larger-head {
+      font-size: 35px !important;
+    }
+    .lal-logo {
+      height: 120px;
+    }
 }
 @media screen and (max-width: 340px) {
     h1 {
@@ -90,11 +108,19 @@ h1 a.rootlink:hover {
         margin-top: 0px !important;
         font-size: 22px !important;
     }
+
+    .larger-head{
+      font-size: 30px !important;
+    }
+    .lal-logo {
+      height: 100px;
+    }
 }
 
 
 .skyline {
-    padding-bottom:20px;
+ margin-top: 15px;
+  padding-bottom:0px;
 }
 
 h2.search-heading {
@@ -102,8 +128,8 @@ h2.search-heading {
 }
 
 .footer {
-    border-top: 1px $slight solid;
-    margin-top: 40px;
+    border-top: 0px $slight solid;
+   margin-top: 0px;
     color: $slight;
 }
 

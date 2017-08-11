@@ -19,48 +19,85 @@
     <br />
     The start time is <strong><%= @course.start_time.strftime("%I:%M %p") %></strong> and the finish time is <strong><%= @course.end_time.strftime("%I:%M %p") %></strong>
     (<%= distance_of_time_in_words(@course.start_time, @course.end_time,  scope: 'datetime.distance_in_words.short') %>)
-     <br />
-    <%= render :partial => "calendar"%>
-      
-    Where: <%= link_to @course.venue.name.titlecase, @course.venue %> <br />
+  </p>
+  <p>
+    At: <strong> <%= @course.venue.name.titlecase  %> </strong> <br />
     <%= @course.venue.address_1.titlecase %><br />
     <%= "#{@course.venue.address_2.titlecase} <br />".html_safe unless @course.venue.address_2.blank? %>
     <%= @course.venue.address_3.titlecase %><br />
     <%= @course.venue.postcode %>
   </p>
- 
-  <div class="venue-map">
-    <% if @course.venue.latitude && @course.venue.longitude %>
-      <%= map(center:  {
-        latlng: [@course.venue.latitude, @course.venue.longitude],
-        zoom: 18 
-        },
-        markers: [{ latlng: [@course.venue.latitude, @course.venue.longitude] }]
-        ) %>
- 
-      <% if browser.device.mobile? %>
-        <%= link_to("Open Location on Your Mobile Maps", "geo:#{@course.venue.latitude},#{@course.venue.longitude};u=10")  %>
-      <% else %>
-        <%= link_to("Open Location on Google Maps", "https://maps.google.com/?q=#{@course.venue.latitude},#{@course.venue.longitude}") %>
-      <% end %>
+  <div class="media">
+    <span class="media-left">
 
-    <% end %>
-  </div>
+      <div class="venue-map">
+          <% if @course.venue.latitude && @course.venue.longitude %>
+            <%= map(center:  {
+              latlng: [@course.venue.latitude, @course.venue.longitude],
+              zoom: 18 
+              },
+              markers: [{ latlng: [@course.venue.latitude, @course.venue.longitude] }]
+             ) %>
+ 
+           <% if browser.device.mobile? %>
+             <%= link_to("Open this area on your Mobile Maps", "geo:#{@course.venue.latitude},#{@course.venue.longitude};u=10")  %>
+           <% else %>
+             <%= link_to("Open this area on Google Maps", "https://maps.google.com/?q=#{@course.venue.latitude},#{@course.venue.longitude}") %>
+           <% end %>
 
-  <p>
-    Course Provided by:  <%= link_to @course.provider.name, @course.provider %> <br />
-    <% unless @course.provider.url.blank? 
-      url = @course.provider.url
-         unless url.split(':')[0] == 'http' || url.split(':')[0] == 'https'
-          url = "http://" + url
+           <% end %>
+      </div>
+    </span>
+    <span class="media-right">
+      <p>
+      <% unless @course.provider.url.blank? 
+           url = @course.provider.url
+             unless url.split(':')[0] == 'http' || url.split(':')[0] == 'https'
+               url = "http://" + url
+             end
+        else
+          url = nil
         end
-     %>
-      Website: <%= link_to url, url %><br />
-    <% end %>
-    <% unless @course.provider.telephone.blank? %>
-      Telephone: <%= link_to phone_format(@course.provider.telephone), "tel:#{@course.provider.telephone}" %>
-    <% end %>
-  </p>
+           %>
+          This course is provided by <strong><%= link_to_unless(url.nil?, @course.provider.name, url) %> </strong><br />
+          <% if url %> Website: <%= link_to url, url %> <% end %>
+          <% unless @course.provider.telephone.blank? %> 
+            <br />
+            Telephone: <%= link_to phone_format(@course.provider.telephone), "tel:#{@course.provider.telephone}" %>
+          <% end %>
+        </p>
+        <p>
+        View a list of <%= link_to "all courses provided by #{@course.provider.name}", @course.provider %> offered here. <br />
+        View a list of <%= link_to "all courses held at #{@course.venue.name.titlecase}", @course.venue %> offered here.
+        </p>
+        
+        <% unless @course.provider.telephone.blank? && @course.provider.url.blank? %>
+          <div class="interested">
+          <h4>Interested?</h4>
+          <p>
+          To contact <strong><%= link_to_unless(url.nil?, @course.provider.name, url) %> </strong> for further information or to book a place,
+          <% if url %> 
+            please 
+            <%= link_to "click here for their website", url %> 
+            <% unless @course.provider.telephone.blank? %> 
+              or 
+            <% end %>
+          <% end %>
+          <% unless @course.provider.telephone.blank? %> telephone <%= link_to phone_format(@course.provider.telephone), "tel:#{@course.provider.telephone}" %> .
+          <% end %>
+        
+          </p>
+          </div>        
+        <% end %>
+
+          <p>
+          Add the first course (at <%= @course.start_date.strftime("%a, %b %d, %Y") %>) to your calendar:
+          <%= render :partial => "calendar"%>
+          </p>
+    </span>
+    </div>
+
+
   </div>
 
 </div>
@@ -85,7 +122,7 @@
 
       <%= form_tag("", method: "get", class: 'form-horizontal ', role: 'form') do %>
         
-        <%= text_field_tag(:near, params[:near], placeholder: "Postcode or place") %>
+        <%= text_field_tag(:near, params[:near], placeholder: "Postcodes give best results") %>
         <div class="input-group-btn">
           <button class="btn btn-lil" type="submit" title="Search"><i class="glyphicon glyphicon-search"></i> Make Journey Plan</button>
         </div>

@@ -17,6 +17,21 @@ module ApplicationHelper
     end
   end
 
+  def snippet_and_link(text, wordcount, url)
+    if text
+      main_text = text.split[0..(wordcount-1)].join(" ")
+      if text.split.size > wordcount
+        ending_text = "…" + link_to("(more)", url)
+      else
+        ending_text = " " + link_to("(more)", url)
+
+      end
+      
+      text = main_text + ending_text
+      text.html_safe
+    end
+  end
+
 
   def phone_format(num)
     number = num.clone

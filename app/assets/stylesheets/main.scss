@@ -47,7 +47,9 @@ body {
 
 .topic {
     border-radius: 10px;
-    background-color: $box-background;
+    border-width: 2px;
+    border-style: solid;
+    border-color: $box-background;
     text-align: center;
     margin-bottom: 5px;
     padding-top: 5px;

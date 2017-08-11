@@ -60,7 +60,7 @@
         if (searches[i].near.length > 0){
           near = "near "+ searches[i].near;
         }
-        $('.recent-searches').append('<div class="col-xs-4 col-sm-3 col-md-3 search-item"><p><a href="/courses?utf8=✓&q='+searches[i].q+'&sort='+searches[i].sort+'&near='+searches[i].near+'">'+ truncate(searches[i].q, 23) +' ' +truncate(near, 20)+'</a></p></div>');
+        $('.recent-searches').append('<div class="search-item col-xs-4 col-sm-3"><p><a href="/courses?utf8=✓&q='+searches[i].q+'&sort='+searches[i].sort+'&near='+searches[i].near+'">'+ truncate(searches[i].q, 23) +' ' +truncate(near, 20)+'</a></p></div>');
       }
       
     }

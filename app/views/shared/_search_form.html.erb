@@ -1,5 +1,9 @@
 <script type="text/javascript">
-  $( document ).ready(function() {
+$( document ).ready(function() {
+  if (navigator.geolocation){
+    $('.use-location').show();
+  }
+  
   $('#geobutton').on('click', function () {
     geoFindMe();
   })
@@ -45,7 +49,7 @@ function geoFindMe() {
       <%= hidden_field_tag(:sort, params[:sort]) %>   
     </div>
     
-    <div class="col-sm-3">
+    <div class="col-sm-3 use-location" style="display:none;">
       <span class="location-hint">Use current location</span>
       <button id="geobutton" class="geobutton btn btn-default" type="button" title="Use current location"> <%= image_tag 'location.png', width: 25, height: 25 %></button>
     </div>

@@ -4,9 +4,8 @@ class Page < ApplicationRecord
   after_update :clear_cache
 
   def clear_cache
-    ApplicationController.expire_page('/lil/about.html')
+    ApplicationController.expire_about
+    ApplicationController.expire_home
   end
-
-
 
 end

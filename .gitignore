@@ -31,5 +31,6 @@ nbproject
 
 config/application.yml
 
+public/cached_pages/*
 public/lil/*
 public/icons

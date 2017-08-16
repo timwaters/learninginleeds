@@ -1,7 +1,7 @@
 class Page < ApplicationRecord
   validates :name, uniqueness: true
 
-  after_update :clear_cache
+  after_save :clear_cache
 
   def clear_cache
     ApplicationController.expire_about

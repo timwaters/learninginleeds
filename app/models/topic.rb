@@ -9,7 +9,7 @@ class Topic < ApplicationRecord
   validates_attachment :icon, content_type: { content_type: ["image/jpg", "image/jpeg","image/pjpeg", "image/png","image/x-png", "image/gif"] }
 
   before_save :update_count
-  after_update :clear_cache
+  after_save :clear_cache
 
   def category_1=(values)
     values = values.delete_if{|v|v.blank? }

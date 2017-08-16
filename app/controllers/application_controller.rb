@@ -7,6 +7,6 @@ class ApplicationController < ActionController::Base
   end
 
   def self.expire_home
-    expire_page('/cached_pages/home.html')
+    expire_page('/cached_pages/index.html')
   end
 end

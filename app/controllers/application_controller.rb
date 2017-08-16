@@ -3,10 +3,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def self.expire_about
-    expire_page('/cached_pages/about.html')
+    expire_page('about.html')
   end
 
   def self.expire_home
-    expire_page('/cached_pages/index.html')
+    expire_page('index.html')
   end
 end

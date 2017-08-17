@@ -1,7 +1,7 @@
 class Topic < ApplicationRecord
 
   has_attached_file :icon,
-    :styles => {:thumb => ["50x50>", :png]},
+    :styles => {:thumb => ["70x70>", :png]},
     :url => '/icons/:id/:style/:basename.:extension',
     preserve_files: false,
     default_url: ->(attachment) { ActionController::Base.helpers.asset_path('generic.png') }

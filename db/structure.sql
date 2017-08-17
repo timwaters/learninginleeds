@@ -371,7 +371,8 @@ CREATE TABLE providers (
     url character varying,
     telephone character varying,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    email character varying
 );
 
 
@@ -865,6 +866,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170626162151'),
 ('20170626164734'),
 ('20170630190403'),
-('20170701173218');
+('20170701173218'),
+('20170817131455');
 
 

@@ -70,7 +70,10 @@ class Import < ApplicationRecord
       telephone = row[:contact_tel_no]
       telephone = nil if telephone && telephone[0] == "?"
 
-      updated = provider.update({ url: row[:provider_url], telephone: row[:contact_tel_no]})
+      email = row[:contact_email]
+      email = nil if email && email[0] == "?"
+
+      updated = provider.update({ url: row[:provider_url], telephone: telephone, email: email })
       unless updated
         log_error "Could not update provider: #{provider.inspect}" 
       end

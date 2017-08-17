@@ -32,7 +32,7 @@
       <var class="atc_title"><%= @course.title %> - Adult Learning in Leeds</var>
       <var class="atc_description"><%= @course.description %></var>
       <var class="atc_location"><%= @course.venue.name.titlecase %> <%= @course.venue.postcode %></var>
-      <var class="atc_organizer"><%= @course.provider.name %> Tel:<%= @course.provider.telephone %>  Website:<%= @course.provider.url %></var>
+      <var class="atc_organizer"><%= @course.provider.name %> Tel:<%= @course.provider.telephone %>  Website:<%= @course.provider.url %> Email: <%= @course.provider.email %></var>
       <var class="atc_organizer_email"></var>  <!-- TODO -->
     </var>
   </span>

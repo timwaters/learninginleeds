@@ -65,27 +65,27 @@
             <br />
             Telephone: <%= link_to phone_format(@course.provider.telephone), "tel:#{@course.provider.telephone}" %>
           <% end %>
+          <% unless @course.provider.email.blank? %> 
+            <br />
+            Email: <%= mail_to @course.provider.email, nil, subject: "Enquiry about #{@course.title} starting on #{@course.start_date.strftime("%a, %b %d, %Y")} from Leeds Adult Learning" %> 
+          <% end %>
         </p>
         <p>
         View a list of <%= link_to "all courses provided by #{@course.provider.name}", @course.provider %> offered here. <br />
         View a list of <%= link_to "all courses held at #{@course.venue.name.titlecase}", @course.venue %> offered here.
         </p>
         
-        <% unless @course.provider.telephone.blank? && @course.provider.url.blank? %>
+        <% unless @course.provider.telephone.blank? && @course.provider.url.blank? && @course.provider.email.blank? %>
+        <%  interested_links = []
+            interested_links << " #{link_to("visit their website #{url}", url)} " unless @course.provider.url.blank?
+            interested_links << " telephone #{link_to(phone_format(@course.provider.telephone), "tel:#{@course.provider.telephone}")} " unless @course.provider.telephone.blank?
+            interested_links << " email  #{mail_to(@course.provider.email, nil, subject: "Enquiry about Course: #{@course.title} starting on #{@course.start_date.strftime("%a, %b %d, %Y")} from Leeds Adult Learning ") }"  unless @course.provider.email.blank?
+        %>
           <div class="interested">
           <h4>Interested?</h4>
           <p>
-          To contact <strong><%= link_to_unless(url.nil?, @course.provider.name, url) %> </strong> for further information or to book a place,
-          <% if url %> 
-            please 
-            <%= link_to "click here for their website", url %> 
-            <% unless @course.provider.telephone.blank? %> 
-              or 
-            <% end %>
-          <% end %>
-          <% unless @course.provider.telephone.blank? %> telephone <%= link_to phone_format(@course.provider.telephone), "tel:#{@course.provider.telephone}" %> .
-          <% end %>
-        
+          To contact <strong><%= link_to_unless(url.nil?, @course.provider.name, url) %> </strong> for further information or to book a place, please
+            <%= interested_links.to_sentence(:last_word_connector => "or", :two_words_connector => "or").html_safe %>       
           </p>
           </div>        
         <% end %>

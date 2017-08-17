@@ -1,5 +1,5 @@
 ActiveAdmin.register Provider do
-  permit_params :name, :url, :telephone
+  permit_params :name, :url, :telephone, :email
 
   index do
     selectable_column
@@ -11,6 +11,7 @@ ActiveAdmin.register Provider do
     end
     column :url
     column :telephone
+    column :email
     column :created_at
     column :updated_at
     actions

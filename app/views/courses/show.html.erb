@@ -27,8 +27,10 @@
     <%= @course.venue.address_3.titlecase %><br />
     <%= @course.venue.postcode %>
   </p>
-  <div class="media">
-    <span class="media-left">
+  </div>
+</div>
+<div class="row course-main course-map">
+  <div class="col-sm-6">
 
       <div class="venue-map">
           <% if @course.venue.latitude && @course.venue.longitude %>
@@ -47,8 +49,8 @@
 
            <% end %>
       </div>
-    </span>
-    <span class="media-right">
+    </div>
+    <div class="col-sm-6">
       <p>
       <% unless @course.provider.url.blank? 
            url = @course.provider.url
@@ -77,15 +79,15 @@
         
         <% unless @course.provider.telephone.blank? && @course.provider.url.blank? && @course.provider.email.blank? %>
         <%  interested_links = []
-            interested_links << " #{link_to("visit their website #{url}", url)} " unless @course.provider.url.blank?
-            interested_links << " telephone #{link_to(phone_format(@course.provider.telephone), "tel:#{@course.provider.telephone}")} " unless @course.provider.telephone.blank?
-            interested_links << " email  #{mail_to(@course.provider.email, nil, subject: "Enquiry about Course: #{@course.title} starting on #{@course.start_date.strftime("%a, %b %d, %Y")} from Leeds Adult Learning ") }"  unless @course.provider.email.blank?
+            interested_links << "visit their website #{link_to(url, url)}" unless @course.provider.url.blank?
+            interested_links << "telephone them on #{link_to(phone_format(@course.provider.telephone), "tel:#{@course.provider.telephone}")}" unless @course.provider.telephone.blank?
+            interested_links << "email them at #{mail_to(@course.provider.email, nil, subject: "Enquiry about Course: #{@course.title} starting on #{@course.start_date.strftime("%a, %b %d, %Y")} from Leeds Adult Learning ") }"  unless @course.provider.email.blank?
         %>
           <div class="interested">
           <h4>Interested?</h4>
           <p>
           To contact <strong><%= link_to_unless(url.nil?, @course.provider.name, url) %> </strong> for further information or to book a place, please
-            <%= interested_links.to_sentence(:last_word_connector => "or", :two_words_connector => "or").html_safe %>       
+            <%= interested_links.to_sentence(:last_word_connector => " or ", :two_words_connector => " or ").html_safe %>       
           </p>
           </div>        
         <% end %>
@@ -94,11 +96,7 @@
           Add the first course (at <%= @course.start_date.strftime("%a, %b %d, %Y") %>) to your calendar:
           <%= render :partial => "calendar"%>
           </p>
-    </span>
     </div>
-
-
-  </div>
 
 </div>
 

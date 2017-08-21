@@ -52,9 +52,14 @@ body {
     border-color: $box-background;
     text-align: center;
     margin-bottom: 5px;
-    padding-top: 5px;
+    padding-top: 7px;
     padding-bottom: 5px;
-    height: 120px;
+    min-height: 127px;
+}
+@media screen and (max-width: 340px) {
+    .topic {
+        font-size: 90%;
+    }
 }
 
 .rec {

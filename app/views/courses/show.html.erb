@@ -107,7 +107,7 @@
       <%= render :partial => 'directions', object: @directions %>
     <% elsif !params[:near].blank? && @directions.nil? %>
       <h4>Journey Plan</h4>
-      <p class="alert alert-success alert-dismissable">Sorry couldn't find a journey plan for <%= params[:near] %>
+      <p class="alert alert-success alert-dismissable">Sorry couldn't find a journey plan for '<%= params[:near] %>'
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times;</button>
       </p>
       <div class="direction_links">

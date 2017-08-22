@@ -17,20 +17,57 @@ class CoursesController < ApplicationController
       end
     end
     if params[:near] && params[:lon_lat]
+      @directions = nil
       if route == "walk"
 
         @directions = Rails.cache.fetch(@course.id.to_s + params[:lon_lat] + route, :expires => 14.days) do
-          @course.walk_route({:lon_lat => params[:lon_lat]}) 
+          begin 
+            @course.walk_route({:lon_lat => params[:lon_lat]})
+          rescue ApiError => e
+            logger.error "Api Error #{e.message}"
+            break
+          rescue HTTParty::Error => e
+            logger.error "HttpParty Error #{e.message}"
+            break
+          rescue StandardError => e
+            logger.error "Standard Error  #{e.message}"
+            logger.error(e.backtrace)
+            break
+          end
         end
 
       elsif route == "bus"
         if AppConfig["transit_routing"] == "bing"
           @directions = Rails.cache.fetch(@course.id.to_s + params[:lon_lat] + route + "bing", :expires => 14.days) do
+            begin
               @course.transit_route_bing({:lon_lat => params[:lon_lat]}) 
+            rescue ApiError => e
+              logger.error "Api Error #{e.message}"
+              break
+            rescue HTTParty::Error => e
+              logger.error "HttpParty Error #{e.message}"
+              break
+            rescue StandardError => e
+              logger.error "Standard Error  #{e.message}"
+              logger.error(e.backtrace)
+              break
+            end
           end 
         else
           @directions = Rails.cache.fetch(@course.id.to_s + params[:lon_lat] + route + "tapi", :expires => 14.days) do
+            begin  
               @course.transit_route_tapi({:lon_lat => params[:lon_lat]}) 
+            rescue ApiError => e
+              logger.error "Api Error #{e.message}"
+              break
+            rescue HTTParty::Error => e
+              logger.error "HttpParty Error #{e.message}"
+              break
+            rescue StandardError => e
+              logger.error "Standard Error  #{e.message}"
+              logger.error(e.backtrace)
+              break
+            end
           end 
         end
         

@@ -77,8 +77,21 @@ class Course < ApplicationRecord
 
     else
       lon_lat = Rails.cache.fetch(near, :expires => 60.days) do
-        Course.geocode(near, geocode_service)
+        begin
+          Course.geocode(near, geocode_service)
+        rescue ApiError => e
+          logger.error "Api Error #{e.message}"
+          break
+        rescue HTTParty::Error => e
+          logger.error "HttpParty Error #{e.message}"
+          break
+        rescue StandardError => e
+          logger.error "Standard Error  #{e.message}"
+          logger.error(e.backtrace)
+          break
+        end
       end
+
     end
 
     return lon_lat
@@ -105,16 +118,19 @@ class Course < ApplicationRecord
     
       url=URI.parse(base_url+query_params)
       logger.debug "calling #{url}"
-      
+
       response = HTTParty.get(url)
 
-      return nil unless response.code == 200
-    
+      if response.code != 200
+        msg = "Problem with Google Geocoding: Code: #{response.code.to_s} Body: " + response.body.inspect
+        raise ApiError, msg
+      end         
+      
       body = JSON.parse(response.body)
 
       if body["status"] != "OK"
-        logger.error "Problem with Google Geocoding: " + body["status"].inspect
-        return nil 
+        msg = "Problem with Google Geocoding: Code: #{response.code.to_s} Status: " + body["status"].inspect
+        raise ApiError, msg
       end
 
       lon_lat = {:longitude => body["results"][0]["geometry"]["location"]["lng"].round(6), :latitude =>body["results"][0]["geometry"]["location"]["lat"].round(6)} if body["results"].size > 0
@@ -136,12 +152,12 @@ class Course < ApplicationRecord
     
       url=URI.parse(base_url+query_params)
       logger.debug "calling #{url}"
-      
+
       response = HTTParty.get(url)
 
       if response.code != 200
-        logger.error "Problem with Mapzen Geocoding: " + response.body.inspect
-        return nil 
+        msg = "Problem with Mapzen Geocoding: Code: #{response.code.to_s} Body: " + response.body.inspect
+        raise ApiError, msg 
       end
     
       body = JSON.parse(response.body)
@@ -171,14 +187,17 @@ class Course < ApplicationRecord
     end
 
     time = params[:start_date]+"T"+params[:start_time]
-    logger.debug params.inspect
     json = {"locations" => [{"lat"=>params[:origin][:lat], "lon"=>params[:origin][:lon]},{"lat"=>self.latitude, "lon"=> self.longitude}], "directions_options"=>{"units"=>"kilometers"},"costing" => "pedestrian"  }.to_json
     
     url="https://valhalla.mapzen.com/route?json=#{json}&api_key=#{AppConfig['mapzen_key']}"
     logger.debug "calling #{url}"
+
     response = HTTParty.get(url)
 
-    return nil unless response.code == 200
+    if response.code != 200
+      msg = "Problem with Mapzen walk routing: Code: #{response.code.to_s} Body: " + response.body.inspect
+      raise ApiError, msg
+    end
    
     body = JSON.parse(response.body)
    
@@ -232,9 +251,13 @@ class Course < ApplicationRecord
   
     url=URI.parse(base_url+rest_params+query_params)
     logger.debug "calling #{url}"
+
     response = HTTParty.get(url)
-  
-    return nil unless response.code == 200
+    
+    if response.code != 200
+     msg =  "Problem with Transport API transit routing: Code: #{response.code.to_s} Body: " + response.body.inspect
+     raise ApiError, msg
+    end
    
     body = JSON.parse(response.body)
 
@@ -279,8 +302,6 @@ class Course < ApplicationRecord
 
     params[:start_time]  ||= self.start_time.strftime("%H:%M")
 
-    # http://dev.virtualearth.net/REST/V1/Routes/Transit?wp.0=headingley%20leeds&wp.1=leeds%20bus%20station&timeType=Departure&dateTime=3:00:00PM&output=json&key=AlpdOPpl38Mpyue6eqx2dr7EgH2MBtjE8zuutBQjVVRLh3JzydzUIWU7DtL_ON2P
-      
     base_url="https://dev.virtualearth.net/REST/V1/Routes/Transit"
 
     query_params = "?" + {
@@ -295,12 +316,15 @@ class Course < ApplicationRecord
   
     url=URI.parse(base_url+query_params)
     logger.debug "calling #{url}"
+
     response = HTTParty.get(url)
- 
-    return nil unless response.code == 200
+
+    if response.code != 200
+     msg = "Problem with Bing API transit routing: Code: #{response.code.to_s} Body: " + response.body.inspect
+     raise ApiError, msg
+    end
    
     body = JSON.parse(response.body)
-    #logger.debug body.inspect
    
     route = body["resourceSets"][0]["resources"][0]
 
@@ -341,5 +365,6 @@ class Course < ApplicationRecord
 
 end
 
-
+class ApiError < StandardError
+end
 

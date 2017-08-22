@@ -34,24 +34,27 @@
             
             </span>
           </div>
-          
-           <div class="flash">
-             <% if notice %>
-               <p class="alert alert-success alert-dismissable"><%= notice %>
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times;</button>
-               </p>
-             <% end %>
-             <% if alert %>
-               <p class="alert alert-danger alert-dismissable"><%= alert %>
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times;</button>
-               </p>
-             <% end %>
-            </div>
+
           
         </div>
 
       </div>
-            
+      
+      <div class="row">          
+        <div class="flash">
+          <% if notice %>
+            <p class="alert alert-success alert-dismissable"><%= notice %>
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times;</button>
+            </p>
+          <% end %>
+          <% if alert %>
+            <p class="alert alert-danger alert-dismissable"><%= alert %>
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times;</button>
+            </p>
+          <% end %>
+        </div>
+      </div>
+      
       <div class="content">
         <%= yield %>
       </div>

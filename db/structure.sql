@@ -175,7 +175,7 @@ CREATE TABLE courses (
     id bigint NOT NULL,
     title character varying,
     description text,
-    target_group character varying,
+    target_group text,
     status character varying,
     qualification character varying,
     start_date date,
@@ -867,6 +867,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170626164734'),
 ('20170630190403'),
 ('20170701173218'),
-('20170817131455');
+('20170817131455'),
+('20170823124132');
 
 

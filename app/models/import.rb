@@ -59,7 +59,8 @@ class Import < ApplicationRecord
                           start_time: row[:start_time],
                           end_time: row[:end_time],
                           category_1: row[:category_1],
-                          category_2: row[:category_2]
+                          category_2: row[:category_2],
+                          target_group: row[:target_group]
       })
       unless updated
         log_error "Could not update course: #{course.inspect}" 

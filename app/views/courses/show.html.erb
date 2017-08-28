@@ -76,6 +76,16 @@
         View a list of <%= link_to "all courses provided by #{@course.provider.name}", @course.provider %> offered here. <br />
         View a list of <%= link_to "all courses held at #{@course.venue.name.titlecase}", @course.venue %> offered here.
         </p>
+
+        <% unless @course.target_group.blank? %>
+        <h4 class="interested">Who is it for?</h4>
+        <p>
+          The course is aimed towards: <%= @course.target_group %>. <br />
+          Often courses are open to everyone, so please contact the course provider to ask. 
+        </p>
+        <% end %>
+
+
         
         <% unless @course.provider.telephone.blank? && @course.provider.url.blank? && @course.provider.email.blank? %>
         <%  interested_links = []

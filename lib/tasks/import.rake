@@ -11,9 +11,13 @@ namespace :import do
 
     import = Import.new(:note => "Automatic import", :upload_url => AppConfig["csv_upload_url"])
     import.save
-    
-    import.run_import!
-
+    begin
+      import.run_import!
+    rescue => e
+      import.status = "failed"
+      import.note = "Automatic Import Error: #{e.to_s}  #{e.backtrace.join(', ')} "
+      import.save
+    end
     puts "Task finished. Import status: #{import.status}. Number Imported: #{import.imported_num}."
 
   end

@@ -1,15 +1,41 @@
 <!DOCTYPE html>
 <html>
   <head lang="en-GB">
+    <% page_title = (yield(:title) + " - " unless yield(:title).blank?).to_s + "Adult Learning in Leeds" %>
+    <% meta_description = "Leeds City Council offers many free adult and community learning courses in our welcoming community venues to help unemployed and low-waged residents develop their skills and confidence. There's something for everyone, so whether you are looking to develop your skills for work or further education, learn English, or build your confidence and skills to help your children with their homework, there is something for you" %>
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta charset="UTF-8">
-    <%= favicon_link_tag 'favicon.png' %>
-    <%= favicon_link_tag 'touch-icon.png', rel: 'apple-touch-icon', type: 'image/png'  %>
+
+    <meta name="description" content="<%= meta_description %>">
+    <meta name="keywords" content="learning,adult education,tefl,health,jobs,skills,training,english,maths,caring,social,free,confidence,gardening,employability,jobs,horticulture,languages,arts,crafts">
+    <meta name="title" content="<%= page_title %>">
+
+    <meta property="og:site_name" content="Leeds Adult Learning">
+    <meta property="og:title" content="<%= page_title %>">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="<%= meta_description %>">
+    <meta property="og:image" content="<%= asset_url('logo-image-og.png')%>">
+    <meta property="og:url"   content="<%= request.original_url %>">
+
+    <meta property="twitter:site" content="@LCC_employment">
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:title" content="<%= page_title %>">
+    <meta property="twitter:description" content="<%= meta_description %>">
+    <meta property="twitter:image" content="<%= asset_url('logo-image-og.png')%>">
+
+    <%= favicon_link_tag 'favicon-16.png', type: 'image/png', sizes: "16x16"%>
+    <%= favicon_link_tag 'favicon-32.png', type: 'image/png', sizes: "32x32"%>
+    <%= favicon_link_tag 'favicon-96.png', type: 'image/png', sizes: "57x57"  %>
+    <%= favicon_link_tag 'favicon-152.png', type: 'image/png', sizes: "152x152"  %>
+    <%= favicon_link_tag 'favicon-57.png',  rel: 'apple-touch-icon', type: 'image/png',  sizes: "57x57"  %>
+    <%= favicon_link_tag 'favicon-144.png', rel: 'apple-touch-icon', type: 'image/png',  sizes: "144x144"  %>
+    <%= favicon_link_tag 'favicon-152.png', rel: 'apple-touch-icon', type: 'image/png',  sizes: "152x152"  %>
     
     <title>
-      <%= (yield(:title) + " - " unless yield(:title).blank?).to_s + "Adult Learning in Leeds" %>
+      <%= page_title %>
     </title>
 
     <%= csrf_meta_tags %>

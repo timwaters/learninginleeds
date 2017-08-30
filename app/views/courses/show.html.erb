@@ -80,7 +80,8 @@
         <% unless @course.target_group.blank? %>
         <h4 class="interested">Who is it for?</h4>
         <p>
-          The course is aimed towards: <%= @course.target_group %>. <br />
+          <% @course.target_group += "." if @course.target_group[-1] != "." %>
+          <%= @course.target_group %> <br />
           Often courses are open to everyone, so please contact the course provider to ask. 
         </p>
         <% end %>

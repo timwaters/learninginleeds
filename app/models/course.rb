@@ -18,7 +18,7 @@ class Course < ApplicationRecord
                             }
 
   pg_search_scope :category_search,
-                  :against => {:category_1 => 'A', :category_2 => 'B'},
+                  :against => {:category_1 => 'A', :category_2 => 'C'},
                   :using => { :tsearch => { :dictionary => "simple", :any_word => true}  }
 
   self.per_page = 30  #will paginate

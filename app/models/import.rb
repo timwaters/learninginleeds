@@ -94,7 +94,7 @@ class Import < ApplicationRecord
         lookup_address = [row[:venue],row[:address_1],row[:address_2],row[:address_3],row[:venue_postcode].strip].select {|a| !a.blank?}.join(", ")
         lon_lat = Course.get_lon_lat(lookup_address, "google")
  
-        if lon_lat[:latitude] > 54.50 #hacky fix for google approximate results
+        if lon_lat && lon_lat[:latitude] > 54.50 #hacky fix for google approximate results
           lookup_address = [row[:address_1],row[:address_2],row[:address_3],row[:venue_postcode].strip].select {|a| !a.blank?}.join(", ")
           lon_lat = Course.get_lon_lat(lookup_address, "google")
         end

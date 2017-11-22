@@ -1,14 +1,22 @@
-# LeedsAdultLearning
+# LearningInLeeds
 
 Resulting from a LCC Innovation Lab this is a course finder for about 300 courses by the City and run by a number of providers and dozens of venues. It offers a range of first step courses for adults, such as basic IT skills, ESOL, caring and crafts. Within the first 24 hours of launch it received over 3000 visits, in the first month, it had over 25,000 visits, with the average user spending three minutes on the site. 
 
 It can be seen in operation at [LeedsAdultLearning.co.uk](https://leedsadultlearning.co.uk/) 
 
+## Screenshots 
+
+### Homepage
 ![Homepage](/screenshot-home.png)
 
+### Course Detail
 ![Course Detail](/screenshot-course.png)
 
-## Features
+### Admin Page
+![Admin page](/screenshot-admin.png)
+
+
+## Features  
 
 * Automatic imports of courses from Data Mill North (open data site)
 * Full text search with support for sounds like and spelling mistakes
@@ -30,5 +38,5 @@ It can be seen in operation at [LeedsAdultLearning.co.uk](https://leedsadultlear
 * Transport API, Bing Transit, Mapzen for journey planning and geocoding etc
 
 
-![Admin page](/screenshot-admin.png)
+
  

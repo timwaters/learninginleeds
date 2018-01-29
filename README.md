@@ -35,7 +35,7 @@ It can be seen in operation at [LeedsAdultLearning.co.uk](https://leedsadultlear
 * Devise and Active Admin for admin UI
 * Postgresql, PostGIS and pg_search for db, geo, full text stuff
 * Bootstrap for front end user interface layout, CSS etc
-* Transport API, Bing Transit, Mapzen for journey planning and geocoding etc
+* Transport API and Bing Transit for journey planning and geocoding etc
 
 
 

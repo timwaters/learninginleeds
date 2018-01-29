@@ -5,7 +5,6 @@ default: &default
   bing_maps_key: abc
   transportapi_id: abc
   transportapi_key: abc
-  mapzen_key: abc
   google_key: abc
   csv_upload_url: http://example.com/courses.csv
   transit_routing: transportapi #bing or transportapi

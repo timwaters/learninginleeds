@@ -56,7 +56,7 @@ class Course < ApplicationRecord
   end 
 
   #postcode, lat,lon, place/address
-  def self.get_lon_lat(near, geocode_service="mapzen")
+  def self.get_lon_lat(near, geocode_service="google")
     return nil if near.blank?
     lon_lat = nil
 
@@ -100,7 +100,7 @@ class Course < ApplicationRecord
 
   require 'httparty'
 
-  def self.geocode(near, service="mapzen")
+  def self.geocode(near, service="google")
 
     lon_lat = nil
 

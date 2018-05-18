@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   get 'about', :as => '/about', to: 'pages#about'
+  get 'privacy', :as => '/privacy', to: 'home#privacy'
   root to: "home#index"   #home/index is /
 
   get 'courses/:lcc_code', to: 'courses#show', as: 'course'

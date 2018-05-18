@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
   caches_page :index
+  caches_page :privacy
   
   def index
     @welcome = Page.find_by(name: "welcome")

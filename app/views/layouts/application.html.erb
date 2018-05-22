@@ -42,9 +42,26 @@
     
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+
   </head>
 
   <body>
+
+    <div id="cookie_directive_container" class="container" style="display: none">
+      <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+        
+          <div class="navbar-inner navbar-content-center" id="cookie_accept">
+          <button id="accept-button" class="btn btn-primary pull-right"> Accept </button>
+            <p class="credit"><span class="cookie-h">Cookies</span>
+We use cookies on this website. We use them to understand how you use the site and give added features. Cookies are also set by Google Analytics. To consent to this use click on the Accept button. You can view our privacy, data and terms page for more information about cookies, your data and your options. <%= link_to "", privacy_path %><a id="privacy-button" target="_blank" href="/privacy" class="btn btn-default">Privacy / Data</a>
+            </p>
+          </div>
+        </div>
+      </nav>
+    </div>
+    
     <div class="container container-fluid">
       
       <div class="row">

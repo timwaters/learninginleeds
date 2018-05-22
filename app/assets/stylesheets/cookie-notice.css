@@ -1,0 +1,36 @@
+
+#cookie_directive_container nav  {
+color: white;
+background-color: #92B558;
+-webkit-box-shadow: 0px 2px 11px 9px #aaaaaa ;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+-moz-box-shadow:    0px 2px 11px 9px #aaaaaa ;  /* Firefox 3.5 - 3.6 */
+box-shadow:         0px 2px 11px 9px #aaaaaa ;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+border: none;
+
+}
+#accept-button {
+ background-color: #f68712;
+ padding-top:10px;
+ padding-right: 20px;
+ padding-left: 20px;
+ padding-bottom: 10px;
+ font-size: x-large;
+ margin-top:10px;
+ margin-left: 10px;
+ -webkit-box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
+box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
+}
+
+#privacy-button  {
+  text-decoration: none;
+}
+
+.cookie-h {
+ font-size: x-large;
+ font-weight: bold;
+}
+
+
+
+

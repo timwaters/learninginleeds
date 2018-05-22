@@ -17,3 +17,4 @@
 //= require bootstrap-sprockets
 //= require cookies_helper
 //= require leaflet
+//= require cookie-notice-loader.js

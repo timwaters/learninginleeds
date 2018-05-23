@@ -110,6 +110,12 @@ class Import < ApplicationRecord
       unless updated
         log_error "Could not update venue: #{venue.inspect}" 
       end
+      
+      #if the venue doesn't have a name or a postcode, or is otherwise invalid, make sure that the corresponding course is not saved
+      if venue.invalid?
+        course.destroy
+        next
+      end
 
       course.venue = venue
       course.provider = provider

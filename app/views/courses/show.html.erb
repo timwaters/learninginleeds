@@ -22,9 +22,9 @@
   </p>
   <p>
     At: <strong> <%= @course.venue.name.titlecase  %> </strong> <br />
-    <%= @course.venue.address_1.titlecase %><br />
+    <%= @course.venue.address_1.titlecase unless @course.venue.address_1.blank?  %><br />
     <%= "#{@course.venue.address_2.titlecase} <br />".html_safe unless @course.venue.address_2.blank? %>
-    <%= @course.venue.address_3.titlecase %><br />
+    <%= @course.venue.address_3.titlecase unless @course.venue.address_3.blank? %><br />
     <%= @course.venue.postcode %>
   </p>
   </div>

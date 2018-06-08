@@ -9,6 +9,7 @@ default: &default
   csv_upload_url: http://example.com/courses.csv
   transit_routing: transportapi #bing or transportapi
   google_analytics_id: UA-123
+  osrm_url: http://localhost:5000
 
 development:
   <<: *default

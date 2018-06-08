@@ -171,7 +171,7 @@ class Course < ApplicationRecord
     return lon_lat
   end
 
-  #gets a walking route based using mapzen
+  #gets a walking route based using OSRM router
   def walk_route(params={})
 
     params[:origin] ||= {:lat =>53.797678, :lon =>-1.5359008} #-1.5359008,53.797678  bus station!
@@ -188,29 +188,40 @@ class Course < ApplicationRecord
 
     time = params[:start_date]+"T"+params[:start_time]
     json = {"locations" => [{"lat"=>params[:origin][:lat], "lon"=>params[:origin][:lon]},{"lat"=>self.latitude, "lon"=> self.longitude}], "directions_options"=>{"units"=>"kilometers"},"costing" => "pedestrian"  }.to_json
-    
-    url="https://valhalla.mapzen.com/route?json=#{json}&api_key=#{AppConfig['mapzen_key']}"
+    location = "#{params[:origin][:lon]},#{params[:origin][:lat]};#{self.longitude},#{self.latitude}"
+    url = "#{AppConfig['osrm_url']}/route/v1/foot/#{location}?overview=false&alternatives=false&steps=true"
+
     logger.debug "calling #{url}"
 
-    response = HTTParty.get(url)
+    response = HTTParty.get(url, {
+      headers: {"User-Agent" => "Leeds-Adult-Learning;Contact osm @chippy"} 
+    })
 
     if response.code != 200
-      msg = "Problem with Mapzen walk routing: Code: #{response.code.to_s} Body: " + response.body.inspect
+      msg = "Problem with OSRM walk routing: Code: #{response.code.to_s} Body: " + response.body.inspect
       raise ApiError, msg
     end
    
     body = JSON.parse(response.body)
-   
-    duration = body["trip"]["summary"]["time"] 
-    length = body["trip"]["summary"]["length"]
+
+    duration = body["routes"][0]["legs"][0]["duration"]
+    length = body["routes"][0]["legs"][0]["distance"]
     departure_time = self.start_time - duration
     arrival_time = self.start_time 
-   
-    parts = body["trip"]["legs"][0]["maneuvers"].map {| part | 
-                {"mode" => "foot",
-                 "pre_instruction"=> part["verbal_pre_transition_instruction"], 
-                 "post_instruction" => part["verbal_post_transition_instruction"],
-                 "duration" => part["time"]}    }
+
+    parts = []
+    body["routes"][0]["legs"].each do | leg |
+      leg["steps"].each do | step |
+        instruction = OSRMTextInstructions.compile(step)
+        parts <<    { "mode" => "foot",
+          "pre_instruction" => instruction,
+          "post_instruction" => "",
+          "duration" => step["duration"],
+          "distance" => step["distance"],
+          "ref" => step["ref"]
+        }   
+      end
+   end
    
     return  {:type => "foot",
             :duration => duration,

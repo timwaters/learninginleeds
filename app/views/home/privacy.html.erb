@@ -17,10 +17,14 @@
     <p>Place: If you type in a place, such as a neighbourhood or an address, the system will pass this data (and only that place text data) to <a href="https://developers.google.com/maps/documentation/geocoding/intro">Google Geocoding API</a> Service, to resolve this to a location </p>
 
     <h3>Routing</h3>
-
+    <h4>Bus </h4>
     <p>
     If you do a search for courses near an area, and view a course, the system passes this location (as latitude and longitude) to the <a href="https://msdn.microsoft.com/en-us/library/ff701705.aspx">Bing Transit API</a> service.     </p>
 
+    <h4>Walking directions </h4>
+    <p>
+    if you do a search for courses near an area, view a course and select to view walking directions, the system passes this location (as latitude and longitude) to an internal <a href="http://project-osrm.org/">OSRM</a> service running on the same machine so data is not sent to a third party.</a>
+    </p>
     <h3>Data choices for location privacy</h3>
      <p>
     You have the choice to search for a nearby place or just a town or neighbourhood to keep your location more  private. For example you can just search for courses near "Beeston" instead of your home address. You also have the choice not to search for courses near a location.

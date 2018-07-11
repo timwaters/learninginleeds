@@ -2,6 +2,7 @@ SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
@@ -62,13 +63,11 @@ CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA public;
 COMMENT ON EXTENSION postgis IS 'PostGIS geometry, geography, and raster spatial types and functions';
 
 
-SET search_path = public, pg_catalog;
-
 --
 -- Name: pg_search_dmetaphone(text); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION pg_search_dmetaphone(text) RETURNS text
+CREATE FUNCTION public.pg_search_dmetaphone(text) RETURNS text
     LANGUAGE sql IMMUTABLE STRICT
     AS $_$
   SELECT array_to_string(ARRAY(SELECT dmetaphone(unnest(regexp_split_to_array($1, E'\\s+')))), ' ')
@@ -83,7 +82,7 @@ SET default_with_oids = false;
 -- Name: active_admin_comments; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE active_admin_comments (
+CREATE TABLE public.active_admin_comments (
     id bigint NOT NULL,
     namespace character varying,
     body text,
@@ -100,7 +99,7 @@ CREATE TABLE active_admin_comments (
 -- Name: active_admin_comments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE active_admin_comments_id_seq
+CREATE SEQUENCE public.active_admin_comments_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -112,14 +111,14 @@ CREATE SEQUENCE active_admin_comments_id_seq
 -- Name: active_admin_comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE active_admin_comments_id_seq OWNED BY active_admin_comments.id;
+ALTER SEQUENCE public.active_admin_comments_id_seq OWNED BY public.active_admin_comments.id;
 
 
 --
 -- Name: admin_users; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE admin_users (
+CREATE TABLE public.admin_users (
     id bigint NOT NULL,
     email character varying DEFAULT ''::character varying NOT NULL,
     encrypted_password character varying DEFAULT ''::character varying NOT NULL,
@@ -140,7 +139,7 @@ CREATE TABLE admin_users (
 -- Name: admin_users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE admin_users_id_seq
+CREATE SEQUENCE public.admin_users_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -152,14 +151,14 @@ CREATE SEQUENCE admin_users_id_seq
 -- Name: admin_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE admin_users_id_seq OWNED BY admin_users.id;
+ALTER SEQUENCE public.admin_users_id_seq OWNED BY public.admin_users.id;
 
 
 --
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE ar_internal_metadata (
+CREATE TABLE public.ar_internal_metadata (
     key character varying NOT NULL,
     value character varying,
     created_at timestamp without time zone NOT NULL,
@@ -171,7 +170,7 @@ CREATE TABLE ar_internal_metadata (
 -- Name: courses; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE courses (
+CREATE TABLE public.courses (
     id bigint NOT NULL,
     title character varying,
     description text,
@@ -195,7 +194,7 @@ CREATE TABLE courses (
     subject_id bigint,
     latitude double precision,
     longitude double precision,
-    lonlat geography(Point,4326),
+    lonlat public.geography(Point,4326),
     category_1 character varying,
     category_2 character varying,
     import_id bigint
@@ -206,7 +205,7 @@ CREATE TABLE courses (
 -- Name: courses_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE courses_id_seq
+CREATE SEQUENCE public.courses_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -218,14 +217,14 @@ CREATE SEQUENCE courses_id_seq
 -- Name: courses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE courses_id_seq OWNED BY courses.id;
+ALTER SEQUENCE public.courses_id_seq OWNED BY public.courses.id;
 
 
 --
 -- Name: imports; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE imports (
+CREATE TABLE public.imports (
     id bigint NOT NULL,
     status character varying,
     course_count integer,
@@ -247,7 +246,7 @@ CREATE TABLE imports (
 -- Name: imports_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE imports_id_seq
+CREATE SEQUENCE public.imports_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -259,14 +258,14 @@ CREATE SEQUENCE imports_id_seq
 -- Name: imports_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE imports_id_seq OWNED BY imports.id;
+ALTER SEQUENCE public.imports_id_seq OWNED BY public.imports.id;
 
 
 --
 -- Name: news; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE news (
+CREATE TABLE public.news (
     id bigint NOT NULL,
     body text,
     created_at timestamp without time zone NOT NULL,
@@ -278,7 +277,7 @@ CREATE TABLE news (
 -- Name: news_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE news_id_seq
+CREATE SEQUENCE public.news_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -290,14 +289,14 @@ CREATE SEQUENCE news_id_seq
 -- Name: news_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE news_id_seq OWNED BY news.id;
+ALTER SEQUENCE public.news_id_seq OWNED BY public.news.id;
 
 
 --
 -- Name: pages; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE pages (
+CREATE TABLE public.pages (
     id bigint NOT NULL,
     name character varying,
     body text,
@@ -310,7 +309,7 @@ CREATE TABLE pages (
 -- Name: pages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE pages_id_seq
+CREATE SEQUENCE public.pages_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -322,14 +321,14 @@ CREATE SEQUENCE pages_id_seq
 -- Name: pages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE pages_id_seq OWNED BY pages.id;
+ALTER SEQUENCE public.pages_id_seq OWNED BY public.pages.id;
 
 
 --
 -- Name: postcodes; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE postcodes (
+CREATE TABLE public.postcodes (
     id bigint NOT NULL,
     postcode character varying,
     easting integer,
@@ -346,7 +345,7 @@ CREATE TABLE postcodes (
 -- Name: postcodes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE postcodes_id_seq
+CREATE SEQUENCE public.postcodes_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -358,14 +357,14 @@ CREATE SEQUENCE postcodes_id_seq
 -- Name: postcodes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE postcodes_id_seq OWNED BY postcodes.id;
+ALTER SEQUENCE public.postcodes_id_seq OWNED BY public.postcodes.id;
 
 
 --
 -- Name: providers; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE providers (
+CREATE TABLE public.providers (
     id bigint NOT NULL,
     name character varying,
     url character varying,
@@ -380,7 +379,7 @@ CREATE TABLE providers (
 -- Name: providers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE providers_id_seq
+CREATE SEQUENCE public.providers_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -392,14 +391,14 @@ CREATE SEQUENCE providers_id_seq
 -- Name: providers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE providers_id_seq OWNED BY providers.id;
+ALTER SEQUENCE public.providers_id_seq OWNED BY public.providers.id;
 
 
 --
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE schema_migrations (
+CREATE TABLE public.schema_migrations (
     version character varying NOT NULL
 );
 
@@ -408,7 +407,7 @@ CREATE TABLE schema_migrations (
 -- Name: subjects; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE subjects (
+CREATE TABLE public.subjects (
     id bigint NOT NULL,
     code character varying,
     description character varying,
@@ -421,7 +420,7 @@ CREATE TABLE subjects (
 -- Name: subjects_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE subjects_id_seq
+CREATE SEQUENCE public.subjects_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -433,14 +432,14 @@ CREATE SEQUENCE subjects_id_seq
 -- Name: subjects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE subjects_id_seq OWNED BY subjects.id;
+ALTER SEQUENCE public.subjects_id_seq OWNED BY public.subjects.id;
 
 
 --
 -- Name: subjects_topics; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE subjects_topics (
+CREATE TABLE public.subjects_topics (
     topic_id bigint,
     subject_id bigint
 );
@@ -450,7 +449,7 @@ CREATE TABLE subjects_topics (
 -- Name: topics; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE topics (
+CREATE TABLE public.topics (
     id bigint NOT NULL,
     name character varying,
     created_at timestamp without time zone NOT NULL,
@@ -461,7 +460,8 @@ CREATE TABLE topics (
     icon_file_name character varying,
     icon_content_type character varying,
     icon_file_size integer,
-    icon_updated_at timestamp without time zone
+    icon_updated_at timestamp without time zone,
+    promotion text
 );
 
 
@@ -469,7 +469,7 @@ CREATE TABLE topics (
 -- Name: topics_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE topics_id_seq
+CREATE SEQUENCE public.topics_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -481,14 +481,14 @@ CREATE SEQUENCE topics_id_seq
 -- Name: topics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE topics_id_seq OWNED BY topics.id;
+ALTER SEQUENCE public.topics_id_seq OWNED BY public.topics.id;
 
 
 --
 -- Name: venues; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE venues (
+CREATE TABLE public.venues (
     id bigint NOT NULL,
     name character varying,
     postcode character varying,
@@ -512,7 +512,7 @@ CREATE TABLE venues (
 -- Name: venues_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE venues_id_seq
+CREATE SEQUENCE public.venues_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -524,91 +524,91 @@ CREATE SEQUENCE venues_id_seq
 -- Name: venues_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE venues_id_seq OWNED BY venues.id;
+ALTER SEQUENCE public.venues_id_seq OWNED BY public.venues.id;
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY active_admin_comments ALTER COLUMN id SET DEFAULT nextval('active_admin_comments_id_seq'::regclass);
+ALTER TABLE ONLY public.active_admin_comments ALTER COLUMN id SET DEFAULT nextval('public.active_admin_comments_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY admin_users ALTER COLUMN id SET DEFAULT nextval('admin_users_id_seq'::regclass);
+ALTER TABLE ONLY public.admin_users ALTER COLUMN id SET DEFAULT nextval('public.admin_users_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY courses ALTER COLUMN id SET DEFAULT nextval('courses_id_seq'::regclass);
+ALTER TABLE ONLY public.courses ALTER COLUMN id SET DEFAULT nextval('public.courses_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY imports ALTER COLUMN id SET DEFAULT nextval('imports_id_seq'::regclass);
+ALTER TABLE ONLY public.imports ALTER COLUMN id SET DEFAULT nextval('public.imports_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY news ALTER COLUMN id SET DEFAULT nextval('news_id_seq'::regclass);
+ALTER TABLE ONLY public.news ALTER COLUMN id SET DEFAULT nextval('public.news_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY pages ALTER COLUMN id SET DEFAULT nextval('pages_id_seq'::regclass);
+ALTER TABLE ONLY public.pages ALTER COLUMN id SET DEFAULT nextval('public.pages_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY postcodes ALTER COLUMN id SET DEFAULT nextval('postcodes_id_seq'::regclass);
+ALTER TABLE ONLY public.postcodes ALTER COLUMN id SET DEFAULT nextval('public.postcodes_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY providers ALTER COLUMN id SET DEFAULT nextval('providers_id_seq'::regclass);
+ALTER TABLE ONLY public.providers ALTER COLUMN id SET DEFAULT nextval('public.providers_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY subjects ALTER COLUMN id SET DEFAULT nextval('subjects_id_seq'::regclass);
+ALTER TABLE ONLY public.subjects ALTER COLUMN id SET DEFAULT nextval('public.subjects_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY topics ALTER COLUMN id SET DEFAULT nextval('topics_id_seq'::regclass);
+ALTER TABLE ONLY public.topics ALTER COLUMN id SET DEFAULT nextval('public.topics_id_seq'::regclass);
 
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY venues ALTER COLUMN id SET DEFAULT nextval('venues_id_seq'::regclass);
+ALTER TABLE ONLY public.venues ALTER COLUMN id SET DEFAULT nextval('public.venues_id_seq'::regclass);
 
 
 --
 -- Name: active_admin_comments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY active_admin_comments
+ALTER TABLE ONLY public.active_admin_comments
     ADD CONSTRAINT active_admin_comments_pkey PRIMARY KEY (id);
 
 
@@ -616,7 +616,7 @@ ALTER TABLE ONLY active_admin_comments
 -- Name: admin_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY admin_users
+ALTER TABLE ONLY public.admin_users
     ADD CONSTRAINT admin_users_pkey PRIMARY KEY (id);
 
 
@@ -624,7 +624,7 @@ ALTER TABLE ONLY admin_users
 -- Name: ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY ar_internal_metadata
+ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
 
 
@@ -632,7 +632,7 @@ ALTER TABLE ONLY ar_internal_metadata
 -- Name: courses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY courses
+ALTER TABLE ONLY public.courses
     ADD CONSTRAINT courses_pkey PRIMARY KEY (id);
 
 
@@ -640,7 +640,7 @@ ALTER TABLE ONLY courses
 -- Name: imports_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY imports
+ALTER TABLE ONLY public.imports
     ADD CONSTRAINT imports_pkey PRIMARY KEY (id);
 
 
@@ -648,7 +648,7 @@ ALTER TABLE ONLY imports
 -- Name: news_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY news
+ALTER TABLE ONLY public.news
     ADD CONSTRAINT news_pkey PRIMARY KEY (id);
 
 
@@ -656,7 +656,7 @@ ALTER TABLE ONLY news
 -- Name: pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY pages
+ALTER TABLE ONLY public.pages
     ADD CONSTRAINT pages_pkey PRIMARY KEY (id);
 
 
@@ -664,7 +664,7 @@ ALTER TABLE ONLY pages
 -- Name: postcodes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY postcodes
+ALTER TABLE ONLY public.postcodes
     ADD CONSTRAINT postcodes_pkey PRIMARY KEY (id);
 
 
@@ -672,7 +672,7 @@ ALTER TABLE ONLY postcodes
 -- Name: providers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY providers
+ALTER TABLE ONLY public.providers
     ADD CONSTRAINT providers_pkey PRIMARY KEY (id);
 
 
@@ -680,7 +680,7 @@ ALTER TABLE ONLY providers
 -- Name: schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY schema_migrations
+ALTER TABLE ONLY public.schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
 
 
@@ -688,7 +688,7 @@ ALTER TABLE ONLY schema_migrations
 -- Name: subjects_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY subjects
+ALTER TABLE ONLY public.subjects
     ADD CONSTRAINT subjects_pkey PRIMARY KEY (id);
 
 
@@ -696,7 +696,7 @@ ALTER TABLE ONLY subjects
 -- Name: topics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY topics
+ALTER TABLE ONLY public.topics
     ADD CONSTRAINT topics_pkey PRIMARY KEY (id);
 
 
@@ -704,7 +704,7 @@ ALTER TABLE ONLY topics
 -- Name: venues_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY venues
+ALTER TABLE ONLY public.venues
     ADD CONSTRAINT venues_pkey PRIMARY KEY (id);
 
 
@@ -712,123 +712,123 @@ ALTER TABLE ONLY venues
 -- Name: index_active_admin_comments_on_author_type_and_author_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_active_admin_comments_on_author_type_and_author_id ON active_admin_comments USING btree (author_type, author_id);
+CREATE INDEX index_active_admin_comments_on_author_type_and_author_id ON public.active_admin_comments USING btree (author_type, author_id);
 
 
 --
 -- Name: index_active_admin_comments_on_namespace; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_active_admin_comments_on_namespace ON active_admin_comments USING btree (namespace);
+CREATE INDEX index_active_admin_comments_on_namespace ON public.active_admin_comments USING btree (namespace);
 
 
 --
 -- Name: index_active_admin_comments_on_resource_type_and_resource_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_active_admin_comments_on_resource_type_and_resource_id ON active_admin_comments USING btree (resource_type, resource_id);
+CREATE INDEX index_active_admin_comments_on_resource_type_and_resource_id ON public.active_admin_comments USING btree (resource_type, resource_id);
 
 
 --
 -- Name: index_admin_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_admin_users_on_email ON admin_users USING btree (email);
+CREATE UNIQUE INDEX index_admin_users_on_email ON public.admin_users USING btree (email);
 
 
 --
 -- Name: index_admin_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_admin_users_on_reset_password_token ON admin_users USING btree (reset_password_token);
+CREATE UNIQUE INDEX index_admin_users_on_reset_password_token ON public.admin_users USING btree (reset_password_token);
 
 
 --
 -- Name: index_courses_on_import_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_courses_on_import_id ON courses USING btree (import_id);
+CREATE INDEX index_courses_on_import_id ON public.courses USING btree (import_id);
 
 
 --
 -- Name: index_courses_on_lcc_code; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_courses_on_lcc_code ON courses USING btree (lcc_code);
+CREATE INDEX index_courses_on_lcc_code ON public.courses USING btree (lcc_code);
 
 
 --
 -- Name: index_courses_on_lonlat; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_courses_on_lonlat ON courses USING gist (lonlat);
+CREATE INDEX index_courses_on_lonlat ON public.courses USING gist (lonlat);
 
 
 --
 -- Name: index_courses_on_provider_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_courses_on_provider_id ON courses USING btree (provider_id);
+CREATE INDEX index_courses_on_provider_id ON public.courses USING btree (provider_id);
 
 
 --
 -- Name: index_courses_on_subject_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_courses_on_subject_id ON courses USING btree (subject_id);
+CREATE INDEX index_courses_on_subject_id ON public.courses USING btree (subject_id);
 
 
 --
 -- Name: index_courses_on_venue_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_courses_on_venue_id ON courses USING btree (venue_id);
+CREATE INDEX index_courses_on_venue_id ON public.courses USING btree (venue_id);
 
 
 --
 -- Name: index_subjects_topics_on_subject_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_subjects_topics_on_subject_id ON subjects_topics USING btree (subject_id);
+CREATE INDEX index_subjects_topics_on_subject_id ON public.subjects_topics USING btree (subject_id);
 
 
 --
 -- Name: index_subjects_topics_on_topic_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_subjects_topics_on_topic_id ON subjects_topics USING btree (topic_id);
+CREATE INDEX index_subjects_topics_on_topic_id ON public.subjects_topics USING btree (topic_id);
 
 
 --
 -- Name: fk_rails_3dce5cd5bf; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY courses
-    ADD CONSTRAINT fk_rails_3dce5cd5bf FOREIGN KEY (provider_id) REFERENCES providers(id);
+ALTER TABLE ONLY public.courses
+    ADD CONSTRAINT fk_rails_3dce5cd5bf FOREIGN KEY (provider_id) REFERENCES public.providers(id);
 
 
 --
 -- Name: fk_rails_57d52eb461; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY courses
-    ADD CONSTRAINT fk_rails_57d52eb461 FOREIGN KEY (subject_id) REFERENCES subjects(id);
+ALTER TABLE ONLY public.courses
+    ADD CONSTRAINT fk_rails_57d52eb461 FOREIGN KEY (subject_id) REFERENCES public.subjects(id);
 
 
 --
 -- Name: fk_rails_8d91db0f8c; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY courses
-    ADD CONSTRAINT fk_rails_8d91db0f8c FOREIGN KEY (venue_id) REFERENCES venues(id);
+ALTER TABLE ONLY public.courses
+    ADD CONSTRAINT fk_rails_8d91db0f8c FOREIGN KEY (venue_id) REFERENCES public.venues(id);
 
 
 --
 -- Name: fk_rails_c3e6349cb8; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY courses
-    ADD CONSTRAINT fk_rails_c3e6349cb8 FOREIGN KEY (import_id) REFERENCES imports(id);
+ALTER TABLE ONLY public.courses
+    ADD CONSTRAINT fk_rails_c3e6349cb8 FOREIGN KEY (import_id) REFERENCES public.imports(id);
 
 
 --
@@ -868,6 +868,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170630190403'),
 ('20170701173218'),
 ('20170817131455'),
-('20170823124132');
+('20170823124132'),
+('20180710130605');
 
 

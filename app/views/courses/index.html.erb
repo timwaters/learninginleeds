@@ -38,7 +38,18 @@
 
 <h2><%= heading %></h2>
 
-<% @courses.each do | course | %>
+<% @courses.each_with_index do | course, index | %>
+
+  <% if @topic && !@topic.promotion.blank? && index == 0 %>
+    <div class="row course-result topic-promotion">
+      <div class="col-md-12">
+        <p>
+          <%= sanitize @topic.promotion, tags: %w(br a h3 strong) %>
+        </p>
+      </div>
+    </div>
+  <% end %> 
+
  <% if course.has_attribute? "distance"
    distance = course.distance
    distance = distance.round(1) unless distance.nil?

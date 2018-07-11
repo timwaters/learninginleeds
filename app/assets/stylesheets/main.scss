@@ -1,5 +1,6 @@
 
 $camo:#92B558;
+$camo-light:#cef390;
 $slight:#7a8990;
 $box-background: #edeffc ;
 $box-border: #3f4f5e;
@@ -271,6 +272,11 @@ td.text-center img {
 
 .interested {
   padding-top: 10px;
+}
+
+.topic-promotion {
+  background-color: $camo-light;
+  padding-top: 0px;
 }
 
 /* lato-700italic - latin */

@@ -29,7 +29,7 @@
       <var class="atc_date_start"><%= "#{@course.start_date.strftime('%Y-%m-%d')} #{@course.start_time.strftime('%H:%M:00')}" %></var>
       <var class="atc_date_end"><%= "#{@course.start_date.strftime('%Y-%m-%d')} #{@course.end_time.strftime('%H:%M:00')}" %></var>
       <var class="atc_timezone">Europe/London</var>
-      <var class="atc_title"><%= @course.title %> - Adult Learning in Leeds</var>
+      <var class="atc_title"><%= @course.title %> - Leeds Adult Learning </var>
       <var class="atc_description"><%= @course.description %></var>
       <var class="atc_location"><%= @course.venue.name.titlecase %> <%= @course.venue.postcode %></var>
       <var class="atc_organizer"><%= @course.provider.name %> Tel:<%= @course.provider.telephone %>  Website:<%= @course.provider.url %> Email: <%= @course.provider.email %></var>

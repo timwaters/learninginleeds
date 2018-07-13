@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head lang="en-GB">
-    <% page_title = (yield(:title) + " - " unless yield(:title).blank?).to_s + "Adult Learning in Leeds" %>
+    <% page_title = (yield(:title) + " - " unless yield(:title).blank?).to_s + "Leeds Adult Learning" %>
     <% meta_description = "Leeds City Council offers many free adult and community learning courses in our welcoming community venues to help unemployed and low-waged residents develop their skills and confidence. There's something for everyone, so whether you are looking to develop your skills for work or further education, learn English, or build your confidence and skills to help your children with their homework, there is something for you" %>
+    <% meta_description = page_title +".  "+ yield(:meta_description) unless yield(:meta_description).blank?  %>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -106,7 +107,7 @@ We use cookies on this website. We use them to understand how you use the site a
         <div class="col-lg-offset-1 col-lg-10">
           <div class="footer center-block">
             <%= image_tag 'skyline-1000.jpg', :class =>"img-responsive" %>
-            <p class="text-center"> For general and non course-specific enquires please email <%= mail_to AppConfig["general_email"], nil, subject: "General Enquiry about Adult Learning In Leeds" %>  | <%= link_to "Privacy / Data & Terms", privacy_path %> | <%= link_to "About", about_path %> </p>
+            <p class="text-center"> For general and non course-specific enquires please email <%= mail_to AppConfig["general_email"], nil, subject: "General Enquiry about Leeds Adult Learning In Leeds" %>  | <%= link_to "Privacy / Data & Terms", privacy_path %> | <%= link_to "About", about_path %> </p>
           </div>
         </div>
 

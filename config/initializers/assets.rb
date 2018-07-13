@@ -11,4 +11,4 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
-Rails.application.config.assets.precompile += %w( atc-style-blue.css addtocalendar.min.js  )
+Rails.application.config.assets.precompile += %w(rrssb.min.js rrssb.css atc-style-blue.css addtocalendar.min.js  )

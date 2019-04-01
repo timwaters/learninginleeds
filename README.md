@@ -37,6 +37,15 @@ It can be seen in operation at [LeedsAdultLearning.co.uk](https://leedsadultlear
 * Bootstrap for front end user interface layout, CSS etc
 * OSRM, Transport API and Bing Transit for journey planning and geocoding etc
 
+Commands for running the Docker OSRM:
+
+First get an .osm.pbf extract (e.g. from geofabrik.de )
+
+docker run -t -v $(pwd):/data osrm/osrm-backend osrm-extract -p /opt/foot.lua /data/west-yorkshire-latest.osm.pbf
+docker run -t -v $(pwd):/data osrm/osrm-backend osrm-partition /data/west-yorkshire-latest.osrm
+docker run -t -v $(pwd):/data osrm/osrm-backend osrm-customize /data/west-yorkshire-latest.osrm
+docker run --restart=always -t -i -p 127.0.0.1:5000:5000 -v $(pwd):/data osrm/osrm-backend osrm-routed --algorithm mld /data/west-yorkshire-latest.osrm
+
 
 
  

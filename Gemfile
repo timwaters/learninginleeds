@@ -7,7 +7,7 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.6'
+gem 'rails', '5.2.3'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use SCSS for stylesheets
@@ -28,11 +28,11 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'activeadmin'
-gem 'devise'
+gem 'devise', '~> 4.6'
 gem 'cancancan', '~> 1.10'
 
 gem 'activerecord-import'
-gem 'bootstrap-sass', '~> 3.3.6'
+gem 'bootstrap-sass', '>= 3.4.1'
 gem 'rails-controller-testing'
 gem 'leaflet-rails'
 gem 'text'

@@ -43,7 +43,14 @@
     
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-
+    <script>
+      $( document ).on('turbolinks:load', function(event) {
+        if (typeof(ga) === "function") {
+          ga("set", "location", window.location.pathname)
+          ga("send", "pageview")
+        }
+      });
+    </script>
 
   </head>
 

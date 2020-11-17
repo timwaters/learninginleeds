@@ -5,16 +5,41 @@ $slight:#7a8990;
 $box-background: #edeffc ;
 $box-border: #3f4f5e;
 $button: #90a7d0;
-$links: #444a9e;
+$links: #8e2a8d;
+
+$darkblue: #004c6e;
+$purple:   #8E2A8D;
+$yellow:   #f4ff8d;
+$straw:    #dedc00;
+$lightblue:#e2eefa;
+
+
 
 a {
-    color: $links !important;
+  color: $links !important;
  }
 
+ main a {
+    font-weight: bold;
+    color: $purple;
+    text-decoration: underline;
+  }
+  
+  main a:hover {
+    color: lighten($purple, 10%)
+  }
 
-a:hover, a.hover{
-     color: #1621b1 !important;
+main a:hover, a.hover{
+color: #b536b4 !important;
 }
+
+*:focus {
+    background-color: $straw;
+  }
+  a:focus {
+    text-decoration: none;
+  }
+
 
 .btn-lil {
   color: #fff;
@@ -297,3 +322,43 @@ td.text-center img {
        font-url('lato-v13-latin-700italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
        font-url('lato-v13-latin-700italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
+
+footer {
+    background-color:$purple;
+    min-height: 75px;
+    margin-top: 2rem;
+  }
+  footer a {
+    color: white !important;
+    text-decoration: underline;
+  }
+  footer a:hover {
+    color: white;
+  }
+  footer a:focus{
+    color: $purple;
+  }
+  
+  footer .links {
+    padding-top: 22px;
+    color: white;
+    font-size: 18px;
+    align-self: first baseline;
+  }
+  footer .copyright {
+    font-size: 11px;
+  }
+  
+  footer .logo-footer span {
+    // background: asset_url('lcc-logo-white-01.svg') center center/100% 100% no-repeat;
+    display: block;
+    height: 40px;
+    width:100px;
+    margin-top: 12px;
+  }
+  
+  .footer {
+    margin-right:0px !important;
+    display: flex !important;
+  }
+  

@@ -43,14 +43,14 @@ color: #b536b4 !important;
 
 .btn-lil {
   color: #fff;
-  background-color: $camo !important;
+  background-color: $purple !important;
   border-color: #66648b !important;
   text-shadow:  #516b2c 0 1px 0;
 }
 
 
 .btn-lil:hover, .btn-lil:focus, .btn-lil.focus{
- background-image: linear-gradient(180deg, $camo, #476a30) !important;
+ background-image: linear-gradient(180deg, $purple, #571956) !important;
   text-decoration: none;
   background-color: #476a30 !important;
   color: white !important;
@@ -61,7 +61,7 @@ body {
 }
 
 .slight {
-    color: $camo;
+    color: lighten($purple, 10%);
 }
 
 .smaller {
@@ -75,7 +75,7 @@ body {
     border-radius: 10px;
     border-width: 2px;
     border-style: solid;
-    border-color: $box-background;
+    border-color: $lightblue;
     text-align: center;
     margin-bottom: 5px;
     padding-top: 7px;
@@ -103,14 +103,14 @@ padding-bottom: 5px;
 h1 {
     font-family: 'Lato', sans-serif !important;
     font-style: italic;
-    color: $slight !important;
+    color: $purple !important;
     padding-top: 25px;
 }
 
 h1 a.rootlink {
     text-decoration: none;
     font-size: 40px;
-    color: $slight !important;
+    color: $purple !important;
 }
 
 h1 a.rootlink:hover {
@@ -172,7 +172,7 @@ h2.search-heading {
     margin-bottom: 10px;
     margin-left: 15px;
     margin-right: 15px;
-    background-color: $box-background;
+    background-color: $lightblue;
 }
 
 .course-main {
@@ -181,7 +181,7 @@ h2.search-heading {
     margin-bottom: 15px;
     margin-left: 15px;
     margin-right:15px;
-    background-color: $box-background;
+    background-color: $lightblue;
 }
 
 .course-map {
@@ -194,7 +194,7 @@ h2.search-heading {
     border-radius: 10px;
     margin-bottom: 15px;
 
-    background-color: $box-background;
+    background-color: $lightblue;
 }
 
 .rotate {
@@ -282,7 +282,7 @@ td.text-center img {
     padding-top: 5px;
     border-radius: 10px;
     margin-bottom: 10px;
-    background-color: $box-background;
+    background-color: $lightblue;
     padding-left: 5px;
     padding-right: 5px;
     padding-bottom: 5px;

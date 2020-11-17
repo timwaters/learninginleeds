@@ -31,6 +31,13 @@
       <%= @course.venue.postcode %>
     <% end %>
   </p>
+
+  <h4>Interested?</h4>
+  <p>
+    <% form_url =  URI.encode("#{AppConfig['form_url']}?course_title=#{@course.title}&course_code=#{@course.lcc_code}ABC&course_start=#{@course.start_date.strftime("%d/%m/%Y")}&course_end=#{@course.end_date.strftime("%d/%m/%Y")}")  %>
+    <%= link_to "Open Application Form", form_url,  :class => "enrol btn btn-lil " %>
+  </p>
+
   </div>
 </div>
 <div class="row course-main course-map">
@@ -90,29 +97,7 @@
           Often courses are open to everyone, so please contact the course provider to ask. 
         </p>
         <% end %>
-
-
-        
-        <% unless @course.provider.telephone.blank? && @course.provider.url.blank? && @course.provider.email.blank? %>
-        <%  interested_links = []
-            interested_links << "visit their website #{link_to(url, url)}" unless @course.provider.url.blank?
-            interested_links << "telephone them on #{link_to(phone_format(@course.provider.telephone), "tel:#{@course.provider.telephone}")}" unless @course.provider.telephone.blank?
-            interested_links << "email them at #{mail_to(@course.provider.email, nil, subject: "Enquiry about Course: #{@course.title} starting on #{@course.start_date.strftime("%a, %b %d, %Y")} from Leeds Adult Learning ") }"  unless @course.provider.email.blank?
-        %>
-          <div class="interested">
-          <h4>Interested?</h4>
-          <p>
-          To contact <strong><%= link_to_unless(url.nil?, @course.provider.name, url) %> </strong> for further information or to book a place, please
-            <%= interested_links.to_sentence(:last_word_connector => " or ", :two_words_connector => " or ").html_safe %>       
-          </p>
-          </div>        
-        <% end %>
-
-          <p>
-          Add the first course (at <%= @course.start_date.strftime("%a, %b %d, %Y") %>) to your calendar:
-          <%= render :partial => "calendar"%>
-          </p>
-          <%= render :partial => "share" %>
+   
     </div>
 
 </div>

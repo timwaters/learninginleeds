@@ -73,22 +73,10 @@ We use cookies on this website. We use them to understand how you use the site a
     <div class="container container-fluid">
       
       <div class="row">
-        <div class="col-lg-8 col-md-offset-4 col-sm-offset-2 col-xs-offset-0">
-          
-          <div class="page-head media">
-            <span class="media-left">
-              <%= image_tag "learning.png", :class => "lal-logo", :height => 150 %>
-            </span>
-            <span class="media-right">
-              <h1><a class="rootlink" href="/"><span class="slight">Leeds</span> Adult <br />
-                  <span class="larger-head">Learning</span></a></h1>
-            
-            </span>
-          </div>
-
-          
+        <div class="text-center">
+          <a class="rootlink" href="/"><%= image_tag "hub.png", :class => "lal-logo", :height => 100, :alt => "Leeds Adult Learning Hub logo" %> </a>
+          <h1 class="page-head"> <a class="rootlink" href="/"><span class="slight">Leeds</span> Adult Learning</a></h1>          
         </div>
-
       </div>
       
       <div class="row">          
@@ -109,17 +97,7 @@ We use cookies on this website. We use them to understand how you use the site a
       <div class="content">
         <%= yield %>
       </div>
-<!-- 
-      <div class="row">
-        <div class="col-lg-offset-1 col-lg-10">
-          <div class="footer center-block">
-            <%= image_tag 'skyline-1000.jpg', :class =>"img-responsive" %>
-            <p class="text-center"> For general and non course-specific enquires please email <%= mail_to AppConfig["general_email"], nil, subject: "General Enquiry about Leeds Adult Learning In Leeds" %>  | <%= link_to "Privacy / Data & Terms", privacy_path %> | <%= link_to "About", about_path %> </p>
-          </div>
-        </div>
 
-      </div>  
-      -->
     </div>
 </main>
 <!-- FOOTER -->

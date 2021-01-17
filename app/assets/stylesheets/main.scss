@@ -293,7 +293,7 @@ td.text-center img {
     padding: 3px !important;
 }
 .location-hint{
-    color: grey;
+    color: darkslategray;
 }
 
 .interested {
@@ -362,4 +362,11 @@ footer {
   //   margin-right:0px !important;
   //  // display: flex !important;
   // }
-  
+
+  .recent-h{
+    font-size: medium;
+  }
+
+  form input[type="text"] {
+    border-color: darkslategray;
+  }

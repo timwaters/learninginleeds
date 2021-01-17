@@ -1,12 +1,13 @@
 ActiveAdmin.register Topic do
 
-  permit_params :id, :name, :filename, :icon,  :promotion, :category_1 => [], :category_2 => []
+  permit_params :id, :name, :filename, :icon, :alt_text, :position, :promotion, :category_1 => [], :category_2 => []
 
   form do | f| 
 
     f.inputs 'Details' do
       f.input :name
       f.input :icon, required: false, as: :file
+      f.input :alt_text, required: false
     end
 
     f.inputs do
@@ -20,6 +21,10 @@ ActiveAdmin.register Topic do
      
     end
 
+    f.inputs do 
+      f.input :position, required: false, hint: "position to order the topic in the list, lower comes first"
+    end
+
     f.actions
   end
 
@@ -30,10 +35,12 @@ ActiveAdmin.register Topic do
       row :icon do
         image_tag(t.icon.url(:thumb), width:50)
       end
+      row :alt_text
       row :category_1
       row :category_2
       # Will display the image on show object page
       row :promotion
+      row :position
     end
   end
 

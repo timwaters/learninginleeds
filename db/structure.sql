@@ -4,6 +4,7 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -461,7 +462,9 @@ CREATE TABLE public.topics (
     icon_content_type character varying,
     icon_file_size integer,
     icon_updated_at timestamp without time zone,
-    promotion text
+    promotion text,
+    alt_text character varying,
+    "position" integer
 );
 
 
@@ -869,6 +872,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170701173218'),
 ('20170817131455'),
 ('20170823124132'),
-('20180710130605');
+('20180710130605'),
+('20210117153530');
 
 

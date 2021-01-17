@@ -5,7 +5,7 @@ class HomeController < ApplicationController
   def index
     @welcome = Page.find_by(name: "welcome")
     @news = News.all.order(updated_at: :desc).limit(3)
-    @topics =  Topic.all.limit(6).select { | t | t.has_courses? }
+    @topics =  Topic.all.limit(6).order(position: :asc)
   end
 
 

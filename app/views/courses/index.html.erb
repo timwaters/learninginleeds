@@ -32,7 +32,7 @@
     heading = "Courses at this venue: #{@venue.name}"
   end
   title = heading == "" ? "Courses" : heading.titlecase
-  heading = heading == "" ? "" : "<h2>#{heading.titlecase}</h2>".html_safe
+  heading = heading == "" ? "" : "#{heading.titlecase}".html_safe
   content_for :title, title
  %>
 

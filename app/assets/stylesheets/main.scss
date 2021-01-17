@@ -370,3 +370,20 @@ footer {
   form input[type="text"] {
     border-color: darkslategray;
   }
+
+  .sr-only-focusable:focus {
+    position: relative !important;
+    width: auto;
+    height: auto; 
+    margin: 0; 
+    overflow: auto; 
+    clip: auto; 
+    color: $purple;
+  }
+  
+  .skip-to-content{
+    z-index: 1050;
+    position: relative;
+    color: $purple;
+  }
+  

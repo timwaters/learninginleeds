@@ -90,7 +90,7 @@
         </p>
 
         <% unless @course.target_group.blank? %>
-        <h4 class="interested">Who is it for?</h4>
+        <h3 class="interested">Who is it for?</h3>
         <p>
           <% @course.target_group += "." if @course.target_group[-1] != "." %>
           <%= @course.target_group %> <br />
@@ -113,8 +113,8 @@
       <% if !params[:near].blank? && !@directions.nil? %>
         <%= render :partial => 'directions', object: @directions %>
       <% elsif !params[:near].blank? && @directions.nil? %>
-        <h4>Journey Plan</h4>
-        <p class="alert alert-success alert-dismissable">Sorry couldn't find a journey plan for '<%= params[:near] %>'
+        <h3 id="directions">Journey Plan</h3>
+        <p  role="alert" class="alert alert-success alert-dismissable">Sorry couldn't find a journey plan for '<%= params[:near] %>'
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times;</button>
         </p>
         <div class="direction_links">
@@ -122,9 +122,9 @@
         </div>
 
       <% else %>
-        <h4>Journey Plan</h4>
+        <h3 id="directions">Journey Plan</h3>
 
-        <%= form_tag("", method: "get", class: 'form-horizontal ', role: 'form') do %>
+        <%= form_tag("#directions", method: "get", class: 'form-horizontal ', role: 'form') do %>
            <%= label_tag(:near, "Get Directions:", class:"control-label") %>
             <span id="nearhelp" class="help-block">Type in a place, postcode or address to show a journey plan by bus and by foot to arrive for the course start. Postcodes give best results.</span>
           <%= text_field_tag(:near, params[:near], aria: { describedby:  'nearhelp' }) %>

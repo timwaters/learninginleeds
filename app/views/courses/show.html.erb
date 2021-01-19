@@ -123,11 +123,11 @@
 
       <% else %>
         <h4>Journey Plan</h4>
-        <p>Type in a place, postcode or address to show a journey plan by bus and by foot to arrive for the course start.</p>
 
         <%= form_tag("", method: "get", class: 'form-horizontal ', role: 'form') do %>
-          
-          <%= text_field_tag(:near, params[:near], placeholder: "Postcodes give best results") %>
+           <%= label_tag(:near, "Get Directions:", class:"control-label") %>
+            <span id="nearhelp" class="help-block">Type in a place, postcode or address to show a journey plan by bus and by foot to arrive for the course start. Postcodes give best results.</span>
+          <%= text_field_tag(:near, params[:near], aria: { describedby:  'nearhelp' }) %>
           <div class="input-group-btn">
             <button class="btn btn-lil" type="submit" title="Search"><i class="glyphicon glyphicon-search"></i> Make Journey Plan</button>
           </div>

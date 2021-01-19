@@ -34,30 +34,33 @@ function geoFindMe() {
 }
 </script>
 <div id="out"></div>
-<%= form_tag("/courses", method: "get", class: 'form-horizontal ', role: 'form') do %>
-  <div class="form-group ">
-    <%= label_tag(:q, "Find", class:"col-sm-1 control-label") %>
-    <div class="col-sm-11">
-      <%= text_field_tag(:q, params[:q], class:"form-control", placeholder: "Courses, Subjects, Topics") %>
+<%= form_tag("/courses", method: "get", class: ' ', role: 'form') do %>
+  <div class="form-group  row">
+    <%= label_tag(:q, "Search for a course, subject or topic:", class:"col-sm-4 control-label") %>
+    <div class="col-sm-8">
+      <%= text_field_tag(:q, params[:q], class:"form-control") %>
     </div>
   </div>
 
-  <div class="form-group ">
-    <%= label_tag(:near, "Near", class:"col-sm-1 control-label") %>
-    <div class="col-sm-5">
-      <%= text_field_tag(:near, params[:near], class:"form-control near-field", placeholder: "Postcode, Place, Address") %>
+  <div class="form-group row ">
+  <div class="col-sm-4">
+    <%= label_tag(:near, "Near:", class:"control-label") %>
+    <span id="nearhelp" class="help-block">E.g. Postcode, place or address.</span>
+    </div>
+        <div class="col-sm-8">
+      <%= text_field_tag(:near, params[:near], class:"form-control near-field",  aria: { describedby:  'nearhelp' }) %>
       <%= hidden_field_tag(:sort, params[:sort]) %>   
     </div>
     
-    <div class="col-sm-3 use-location" style="display:none;">
+    <div class="col-sm-8 col-sm-offset-4 use-location" style="display:none;">
       <span class="location-hint">Use current location</span>
       <button id="geobutton" class="geobutton btn btn-default" type="button" title="Use current location"> <%= image_tag 'location.png', width: 25, height: 25, alt: "Location Marker"%></button>
     </div>
 
 </div>
 
-  <div class="form-group ">
-    <div class="col-sm-8 col-sm-offset-1">
+  <div class="form-group row ">
+    <div class="col-sm-8 col-sm-offset-4">
         <div class="">
         <button class="btn btn-lil" type="submit" title="Search"><i class="glyphicon glyphicon-search"></i> Search</button>
         <span class="show-all"> &nbsp; <%= link_to 'Show All Courses', courses_url %></span>

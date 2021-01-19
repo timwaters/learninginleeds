@@ -106,42 +106,44 @@
 
 </div>
 
+<% unless @course.venue.is_online? %>
 
-<div class="row course-directions">
-  <div class="col-md-12">
-    <% if !params[:near].blank? && !@directions.nil? %>
-      <%= render :partial => 'directions', object: @directions %>
-    <% elsif !params[:near].blank? && @directions.nil? %>
-      <h4>Journey Plan</h4>
-      <p class="alert alert-success alert-dismissable">Sorry couldn't find a journey plan for '<%= params[:near] %>'
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times;</button>
-      </p>
-      <div class="direction_links">
-        <%= render partial: 'courses/direction_links' %>
-      </div>
-
-    <% else %>
-      <h4>Journey Plan</h4>
-      <p>Type in a place, postcode or address to show a journey plan by bus and by foot to arrive for the course start.</p>
-
-      <%= form_tag("", method: "get", class: 'form-horizontal ', role: 'form') do %>
-        
-        <%= text_field_tag(:near, params[:near], placeholder: "Postcodes give best results") %>
-        <div class="input-group-btn">
-          <button class="btn btn-lil" type="submit" title="Search"><i class="glyphicon glyphicon-search"></i> Make Journey Plan</button>
+  <div class="row course-directions">
+    <div class="col-md-12">
+      <% if !params[:near].blank? && !@directions.nil? %>
+        <%= render :partial => 'directions', object: @directions %>
+      <% elsif !params[:near].blank? && @directions.nil? %>
+        <h4>Journey Plan</h4>
+        <p class="alert alert-success alert-dismissable">Sorry couldn't find a journey plan for '<%= params[:near] %>'
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times;</button>
+        </p>
+        <div class="direction_links">
+          <%= render partial: 'courses/direction_links' %>
         </div>
-       <!-- 
-        <button id="geobutton" class="btn btn-default" type="button" title="Find Your Location"><i class="glyphicon glyphicon-globe" ></i></button>
-       -->
-      <% end #form %>
 
-      <div class="direction_links">
-        <%= render partial: 'courses/direction_links' %>
-      </div>
+      <% else %>
+        <h4>Journey Plan</h4>
+        <p>Type in a place, postcode or address to show a journey plan by bus and by foot to arrive for the course start.</p>
 
-    <% end %>
-  </div>  
-</div>
+        <%= form_tag("", method: "get", class: 'form-horizontal ', role: 'form') do %>
+          
+          <%= text_field_tag(:near, params[:near], placeholder: "Postcodes give best results") %>
+          <div class="input-group-btn">
+            <button class="btn btn-lil" type="submit" title="Search"><i class="glyphicon glyphicon-search"></i> Make Journey Plan</button>
+          </div>
+        <!-- 
+          <button id="geobutton" class="btn btn-default" type="button" title="Find Your Location"><i class="glyphicon glyphicon-globe" ></i></button>
+        -->
+        <% end #form %>
+
+        <div class="direction_links">
+          <%= render partial: 'courses/direction_links' %>
+        </div>
+
+      <% end %>
+    </div>  
+  </div>
+<% end %>
 
  
 <!-- recent searches -->

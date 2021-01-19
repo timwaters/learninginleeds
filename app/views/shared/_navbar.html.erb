@@ -4,7 +4,6 @@
   // highlights nav
   $( document ).on('turbolinks:load', function() {
       $(".navbar-nav li").each( function () {
-        console.log($(this).find(".nav-link").attr("href"))
         if (window.location.pathname == $(this).find(".nav-link").attr("href")){
           $(this).addClass('active').find(".nav-link").find("span").remove();
           $(this).addClass('active').find(".nav-link").append(" <span class='sr-only'>(current)></span>");

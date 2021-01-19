@@ -45,6 +45,8 @@ class Topic < ApplicationRecord
 
   def clear_cache
     ApplicationController.expire_home
+    ActionController::Base.new.expire_fragment(%r{topicnav.*})
+    ActionController::Base.new.expire_fragment(%r{topicnav_quick*})
   end
 
 end

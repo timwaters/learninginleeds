@@ -387,3 +387,31 @@ footer {
     color: $purple;
   }
   
+  .navbar 
+  {
+    button {
+      background-color: $purple ;
+    }
+    button:hover{
+      background-image: linear-gradient(180deg, #f87df8, #8e2a8d);
+    }
+  
+    .icon-bar {
+      background-color: white !important;
+    }
+    
+    .navbar-toggle {
+      border-color: darkslategray !important;
+    }
+
+    .navbar-toggle:active  {
+      background-color: $purple !important ;
+    }
+    .navbar-toggle:focus  {
+      background-color: $purple !important ;
+    }
+  }
+
+ span.quick-topic {
+   padding-right: 10px;
+ } 

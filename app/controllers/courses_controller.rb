@@ -1,4 +1,6 @@
 class CoursesController < ApplicationController
+  before_action :get_topics
+
   def show
     @course = Course.find_by(lcc_code: params[:lcc_code])
     if @course.nil?
@@ -110,5 +112,8 @@ class CoursesController < ApplicationController
     
   end
 
+  def get_topics
+    @topics = Topic.all.limit(6).order(position: :asc)
+  end
 
 end

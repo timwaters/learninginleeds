@@ -1,0 +1,9 @@
+<h2 class="recent-h">Topics</h2>
+
+<% cache "topicnav_quick" do %>
+  <% for topic in @topics %>
+    <span class="quick-topic">
+      <%= link_to(topic.name,  topic) %>
+    </span>        
+  <% end %>
+<% end %>

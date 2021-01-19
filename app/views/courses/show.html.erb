@@ -73,15 +73,15 @@
           url = nil
         end
            %>
-          This course is provided by <strong><%= link_to_unless(url.nil?, @course.provider.name, url) %> </strong><br />
-          <% if url %> Website: <%= link_to url, url %> <% end %>
+          This course is <strong><%= link_to_unless(url.nil?, "provided by #{@course.provider.name}", url) %> </strong>
+         
           <% unless @course.provider.telephone.blank? %> 
             <br />
-            Telephone: <%= link_to phone_format(@course.provider.telephone), "tel:#{@course.provider.telephone}" %>
+          Telephone <%= @course.provider.name %> on <%= link_to phone_format(@course.provider.telephone), "tel:#{@course.provider.telephone}" %>
           <% end %>
           <% unless @course.provider.email.blank? %> 
             <br />
-            Email: <%= mail_to @course.provider.email, nil, subject: "Enquiry about #{@course.title} starting on #{@course.start_date.strftime("%a, %b %d, %Y")} from Leeds Adult Learning" %> 
+            Email <%= @course.provider.name %>: <%= mail_to @course.provider.email, nil, subject: "Enquiry about #{@course.title} starting on #{@course.start_date.strftime("%a, %b %d, %Y")} from Leeds Adult Learning" %> 
           <% end %>
         </p>
         <p>

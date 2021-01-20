@@ -30,9 +30,9 @@
     
       <%= form_tag("/courses", method: "get", class: 'navbar-form navbar-left ', role: 'form') do %>
         <div class="form-group">
-           <%= text_field_tag(:q, params[:q], class:"form-control") %>
+           <%= text_field_tag(:q, params[:q], class:"form-control", id: "navq") %>
         </div>
-        <button class="btn btn-lil" type="submit" title="Search"><i class="glyphicon glyphicon-search"></i>Search for courses</button>
+        <button class="btn btn-lil" type="submit" title="Search"><i class="glyphicon glyphicon-search"></i> Search for courses</button>
        
     
       <% end %>

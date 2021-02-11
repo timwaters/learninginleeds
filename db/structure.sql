@@ -372,7 +372,8 @@ CREATE TABLE public.providers (
     telephone character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    email character varying
+    email character varying,
+    application_form boolean DEFAULT true
 );
 
 
@@ -873,6 +874,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170817131455'),
 ('20170823124132'),
 ('20180710130605'),
-('20210117153530');
+('20210117153530'),
+('20210211175004');
 
 

@@ -1,5 +1,5 @@
 ActiveAdmin.register Provider do
-  permit_params :name, :url, :telephone, :email
+  permit_params :name, :url, :telephone, :email, :application_form
 
   index do
     selectable_column

@@ -32,11 +32,12 @@
     <% end %>
   </p>
 
-
+  <% if @course.provider.application_form %>
   <p>
     <% form_url =  URI.encode("#{AppConfig['form_url']}?course_title=#{CGI.escape(@course.title)}&course_code=#{@course.lcc_code}&course_start=#{@course.start_date.strftime("%d/%m/%Y")}&course_end=#{@course.end_date.strftime("%d/%m/%Y")}")  %>
     <%= link_to "Apply Now", form_url,  :class => "enrol btn btn-lil ", :target => '_blank'%>
   </p>
+  <% end %>
 
   </div>
 </div>
@@ -97,9 +98,11 @@
           Often courses are open to everyone, so please contact the course provider to ask. 
         </p>
         <% end %>
+        <% if @course.provider.application_form %>
         <p>
          <%= link_to "Apply Now", form_url,  :class => "enrol btn btn-lil ", :target => '_blank'%>
         </p>
+        <% end %>
        
    
     </div>

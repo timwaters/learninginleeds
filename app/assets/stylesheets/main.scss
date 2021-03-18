@@ -338,7 +338,9 @@ footer {
     color: white;
   }
   footer a:focus{
-    color: $purple;
+    color: $purple !important;
+    background-color: #e2eefa !important;
+    
   }
   
   footer .links {

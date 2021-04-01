@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
   caches_page :index
   caches_page :privacy
+  caches_page :accessibility
   before_action :get_topics
 
   def index

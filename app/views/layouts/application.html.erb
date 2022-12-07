@@ -45,10 +45,22 @@
     <script>
       $( document ).on('turbolinks:load', function(event) {
         if (typeof(ga) === "function") {
-          ga("set", "location", window.location.pathname)
-          ga("send", "pageview")
+          ga("set", "location", window.location.pathname);
+          ga("send", "pageview");     
         }
+
+        $('.application-form').on('click', function(){
+          var url = $(this).attr("href");
+          ga('send', 'event', 'apply-now-button', 'click', url, {
+            'transport': 'beacon'
+          });
+        })
+
       });
+
+  
+
+
     </script>
 
   </head>

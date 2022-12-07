@@ -35,7 +35,7 @@
   <% if @course.provider.application_form %>
   <p>
     <% form_url =  URI.encode("#{AppConfig['form_url']}?course_title=#{CGI.escape(@course.title)}&course_code=#{@course.lcc_code}&course_start=#{@course.start_date.strftime("%d/%m/%Y")}&course_end=#{@course.end_date.strftime("%d/%m/%Y")}")  %>
-    <%= link_to "Apply Now", form_url,  :class => "enrol btn btn-lil ", :target => '_blank'%>
+    <%= link_to "Apply Now", form_url,  :class => "application-form enrol btn btn-lil ", :target => '_blank'%>
   </p>
   <% end %>
 
@@ -100,7 +100,7 @@
         <% end %>
         <% if @course.provider.application_form %>
         <p>
-         <%= link_to "Apply Now", form_url,  :class => "enrol btn btn-lil ", :target => '_blank'%>
+         <%= link_to "Apply Now", form_url,  :class => "application-form enrol btn btn-lil ", :target => '_blank'%>
         </p>
         <% end %>
        

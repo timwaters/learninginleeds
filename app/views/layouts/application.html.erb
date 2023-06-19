@@ -44,23 +44,28 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <script>
       $( document ).on('turbolinks:load', function(event) {
-        if (typeof(ga) === "function") {
-          ga("set", "location", window.location.pathname);
-          ga("send", "pageview");     
-        }
+        let gtag_not_loaded = true;
+          if (gtag_not_loaded){
+            gtag_not_loaded = false; 
+            return;
+          } else {
+            gtag('config', '<%= AppConfig["google_analytics_id"] %>', {
+              page_path: window.location.pathname,
+            });
+          }
+    
+          $('.application-form').on('click', function(){
+           //
+            var url = $(this).attr("href");
 
-        $('.application-form').on('click', function(){
-          var url = $(this).attr("href");
-          ga('send', 'event', 'apply-now-button', 'click', url, {
-            'transport': 'beacon'
-          });
-        })
+            gtag('event', 'click', {
+              'event_category': 'apply-now-button',
+              'event_label': url
+            });
 
-      });
+          })
 
-  
-
-
+        });
     </script>
 
   </head>

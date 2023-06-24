@@ -43,29 +43,29 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <script>
-      $( document ).on('turbolinks:load', function(event) {
-        let gtag_not_loaded = true;
-          if (gtag_not_loaded){
-            gtag_not_loaded = false; 
-            return;
-          } else {
-            gtag('config', '<%= AppConfig["google_analytics_id"] %>', {
-              page_path: window.location.pathname,
-            });
-          }
-    
-          $('.application-form').on('click', function(){
-           //
-            var url = $(this).attr("href");
+      $( document ).on('turbolinks:load', function (event) {
+        if (typeof (gtag) == "function") {
+          gtag('config', '<%= AppConfig["google_analytics_id"] %>', {
+            page_title: event.target.title,
+            page_path: window.location.pathname,
+          });
+        }
+        $('.application-form').on('click', function () {
+          //console.log("click", new Date());
+          var url = $(this).attr("href");
 
-            gtag('event', 'click', {
-              'event_category': 'apply-now-button',
+          if (typeof (gtag) == "function") {
+            //console.log("sending event", new Date());
+            gtag('event', 'apply-now-button', {
+              'event_category': 'button-click',
               'event_label': url
             });
+          }
+        }) //on click
 
-          })
 
-        });
+      });  //turbolinks
+
     </script>
 
   </head>

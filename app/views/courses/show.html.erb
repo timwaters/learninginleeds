@@ -34,8 +34,9 @@
 
   <% if @course.provider.application_form %>
   <p>  
-    <% template = AppConfig['form_template'] % {course_title: @course.title, course_code: @course.lcc_code, start_date: @course.start_date.strftime("%Y-%m-%d"), end_date: @course.end_date.strftime("%Y-%m-%d")} 
+    <% template = AppConfig['form_template'] % {course_title: CGI.escape(@course.title), course_code: @course.lcc_code, start_date: @course.start_date.strftime("%Y-%m-%d"), end_date: @course.end_date.strftime("%Y-%m-%d")} 
     form_url = URI.encode(template) %>
+
     <%= link_to "Apply Now", form_url,  :class => "application-form enrol btn btn-lil ", :target => '_blank'%>
   </p>
   <% end %>

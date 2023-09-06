@@ -51,8 +51,12 @@ function geoFindMe() {
       <%= text_field_tag(:near, params[:near], class:"form-control near-field",  aria: { describedby:  'nearhelp' }) %>
       <%= hidden_field_tag(:sort, params[:sort]) %>   
     </div>
+    <% if local_assigns[:size] == "half" %>
+      <div class="col-sm-8 use-location" style="display:none;">
+    <% else %>
+      <div class="col-sm-8 col-sm-offset-4 use-location" style="display:none;">
+    <% end %>
     
-    <div class="col-sm-8 col-sm-offset-4 use-location" style="display:none;">
       <span class="location-hint">Use current location</span>
       <button id="geobutton" class="geobutton btn btn-default" type="button" title="Use current location"> <%= image_tag 'location.png', width: 25, height: 25, alt: "Location Marker"%></button>
     </div>
@@ -60,7 +64,13 @@ function geoFindMe() {
 </div>
 
   <div class="form-group row ">
-    <div class="col-sm-8 col-sm-offset-4">
+    <% if local_assigns[:size] == "half" %>
+    <div class="col-sm-8 ">
+    <% else %>
+      <div class="col-sm-8 col-sm-offset-4">
+    <% end %>
+
+  
         <div class="">
         <button class="btn btn-lil" type="submit" title="Search"><i class="glyphicon glyphicon-search"></i> Search</button>
         <span class="show-all"> &nbsp; <%= link_to 'Show All Courses', courses_url %></span>

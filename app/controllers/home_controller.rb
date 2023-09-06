@@ -7,6 +7,7 @@ class HomeController < ApplicationController
   def index
     @welcome = Page.find_by(name: "welcome")
     @news = News.all.order(updated_at: :desc).limit(3)
+    render layout: "front"
   end
 
   def get_topics

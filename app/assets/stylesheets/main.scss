@@ -13,24 +13,29 @@ $yellow:   #f4ff8d;
 $straw:    #dedc00;
 $lightblue:#e2eefa;
 
+$iglblue: #092F44;
+$iglmutedblue: #436168;
+$iglorange: #F5A027;
+$igldarkorange:  #ED7218;
 
 
 a {
-  color: $links !important;
+  color: $iglblue !important;
  }
 
  main a {
     font-weight: bold;
-    color: $purple;
+    color: $iglblue;
     text-decoration: underline;
+    text-decoration-color: $iglorange !important;
   }
   
   main a:hover {
-    color: lighten($purple, 10%)
+    color: lighten($iglblue, 10%)
   }
 
 main a:hover, a.hover{
-color: #b536b4 !important;
+color: $iglmutedblue !important;
 }
 
 *:focus {
@@ -42,18 +47,20 @@ color: #b536b4 !important;
 
 
 .btn-lil {
-  color: #fff;
-  background-color: $purple !important;
-  border-color: #66648b !important;
-  text-shadow:  #516b2c 0 1px 0;
+  color: $iglblue;
+  background-color: $igldarkorange !important;
+  border: none !important;
+  text-shadow:  none;
+  border-radius: 25px !important;
+  padding: 10px 20px !important;
+  font-size: 14px;
 }
 
 
 .btn-lil:hover, .btn-lil:focus, .btn-lil.focus{
- background-image: linear-gradient(180deg, $purple, #571956) !important;
+  background: $iglorange !important;
   text-decoration: none;
-  background-color: #476a30 !important;
-  color: white !important;
+  color: $iglblue;
 }
 
 body {
@@ -75,7 +82,7 @@ body {
     border-radius: 10px;
     border-width: 2px;
     border-style: solid;
-    border-color: $lightblue;
+    border-color: $igldarkorange;
     text-align: center;
     margin-bottom: 5px;
     padding-top: 7px;
@@ -389,14 +396,16 @@ footer {
     position: relative;
     color: $purple;
   }
-  
-  .navbar 
-  {
+
+
+
+  .navbar  {
     button {
-      background-color: $purple ;
+      background-color:  $iglblue  ;
     }
     button:hover{
-      background-image: linear-gradient(180deg, #f87df8, #8e2a8d);
+      // background-image: linear-gradient(180deg, #f87df8, #8e2a8d);
+      background: $iglmutedblue;
     }
   
     .icon-bar {
@@ -404,16 +413,146 @@ footer {
     }
     
     .navbar-toggle {
-      border-color: darkslategray !important;
+      border-color: $iglblue !important;
+      top: 6px;
+      border-radius: 100%;
     }
 
     .navbar-toggle:active  {
-      background-color: $purple !important ;
+      background-color: $iglblue !important ;
     }
     .navbar-toggle:focus  {
-      background-color: $purple !important ;
+      background-color: $iglblue !important ;
     }
+
+    .navbar-header {
+      width: 100%;
+      padding: 0;
+      .links {
+        display: flex;
+        justify-content: end;    
+      }
+      .navbar-link {
+        color:white !important;
+        padding: 14px 15px;
+        font-size: 18px;
+        line-height: normal;
+        text-decoration: none;
+        padding-top: 26px;
+        @media screen and (max-width: 480px) {
+          visibility: hidden;
+        }
+        @media screen and (min-width: 768px) {
+          padding-top: 39px;
+        }
+      }
+      .navbar-link:hover{
+        background: $iglmutedblue;
+        border-radius: 25px;
+      }
+    }
+
+    .nav-link {
+      color: white !important;
+    }
+
+    .navbar-form {
+      box-shadow: none !important;
+    }
+  
+}
+
+
+
+.nav-wrapper {
+  padding: 0 1.25em;
+}
+
+.navbar-igl{
+  border-radius: 60px !important;
+  background-color: $iglblue;
+  margin: 0 auto;
+  position: relative;
+  max-width: 94em;
+  @media screen and (max-width: 1170px) {
+    margin: 0 1.85em;
+   
   }
+}
+
+.site-name {
+  display: none;
+}
+.site-logo {
+  display: inline-block;
+  vertical-align: top;
+  width: 70px;
+  height: 70px;
+  background: $iglorange;
+  border-radius: 100%;
+  position: relative;
+  left: -2px;
+  float:left;
+  @media screen and (min-width: 768px) {
+    height: 100px;
+    width: 100px;
+    left: -17px;
+  }
+
+  img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    display: block;
+    @media screen and (min-width: 768px) {
+      width: 75px;
+    }
+    }
+ }
+
+ .visually-hidden {
+    position: absolute !important;
+    overflow: hidden;
+    clip: rect(1px,1px,1px,1px);
+    width: 1px;
+    height: 1px;
+    word-wrap: normal;
+ }
+
+
+ .iglimage:before{
+    content: '';
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+     background: url(https://www.inclusivegrowthleeds.com/themes/custom/bbd_classy/images/clip.svg) no-repeat top center;
+     background-size: auto;
+    background-size: contain;
+ }
+
+ .iglimage:after{
+  clear: both;
+  display: block;
+  content: '';
+}
+.iglimage {
+  @media screen and (max-width: 992px) {
+    max-width: 400px;
+    margin: 0 auto 30px;
+  }
+}
+
+
+ 
+.iglimage img{
+  display: block;
+max-width: 100%;
+height: auto;
+}
 
  span.quick-topic {
    padding-right: 10px;
@@ -430,3 +569,18 @@ footer {
   width: 50%;
   padding-bottom: 50px;
  }
+
+// bootstrap 3
+// @media only screen and (min-width : 320px) {
+
+// /* Extra Small Devices, Phones */ 
+// @media only screen and (min-width : 480px) {
+
+// /* Small Devices, Tablets */
+// @media only screen and (min-width : 768px) {
+
+// /* Medium Devices, Desktops */
+// @media only screen and (min-width : 992px) {
+
+// /* Large Devices, Wide Screens */
+// @media only screen and (min-width : 1200px) {

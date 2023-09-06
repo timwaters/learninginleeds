@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head lang="en-GB">
+    <% page_title = (yield(:title) + " - " unless yield(:title).blank?).to_s + "Leeds Adult Learning" %>
+    <% meta_description = "Leeds City Council offers many free adult and community learning courses in our welcoming community venues to help unemployed and low-waged residents develop their skills and confidence. There's something for everyone, so whether you are looking to develop your skills for work or further education, learn English, or build your confidence and skills to help your children with their homework, there is something for you" %>
+    <% meta_description = page_title +".  "+ yield(:meta_description) unless yield(:meta_description).blank?  %>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta name="description" content="<%= meta_description %>">
+    <meta name="keywords" content="learning,adult education,tefl,health,jobs,skills,training,english,maths,caring,social,free,confidence,gardening,employability,jobs,horticulture,languages,arts,crafts">
+    <meta name="title" content="<%= page_title %>">
+
+    <meta property="og:site_name" content="Leeds Adult Learning">
+    <meta property="og:title" content="<%= page_title %>">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="<%= meta_description %>">
+    <meta property="og:image" content="<%= asset_url('logo-image-og.png')%>">
+    <meta property="og:url"   content="<%= request.original_url %>">
+
+    <meta property="twitter:site" content="@LCC_employment">
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:title" content="<%= page_title %>">
+    <meta property="twitter:description" content="<%= meta_description %>">
+    <meta property="twitter:image" content="<%= asset_url('logo-image-og.png')%>">
+
+    <%= favicon_link_tag 'favicon-16.png', type: 'image/png', sizes: "16x16"%>
+    <%= favicon_link_tag 'favicon-32.png', type: 'image/png', sizes: "32x32"%>
+    <%= favicon_link_tag 'favicon-96.png', type: 'image/png', sizes: "57x57"  %>
+    <%= favicon_link_tag 'favicon-152.png', type: 'image/png', sizes: "152x152"  %>
+    <%= favicon_link_tag 'favicon-57.png',  rel: 'apple-touch-icon', type: 'image/png',  sizes: "57x57"  %>
+    <%= favicon_link_tag 'favicon-144.png', rel: 'apple-touch-icon', type: 'image/png',  sizes: "144x144"  %>
+    <%= favicon_link_tag 'favicon-152.png', rel: 'apple-touch-icon', type: 'image/png',  sizes: "152x152"  %>
+    
+    <title>
+      <%= page_title %>
+    </title>
+
+    <%= csrf_meta_tags %>
+    
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script>
+      $( document ).on('turbolinks:load', function (event) {
+        if (typeof (gtag) == "function") {
+          gtag('config', '<%= AppConfig["google_analytics_id"] %>', {
+            page_title: event.target.title,
+            page_path: window.location.pathname,
+          });
+        }
+        $('.application-form').on('click', function () {
+          //console.log("click", new Date());
+          var url = $(this).attr("href");
+
+          if (typeof (gtag) == "function") {
+            //console.log("sending event", new Date());
+            gtag('event', 'apply-now-button', {
+              'event_category': 'button-click',
+              'event_label': url
+            });
+          }
+        }) //on click
+
+
+      });  //turbolinks
+
+    </script>
+
+  </head>
+
+  <body>
+  <%= render partial: 'shared/navbar' %>
+  <a href="#main-content" class="sr-only sr-only-focusable skip-to-content" data-turbolinks="false">Skip to main content</a>
+  <main role="main">
+    <div id="cookie_directive_container" class="container" style="display: none">
+      <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+        
+          <div class="navbar-inner navbar-content-center" id="cookie_accept">
+          <button id="accept-button" class="btn btn-primary pull-right"> Accept </button>
+            <p class="credit"><span class="cookie-h">Cookies</span>
+We use cookies on this website. We use them to understand how you use the site and give added features. Cookies are also set by Google Analytics. To consent to this use click on the Accept button. You can view <a id="privacy-button" target="_blank" href="/privacy" class="">our privacy, data and terms page</a> for more information about cookies, your data and your options. 
+            </p>
+          </div>
+        </div>
+      </nav>
+    </div>
+    
+    <div class="container container-fluid">
+            
+      <div class="row">          
+        <div class="flash">
+          <% if notice %>
+            <p class="alert alert-success alert-dismissable"><%= notice %>
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times;</button>
+            </p>
+          <% end %>
+          <% if alert %>
+            <p class="alert alert-danger alert-dismissable"><%= alert %>
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times;</button>
+            </p>
+          <% end %>
+        </div>
+      </div>
+      
+      <div class="content" id="main-content">
+        <%= yield %>
+      </div>
+
+    </div>
+</main>
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="row footer">
+      <div class="col-xs-12 col-sm-3 col-md-3  logo-footer">
+        <span>
+        <a href="https://leeds.gov.uk" title="Leeds.gov.uk"><%= image_tag("lcc-logo-white-01.svg", :alt => "Leeds City Council logo") %></a>
+        </span>
+      </div>
+
+      <div class="col-xs-12 col-sm-2 col-md-2 links">
+        <%= link_to "About", about_path %>
+      </div>
+
+      <div class="col-xs-12 col-sm-2 col-md-2 links">
+         <a href="/accessibility">Accessibility</a> 
+      </div>
+
+     
+      <div class="col-xs-12 col-sm-2 col-md-2 links">
+        <%= link_to "Privacy / Data", privacy_path %>
+      </div>
+      <div class="col-xs-12 col-sm-2 col-md-2 links">  
+        <a href="https://employmentskillsleeds.co.uk/contact">Contact</a>
+      </div>
+
+
+    </div>
+     <div class="row footer">
+      <div class="col-sm-12 copyright links ">
+        Copyright © Leeds City Council 2021 
+      </div> 
+     </div>
+  </div>
+</footer>
+
+    <%= render :partial => "shared/analytics" %>
+  </body>
+</html>

@@ -168,11 +168,6 @@ h2.search-heading {
     font-style: italic;
 }
 
-.footer {
-    border-top: 0px $slight solid;
-   margin-top: 0px;
-    color: $slight;
-}
 
 .course-result {
     padding-top: 5px;
@@ -332,46 +327,137 @@ td.text-center img {
        font-url('lato-v13-latin-700italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
+
+
 footer {
-    background-color:$purple;
-    min-height: 75px;
-    margin-top: 2rem;
+  margin-left: -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 150px;
+  margin-top: 90px;
+  position: relative;
+
   }
+
+  footer:before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: -70px;
+    
+    background: asset_url('footer--shape-mob.svg') no-repeat right bottom;
+    background-size: contain;
+    display: block;
+    width: 250px;
+    height: 250px;
+    z-index: -1;
+
+    @media (min-width: 320px) {
+      top: -70px;
+      width: 250px;
+      height: 250px;
+    }
+
+    @media (min-width: 480px) {
+      width: 400px;
+      height: 400px;
+      bottom: 30%;
+      top: auto;
+    }
+
+
+    @media (min-width: 1500px) {
+      bottom: 65px;
+      width: 600px;
+      height: 600px;
+    }
+
+ }
+
+  footer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: $iglblue;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+  }
+
+  footer .nav{
+    margin-bottom: 35px;
+    max-width: 1340px;
+    @media (min-width: 768px) {
+      font-size: 17px;
+    }
+  }
+
+  footer  ul {
+    list-style: none outside;
+    text-align: left;
+  }
+  footer  li {
+    padding: 0;
+    margin-bottom: 15px;
+  }
+ 
+
+  
+
   footer a {
     color: white !important;
-    text-decoration: underline;
+    text-decoration: none !important;
   }
   footer a:hover {
     color: white;
+    text-decoration: underline;
   }
   footer a:focus{
     color: $purple !important;
     background-color: #e2eefa !important;
+    text-decoration: underline;
     
   }
   
   footer .links {
-    padding-top: 22px;
-    color: white;
-    font-size: 18px;
-    align-self: first baseline;
+    padding-left: 7px;
+    margin: 0 0 15px 0;
+    li {
+      display: inline-block;
+      padding: 0;
+      margin: 0 15px 0 0;
+    }
+
+    a{
+      font-size: 10px;
+      color: inherit;
+      text-decoration: none;
+      @media (min-width: 768px) {
+        font-size: 14px;
+      }
+    }
   }
-  footer .copyright {
-    font-size: 13px;
-  }
+
+  @media (min-width: 768px) {
+    .linksandlogo{ 
+        display: flex;
+        align-items: center;
+    }
+}
+
+
   
-  footer .logo-footer span {
-    // background: asset_url('lcc-logo-white-01.svg') center center/100% 100% no-repeat;
-    display: block;
-    height: 40px;
-    width:100px;
-    margin-top: 12px;
+  footer .logo-footer  {
+    margin-bottom: 30px;
+    img {
+      margin: 0 15px 0 0;
+      max-width: 100px;
+      height: auto;
+    }
+ 
   }
-  
-  // .footer {
-  //   margin-right:0px !important;
-  //  // display: flex !important;
-  // }
+
 
   .recent-h{
     font-size: medium;
@@ -529,7 +615,7 @@ footer {
     position: absolute;
     top: 0;
     left: 0;
-     background: url(https://www.inclusivegrowthleeds.com/themes/custom/bbd_classy/images/clip.svg) no-repeat top center;
+     background: asset_url('clip.svg') no-repeat top center;
      background-size: auto;
     background-size: contain;
  }

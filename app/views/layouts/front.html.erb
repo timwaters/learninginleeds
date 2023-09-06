@@ -111,41 +111,8 @@ We use cookies on this website. We use them to understand how you use the site a
 
     </div>
 </main>
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="container">
-    <div class="row footer">
-      <div class="col-xs-12 col-sm-3 col-md-3  logo-footer">
-        <span>
-        <a href="https://leeds.gov.uk" title="Leeds.gov.uk"><%= image_tag("lcc-logo-white-01.svg", :alt => "Leeds City Council logo") %></a>
-        </span>
-      </div>
-
-      <div class="col-xs-12 col-sm-2 col-md-2 links">
-        <%= link_to "About", about_path %>
-      </div>
-
-      <div class="col-xs-12 col-sm-2 col-md-2 links">
-         <a href="/accessibility">Accessibility</a> 
-      </div>
-
-     
-      <div class="col-xs-12 col-sm-2 col-md-2 links">
-        <%= link_to "Privacy / Data", privacy_path %>
-      </div>
-      <div class="col-xs-12 col-sm-2 col-md-2 links">  
-        <a href="https://employmentskillsleeds.co.uk/contact">Contact</a>
-      </div>
-
-
-    </div>
-     <div class="row footer">
-      <div class="col-sm-12 copyright links ">
-        Copyright © Leeds City Council 2021 
-      </div> 
-     </div>
-  </div>
-</footer>
+    <!-- FOOTER -->
+    <%= render :partial => "shared/footer" %>
 
     <%= render :partial => "shared/analytics" %>
   </body>

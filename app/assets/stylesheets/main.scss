@@ -298,7 +298,9 @@ td.text-center img {
     padding-top: 5px;
     border-radius: 10px;
     margin-bottom: 10px;
-    background-color: $lightblue;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $igldarkorange;
     padding-left: 5px;
     padding-right: 5px;
     padding-bottom: 5px;

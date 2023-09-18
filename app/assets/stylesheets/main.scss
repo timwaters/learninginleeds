@@ -13,6 +13,8 @@ $yellow:   #f4ff8d;
 $straw:    #dedc00;
 $lightblue:#e2eefa;
 
+$hubpink:  #e31a81;
+
 $iglblue: #092F44;
 $iglmutedblue: #436168;
 $iglorange: #F5A027;
@@ -70,7 +72,7 @@ body {
 
 
 .slight {
-    color: lighten($purple, 10%);
+    color: $hubpink;
 }
 
 .smaller {
@@ -112,15 +114,16 @@ h.title {
 }
 h1 {
     font-family: rustica,'Lato',Helvetica,Arial,sans-serif !important;
-    font-style: italic;
-    color: $purple !important;
+    font-weight: normal;
+    color: $iglblue !important;
     padding-top: 25px;
 }
 
 h1 a.rootlink {
+  font-weight: normal;
     text-decoration: none;
     font-size: 40px;
-    color: $purple !important;
+    color: $iglblue !important;
 }
 
 h1 a.rootlink:hover {
@@ -174,6 +177,7 @@ h2.search-heading {
 
 .control-label{
   font-size: larger;
+  font-weight: normal;
 }
 
 .show-all {
@@ -606,6 +610,7 @@ footer {
     top: 50%;
     transform: translate(-50%,-50%);
     display: block;
+    width: 60px;
     @media screen and (min-width: 768px) {
       width: 75px;
     }

@@ -191,19 +191,20 @@ h2.search-heading {
     margin-bottom: 10px;
     margin-left: 15px;
     margin-right: 15px;
-    color: white;
-    background-color: $hubpurple;
-    border-color: $hubpurple;
-    border-width: 1px;
+    color: $iglblue;
+    // background-color: $hubpurple;
+    border-color: $igldarkorange;
+    border-width: 2px;
     border-style: solid;
+    font-size:larger;
     a {
-      color: white !important;
+    
       font-weight: normal;
       
     }
-    a:hover {
-      color: white !important;
-    }
+    // a:hover {
+    //   color: white !important;
+    // }
 }
 
 .course-main {
@@ -212,7 +213,9 @@ h2.search-heading {
     margin-bottom: 15px;
     margin-left: 15px;
     margin-right:15px;
-    background-color: $lightblue;
+    // background-color: $lightblue;
+    background-color: #7ddada;
+    font-size:larger;
 }
 
 .course-map {
@@ -224,8 +227,8 @@ h2.search-heading {
     padding-bottom: 10px;
     border-radius: 10px;
     margin-bottom: 15px;
-
-    background-color: $lightblue;
+    background-color: #7ddada;
+    // background-color: $lightblue;
 }
 
 .rotate {

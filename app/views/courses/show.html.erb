@@ -91,8 +91,8 @@
           <% end %>
         </p>
         <p>
-        View a list of <%= link_to "all courses provided by #{@course.provider.name}", @course.provider %> offered here. <br />
-        View a list of <%= link_to "all courses held at #{@course.venue.name.titlecase}", @course.venue %> offered here.
+        View a list of  <%= link_to "courses near #{@course.venue.name.titlecase}'s", courses_path(q: "", near: "#{@course.venue.longitude},#{@course.venue.latitude}") %> area
+ 
         </p>
 
         <% unless @course.target_group.blank? %>

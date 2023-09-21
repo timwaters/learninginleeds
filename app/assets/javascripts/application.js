@@ -18,3 +18,4 @@
 //= require cookies_helper
 //= require leaflet
 //= require cookie-notice-loader.js
+//= require slick.js

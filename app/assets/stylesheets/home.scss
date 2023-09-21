@@ -1,3 +1,144 @@
 // Place all the styles related to the Home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+// for the news slider
+
+$hubpink:  #e31a81;
+$hubpastelpink: #f184bb;
+
+.slider {
+  max-width:83.75em;
+  margin:0 auto 30px;
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+ }
+
+ .slider .slider-heading h2 {
+  margin: 0;
+  font-weight: normal !important;
+ }
+
+.slider .slick-initialized .slick-track {
+  display:flex;
+ }
+.slider .slick-list {
+  margin:0 -10px;
+ }
+.slider .slick-slider {
+  padding-top:60px;
+ }
+.slider .slick-slider .slide-name {
+  margin:0;
+ }
+.slider .slide-text {
+  padding:0 15px;
+ }
+.slider .slide-text h2 {
+  margin:0;
+ }
+
+.slider .slide-main {
+  border-radius:20px;
+  background:$hubpastelpink
+ }
+.news-slider .slick-main{
+  background:$hubpastelpink;
+}
+
+
+.slide-wrapper {
+  height:auto;
+  margin: 0 10px;
+ }
+
+
+
+.slider .slick-slide h4 {
+  margin-bottom:5px;
+ }
+.slider .slide-image{
+  margin:0 0 15px;
+ }
+.slider .slide-image img {
+  border-radius:20px 20px 0 0;
+ }
+.slider .slide-link {
+  display:block;
+  cursor:pointer;
+  min-height:305px;
+  border-radius:20px;
+  padding:0 15px 15px;
+  text-decoration:none;
+ }
+ .slider .slide-link:focus {
+   background: $hubpink;
+   color: black;
+ }
+.slider .slide-link:hover .cta-title {
+  background:#bdbdbd;
+ }
+.slider .slide-link .slide-image  {
+  margin:0 -15px 15px;
+ }
+.slider .slide-link .slide-text h4 {
+  padding:0;
+ }
+.slider .slide-link .slide-text p {
+  padding:10px 0 0;
+  font-weight: normal;
+ }
+
+ 
+.slider .slick-prev,
+.slider .slick-next {
+  position:absolute;
+  top:0;
+  right:0;
+  width:40px;
+  height:40px;
+  padding:0;
+  margin:0;
+  font-size:20px;
+  font-weight:700;
+  color:#092F44;
+  min-width:40px;
+  border-radius:50%;
+  background: $hubpastelpink;
+  border:0;
+ }
+
+ .news-slider .slider .slick-prev,
+ .slider .slick-next {
+  color:#092F44;
+  background: $hubpastelpink;
+ }
+.slider .slick-prev::before,
+.slider .slick-next::before {
+  content:'';
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:21px;
+  margin:-7px 0 0 -6px;
+  height:18px;
+  background:url(https://www.inclusivegrowthleeds.com/themes/custom/bbd_classy/images/icon-next.svg) no-repeat;
+  background-size:contain;
+ }
+.news-slider .slick-prev:hover,
+.news-slider .slick-prev:focus,
+.news-slider .slick-next:hover,
+.news-slider .slick-next:focus {
+  background: $hubpastelpink;
+ }
+ 
+.slider .slick-prev {
+  right:50px;
+ }
+.slider .slick-prev::before {
+  background-image:url(https://www.inclusivegrowthleeds.com/themes/custom/bbd_classy/images/icon-prev.svg);
+  margin-left:-8px;
+ }
+

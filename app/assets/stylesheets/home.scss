@@ -124,7 +124,7 @@ $hubpastelpink: #f184bb;
   width:21px;
   margin:-7px 0 0 -6px;
   height:18px;
-  background:url(https://www.inclusivegrowthleeds.com/themes/custom/bbd_classy/images/icon-next.svg) no-repeat;
+  background: asset_url('icon-next.svg') no-repeat;
   background-size:contain;
  }
 .news-slider .slick-prev:hover,
@@ -138,7 +138,7 @@ $hubpastelpink: #f184bb;
   right:50px;
  }
 .slider .slick-prev::before {
-  background-image:url(https://www.inclusivegrowthleeds.com/themes/custom/bbd_classy/images/icon-prev.svg);
+  background-image: asset_url('icon-prev.svg') ;
   margin-left:-8px;
  }
 

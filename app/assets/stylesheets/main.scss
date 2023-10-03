@@ -43,7 +43,7 @@ color: $iglmutedblue !important;
 }
 
 *:focus {
-    color:white !important;
+ 
     background-color: $iglorange;
   }
   a:focus {
@@ -236,19 +236,19 @@ h2.search-heading {
     color: grey;
 }
 
-.add-on .input-group-btn > .btn {
-  border-left-width:0;
-  left:4px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  margin-left: -4px !important;
-}
+// .add-on .input-group-btn > .btn {
+//   border-left-width:0;
+//   left:4px;
+//   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+//   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+//   margin-left: -4px !important;
+// }
 
-.add-on .form-control:focus {
-     box-shadow:none;
-     -webkit-box-shadow:none; 
-     border-color:#cccccc; 
-}
+// .add-on .form-control:focus {
+//      box-shadow:none;
+//      -webkit-box-shadow:none; 
+//      border-color:#cccccc; 
+// }
 
 .gimme-rounds {
     border-radius: 3px !important;

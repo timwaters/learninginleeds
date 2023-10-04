@@ -401,7 +401,7 @@ footer {
 
 
     @media (min-width: 1500px) {
-      bottom: 65px;
+      bottom: 0px;
       width: 600px;
       height: 600px;
     }
@@ -690,6 +690,34 @@ height: auto;
   width: 50%;
   padding-bottom: 50px;
  }
+
+ .story {
+  margin-bottom: 2em;
+  font-size: larger;
+}
+
+.story-result {
+  padding-top: 5px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  margin-left: 15px;
+  margin-right: 15px;
+  color: $iglblue;
+  // background-color: $hubpurple;
+  border-color: $igldarkorange;
+  border-width: 2px;
+  border-style: solid;
+  font-size:larger;
+  a {
+    font-size: larger;
+    font-weight: normal;
+    
+  }
+  // a:hover {
+  //   color: white !important;
+  // }
+}
+
 
 // bootstrap 3
 // @media only screen and (min-width : 320px) {

@@ -1,0 +1,6 @@
+<div class="story container">
+  <h2><%= @story.title %></h2>
+  <%= sanitizemarkdown(Kramdown::Document.new(@story.body).to_html)%>
+  <br />
+  <p><%=link_to "View more stories", stories_path, class: "btn btn-lil" %></p>
+</div>

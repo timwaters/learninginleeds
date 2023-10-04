@@ -59,4 +59,13 @@ module ApplicationHelper
     end
   end
 
+  #sanitze text, not allowing div for layout changes or style for formatting changes 
+  #     :elements        => Sanitize::Config::RELAXED[:elements] - ['div', 'style'],
+  def sanitizemarkdown(text)
+    Sanitize.clean(text, Sanitize::Config.merge(Sanitize::Config::RELAXED,
+      :elements        => Sanitize::Config::RELAXED[:elements],
+      :remove_contents => true
+    )).html_safe
+  end
+
 end

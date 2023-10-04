@@ -1,0 +1,24 @@
+<div class="container">
+
+  <h2>Stories</h2>
+
+  <% @stories.each do | story | %>
+  <div class="row story-result">
+    <div class="col-md-12">
+      <h4><%=link_to story.title, story%></h4>
+      <img src="<%= story.thumbnail %>" > <br />
+      <div class="story-excerpt">
+        <p><%= sanitizemarkdown(story.excerpt) %></p>
+        <p><%=link_to "Read more", story, class: "btn btn-lil" %></p>
+      </div>
+    </div>
+  </div>
+  <br />
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-12">
+      <%= will_paginate @stories %>
+    </div>
+  </div>
+</div>

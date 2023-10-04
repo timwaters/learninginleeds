@@ -155,92 +155,24 @@
 
   <div class="story-slider">
 
+    <% @stories.each do | story | %>
     <div>
       <div class="slide-wrapper">
         <div class="story-slide slide-main">
-          <a href="#" class="slide-link" aria-label="Visit page: Future Talent Leeds">
+          <a href="<%= url_for(story) %>" class="slide-link" aria-label="Read story: <%= story.title %>">
             <div class="story-slide-image slide-image">
-              <img src="https://www.inclusivegrowthleeds.com/sites/default/files/styles/card_slider_/public/2022-10/20220929_114549.jpg?h=73a46725&itok=DJz-BWEH" alt="people" typeof="foaf:Image" class="image-style-card-slider-" width="622" height="310">
+              <img src="<%= story.thumbnail %>" class="image-style-card-slider-" >
             </div>
 
             <div class="story-slide-text slide-text ">
-              <h4>Story 1</h4>
-              <p>Neque viverra justo nec ultrices dui sapien eget mi proin. Facilisis magna etiam tempor orci eu lobortis elementum nibh tellus</p>
+              <h4><%= story.title %></h4>
+              <p><%= sanitizemarkdown(story.excerpt) %></p>
             </div>
           </a>
         </div>
       </div>
     </div>
-
-    <div>
-      <div class="slide-wrapper">
-        <div class="story-slide slide-main">
-          <a href="#" class="slide-link" aria-label="Visit page: Future Talent Leeds">
-            <div class="story-slide-image slide-image">
-              <img src="https://www.inclusivegrowthleeds.com/sites/default/files/styles/card_slider_/public/2022-10/20220929_114549.jpg?h=73a46725&itok=DJz-BWEH" alt="people" typeof="foaf:Image" class="image-style-card-slider-" width="622" height="310">
-            </div>
-
-            <div class="story-slide-text slide-text ">
-              <h4>Story title</h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <div>
-      <div class="slide-wrapper">
-        <div class="story-slide slide-main">
-          <a href="#" class="slide-link" aria-label="Visit page: Future Talent Leeds">
-            <div class="story-slide-image slide-image">
-              <img src="https://www.inclusivegrowthleeds.com/sites/default/files/styles/card_slider_/public/2022-10/20220929_114549.jpg?h=73a46725&itok=DJz-BWEH" alt="people" typeof="foaf:Image" class="image-style-card-slider-" width="622" height="310">
-            </div>
-
-            <div class="story-slide-text slide-text ">
-              <h4>Case Study</h4>
-              <p>Neque viverra justo nec ultrices dui sapien eget mi proin. Facilisis magna etiam tempor orci eu lobortis elementum nibh tellus</p>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <div>
-      <div class="slide-wrapper">
-        <div class="story-slide slide-main">
-          <a href="#" class="slide-link" aria-label="Visit page: Future Talent Leeds">
-            <div class="story-slide-image slide-image">
-              <img src="https://www.inclusivegrowthleeds.com/sites/default/files/styles/card_slider_/public/2022-10/20220929_114549.jpg?h=73a46725&itok=DJz-BWEH" alt="people" typeof="foaf:Image" class="image-style-card-slider-" width="622" height="310">
-            </div>
-
-            <div class="story-slide-text slide-text ">
-              <h4>Story 4</h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <div>
-      <div class="slide-wrapper">
-        <div class="story-slide slide-main">
-          <a href="#" class="slide-link" aria-label="Visit page: Future Talent Leeds">
-            <div class="story-slide-image slide-image">
-              <img src="https://www.inclusivegrowthleeds.com/sites/default/files/styles/card_slider_/public/2022-10/20220929_114549.jpg?h=73a46725&itok=DJz-BWEH" alt="people" typeof="foaf:Image" class="image-style-card-slider-" width="622" height="310">
-            </div>
-
-            <div class="story-slide-text slide-text ">
-              <h4>Story 5</h4>
-              <p>Neque viverra justo nec ultrices dui sapien eget mi proin. Facilisis magna etiam tempor orci eu lobortis elementum nibh tellus</p>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-
-
+    <% end %>
 
   </div>
 </div>

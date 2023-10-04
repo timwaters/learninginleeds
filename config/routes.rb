@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'venues/:venue_id', to: 'courses#index', :as => 'venue'
   get 'providers/:provider_id', to: 'courses#index', :as => 'provider'
   get 'topics/:topic_id', to: 'courses#index', :as => 'topic'
+  resources :stories, only: [:index, :show]
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

@@ -5,7 +5,7 @@ ActiveAdmin.register Page do
   form do |f|
     f.inputs "" do
       f.input :name, input_html: { placeholder: "about / welcome"}
-      f.input :body
+      f.input :body, as: :simplemde_editor,  :label => "Body", hint: "Markdown format. Shown for about only"
     end
   f.actions
   end

@@ -687,6 +687,7 @@ height: auto;
 }
 
 .topics {
+  padding-top: 1em;
   padding-bottom: 2em;
 }
 
@@ -706,9 +707,15 @@ height: auto;
   padding-bottom: 50px;
  }
 
- .story {
+ .story, .news {
   margin-bottom: 2em;
   font-size: larger;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
 }
 
 .story-result, .news-result {
@@ -728,9 +735,11 @@ height: auto;
     font-weight: normal;
     
   }
-  // a:hover {
-  //   color: white !important;
-  // }
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
 }
 
 .news-result {

@@ -5,7 +5,7 @@
   <% @stories.each do | story | %>
   <div class="row story-result">
     <div class="col-md-12">
-      <h4><%=link_to story.title, story%></h4>
+      <h3><%=link_to story.title, story%></h3>
       <img src="<%= story.thumbnail %>" > <br />
       <div class="story-excerpt">
         <p><%= sanitizemarkdown(story.excerpt) %></p>

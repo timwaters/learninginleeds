@@ -5,7 +5,7 @@
   <% @news.each do | news_item | %>
   <div class="row news-result">
     <div class="col-md-12">
-      <h4><%=link_to news_item.title, news_item%></h4>
+      <h3><%=link_to news_item.title, news_item%></h3>
       <img src="<%= news_item.thumbnail %>" > <br />
       <div class="news_item-excerpt">
         <p><%= sanitizemarkdown(news_item.excerpt) %></p>

@@ -561,12 +561,16 @@ footer {
         font-size: 18px;
         line-height: normal;
         text-decoration: none;
-        padding-top: 26px;
+      
+        padding-top: 15px;
+        margin-top: 12px;
         @media screen and (max-width: 480px) {
           visibility: hidden;
         }
         @media screen and (min-width: 768px) {
-          padding-top: 39px;
+          
+          padding-top: 17px;
+          margin-top: 24px;
         }
       }
       .navbar-link:hover{
@@ -581,6 +585,10 @@ footer {
 
     .navbar-form {
       box-shadow: none !important;
+    }
+
+    .navbar-nav li a:hover, .navbar-nav li a:focus {
+      background: $iglmutedblue;
     }
   
 }

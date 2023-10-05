@@ -1,3 +1,5 @@
+<% content_for :title, @story.title + " - Stories" %>
+
 <div class="story container">
   <h2><%= @story.title %></h2>
   <%= sanitizemarkdown(Kramdown::Document.new(@story.body).to_html)%>

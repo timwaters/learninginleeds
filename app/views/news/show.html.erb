@@ -1,3 +1,5 @@
+<% content_for :title, @news_item.title + " - News & Events" %>
+
 <div class="news container">
   <h2><%= @news_item.title %></h2>
   <%= sanitizemarkdown(Kramdown::Document.new(@news_item.body).to_html)%>

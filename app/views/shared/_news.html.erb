@@ -1,15 +1,29 @@
-<div class="row rec">
-  
-  <div class="col-md-12">
+<div class="slider">
+  <div class="slider-heading">
     <h2>News & Events</h2>
   </div>
-  <% news.each do | news_item |  %>
 
-    <div class="col-md-4 smaller">
-      <div class="news-item">
-        <%= sanitize news_item.body %>
+  <div class="news-slider">
+
+    <% news.each do | news_item | %>
+    <div>
+      <div class="slide-wrapper">
+        <div class="bews-slide slide-main">
+          <a href="<%= url_for(news_item) %>" class="slide-link" aria-label="Read news: <%= news_item.title %>">
+            <div class="news-slide-image slide-image">
+              <img src="<%= news_item.thumbnail %>" class="image-style-card-slider-" >
+            </div>
+
+            <div class="news-slide-text slide-text ">
+              <h4><%= news_item.title %></h4>
+              <p><%= sanitizemarkdown(news_item.excerpt) %></p>
+            </div>
+          </a>
+        </div>
       </div>
     </div>
-  <% end %>
+    <% end %>
+
+  </div>
 </div>
 

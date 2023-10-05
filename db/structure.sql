@@ -271,7 +271,11 @@ CREATE TABLE public.news (
     id bigint NOT NULL,
     body text,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    excerpt text,
+    title character varying,
+    thumbnail character varying,
+    visible boolean DEFAULT false
 );
 
 
@@ -416,7 +420,7 @@ CREATE TABLE public.stories (
     thumbnail character varying,
     body text,
     excerpt text,
-    visible boolean DEFAULT true,
+    visible boolean DEFAULT false,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -927,6 +931,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180710130605'),
 ('20210117153530'),
 ('20210211175004'),
-('20231003150826');
+('20231003150826'),
+('20231005110840'),
+('20231005114418');
 
 

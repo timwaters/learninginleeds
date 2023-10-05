@@ -13,4 +13,19 @@ ActiveAdmin.register Story do
   f.actions
   end
   
+  index do
+    selectable_column
+    id_column
+    column :visible
+    column :title
+    column :excerpt
+    column :thumbnail
+
+    column :created_at
+    column :updated_at
+   
+
+    actions
+  end
+
 end

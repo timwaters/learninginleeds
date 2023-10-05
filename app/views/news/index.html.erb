@@ -1,0 +1,24 @@
+<div class="container">
+
+  <h2>News & Events</h2>
+
+  <% @news.each do | news_item | %>
+  <div class="row news-result">
+    <div class="col-md-12">
+      <h4><%=link_to news_item.title, news_item%></h4>
+      <img src="<%= news_item.thumbnail %>" > <br />
+      <div class="news_item-excerpt">
+        <p><%= sanitizemarkdown(news_item.excerpt) %></p>
+        <p><%=link_to "Read more", news_item, class: "btn btn-lil" %></p>
+      </div>
+    </div>
+  </div>
+  <br />
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-12">
+      <%= will_paginate @news %>
+    </div>
+  </div>
+</div>

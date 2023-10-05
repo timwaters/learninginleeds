@@ -81,7 +81,7 @@ class CoursesController < ApplicationController
   end
 
   def index
-    @news = News.all.order(updated_at: :desc).limit(3)
+    @news = News.all.where(visible: true).order(updated_at: :desc).limit(16)
     @lon_lat = nil
     if params[:topic_id]
       @topic = Topic.find(params[:topic_id])

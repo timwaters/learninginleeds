@@ -24,3 +24,21 @@
 }
 
 @import 'active_admin/simplemde';
+
+
+#story_body_input, #news_body_input, #story_excerpt_input, #news_excerpt_input {
+    label {
+        height: 5em;
+    }
+    .editor-toolbar {
+        border:none;
+    }
+}
+#story_excerpt_input, #news_excerpt_input {
+
+    .CodeMirror,
+    .CodeMirror-scroll {
+        max-height: 100px;
+        min-height: 100px;
+    }
+}

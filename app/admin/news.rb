@@ -13,6 +13,26 @@ ActiveAdmin.register News do
   f.actions
   end
 
+  action_item :view, only: [:show, :edit] do
+    link_to 'View on site', news
+  end
+
+  show do
+    attributes_table do
+      row :visible
+      row :title
+      row :thumbnail do |img|
+        image_tag img.thumbnail
+      end
+      row :excerpt
+      row :body
+      row :created_at
+      row :updated_at
+    end
+    span do
+      link_to 'View this news article on the site', news
+    end
+  end
 
   index do
     selectable_column

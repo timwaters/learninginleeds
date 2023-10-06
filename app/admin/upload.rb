@@ -25,25 +25,27 @@ ActiveAdmin.register Upload do
       row :image do
         image_tag(t.image.url(:thumbnail))
       end
-      row "micro (70x70>)" do
-        div do
-          url_for t.image.url(:micro)
+   
+      row "micro (100x100>)" do
+        div do | i |
+          text_field_tag :micro_url, t.image.url(:micro), size: 75, readonly: true
         end
         span do
           image_tag(t.image.url(:micro))
         end
       end
       row "thumbnail (450x250>)" do
-        div do
-          url_for t.image.url(:thumbnail)
+        div do | i |
+          text_field_tag :thumbnail_url, t.image.url(:thumbnail), size: 75, readonly: true
         end
         span do
           image_tag(t.image.url(:thumbnail))
         end
       end
       row "large (900x900>)" do
-        div do
-          url_for t.image.url(:large)
+
+        div do | i |
+          text_field_tag :large_url, t.image.url(:large), size: 75, readonly: true
         end
         span do
           image_tag(t.image.url(:large))

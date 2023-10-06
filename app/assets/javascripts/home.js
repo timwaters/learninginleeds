@@ -1,4 +1,11 @@
 
+document.addEventListener("turbolinks:before-cache", function () {
+  var sliders = document.querySelectorAll('.slick-initialized');
+  sliders.forEach(slider => {
+    $(slider).slick('unslick');
+  })
+});
+
 $( document ).on('turbolinks:load', function (event) {
 
   $(".news-slider").not('.slick-initialized').slick({

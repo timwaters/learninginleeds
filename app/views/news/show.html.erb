@@ -3,6 +3,9 @@
 <div class="news container">
   <h2><%= @news_item.title %></h2>
   <%= sanitizemarkdown(Kramdown::Document.new(@news_item.body).to_html)%>
-  <br />
+</div>
+
+<div class="container">
   <p><%=link_to "View more news & events", news_index_path, class: "btn btn-lil" %></p>
+  <br />
 </div>

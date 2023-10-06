@@ -218,7 +218,10 @@ h2.search-heading {
     margin-left: 15px;
     margin-right:15px;
     // background-color: $lightblue;
-    background-color: #7ddada;
+    //background-color: #7ddada;
+    border-color: $iglorange;
+    border-width: 2px;
+    border-style: solid;
     font-size:larger;
 }
 
@@ -231,7 +234,10 @@ h2.search-heading {
     padding-bottom: 10px;
     border-radius: 10px;
     margin-bottom: 15px;
-    background-color: #7ddada;
+   // background-color: #7ddada;
+    border-color: $iglorange;
+    border-width: 2px;
+    border-style: solid;
     // background-color: $lightblue;
 }
 
@@ -710,12 +716,20 @@ height: auto;
  .story, .news {
   margin-bottom: 2em;
   font-size: larger;
-
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 10px;
   img {
     max-width: 100%;
     height: auto;
     display: block;
   }
+}
+.story {
+  border-color: $hubcyan;
+}
+.news {
+  border-color: $hubpastelpink;
 }
 
 .story-result, .news-result {

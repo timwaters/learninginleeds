@@ -22,11 +22,11 @@ ActiveAdmin.register Upload do
 
   show do |t|
     attributes_table do
-      row :image do
-        image_tag(t.image.url(:thumbnail))
-      end
+      # row :image do
+      #   image_tag(t.image.url(:thumbnail))
+      # end
    
-      row "micro (100x100>)" do
+      row "micro (150x150>)" do
         div do | i |
           text_field_tag :micro_url, t.image.url(:micro), size: 75, readonly: true
         end
@@ -34,15 +34,19 @@ ActiveAdmin.register Upload do
           image_tag(t.image.url(:micro))
         end
       end
-      row "thumbnail (450x250>)" do
+
+      row "cropped (500x250)" do
+        span do
+          "Use this one for the thumbnail / small image in story and news sliders. Uploads have been resized to 500x250px"
+        end
         div do | i |
-          text_field_tag :thumbnail_url, t.image.url(:thumbnail), size: 75, readonly: true
+          text_field_tag :cropped_url, t.image.url(:cropped), size: 75, readonly: true
         end
         span do
-          image_tag(t.image.url(:thumbnail))
+          image_tag(t.image.url(:cropped))
         end
       end
-      row "large (900x900>)" do
+      row "large (800x800>)" do
 
         div do | i |
           text_field_tag :large_url, t.image.url(:large), size: 75, readonly: true

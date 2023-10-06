@@ -1,7 +1,9 @@
 class Upload < ApplicationRecord
 
   has_attached_file :image,
-    :styles => {:micro => ["100x100>", :png], :thumbnail => ["450x250>", :png], :large => ["900x900>", :png]},
+    :styles => {:micro =>     ["150x150>", :png],
+                :cropped =>   ["500x250#", :png],
+                :large =>     ["800x800>", :png]},
   #  :url => '/uploads/:id/:style/:basename.:extension',
     url: "/uploads/:id/:style/:hash.:extension",
     hash_data: ":class/:attachment/:id/:style/:updated_at",

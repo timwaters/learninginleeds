@@ -93,7 +93,7 @@ We use cookies on this website. We use them to understand how you use the site a
       <div class="row">
         <div class="text-center">
          
-         
+          <%= link_to "Back to Inclusive Growth Leeds", :back if request.referer && URI(request.referer).host == "www.inclusivegrowthleeds.com"  %>
           <h1 class="page-head"> <a class="rootlink" href="/"><span class="slight">Leeds</span> Adult Learning</a></h1>
                   
         </div>

@@ -106,6 +106,7 @@ We use cookies on this website. We use them to understand how you use the site a
       </div>
       
       <div class="content" id="main-content">
+        <%= link_to "Back to Inclusive Growth Leeds", :back if request.referer && URI(request.referer).host == "www.inclusivegrowthleeds.com"  %>
         <%= yield %>
       </div>
 

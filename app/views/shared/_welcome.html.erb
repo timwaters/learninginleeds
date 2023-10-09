@@ -3,7 +3,7 @@
   <div class="col-md-12">
    
     <p>
-    <%= sanitize @welcome.body, tags: %w(strong em a), attributes: %w(href) %>
+      <%= sanitizemarkdown(Kramdown::Document.new( @welcome.body).to_html)%>
     </p>
 
   </div>

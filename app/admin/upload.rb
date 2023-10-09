@@ -16,6 +16,10 @@ ActiveAdmin.register Upload do
     column :image do | t |
         image_tag(t.image.url(:micro))
     end
+
+    column :cropped_url do | t |
+     t.image.url(:cropped)
+    end
    
     actions
   end

@@ -16,8 +16,11 @@ ActiveAdmin.register Topic do
     end
 
     f.inputs 'Promotional Banner HTML' do
-      f.para "Insert html for promotional banner. Only <h3><strong> <br> and <a> tags accepted. Leave blank for no banner"
-      f.input :promotion, required: false, hint: "Example: <h3>Help Getting Access to Digital Technology</h3> If you are interested in getting help with digital technology there are over 50 places across the area that are part of the Online Centres Network. Leeds City Council Libraries are able to help you get online and are a great resource for those without basic online skills or those looking to improve their existing digital knowledge. <br> <a href='http://example.com'>Find a Getting Online Venue</a>"
+      f.para "Insert html for promotional banner. In markdown format. Leave blank for no banner"
+      f.input :promotion, required: false, as: :simplemde_editor, hint: "Example:<br /> ### Help Getting Access to Digital Technology <br />
+      If you are interested in getting help with digital technology there are over 50 places across the area that are part of the Online Centres Network. Leeds City Council Libraries are able to help you get online and are a great resource for those without basic online skills or those looking to improve their existing digital knowledge. 
+      <br />
+      [Find a Getting Online Venue](http://example.com)".html_safe
      
     end
 

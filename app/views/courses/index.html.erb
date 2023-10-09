@@ -44,7 +44,7 @@
     <div class="row course-result topic-promotion">
       <div class="col-md-12">
         <p>
-          <%= sanitize @topic.promotion, tags: %w(br a h3 strong) %>
+          <%= sanitizemarkdown(Kramdown::Document.new(@topic.promotion).to_html)%>
         </p>
       </div>
     </div>

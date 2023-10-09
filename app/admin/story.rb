@@ -6,7 +6,7 @@ ActiveAdmin.register Story do
     f.inputs "" do
       f.input :visible, :label => "Visible?", :hint => "Show story in list and slider?"
       f.input :title, :label => "Title", hint: "Shown on slider, list and full story"
-      f.input :thumbnail, :label => "URL to small image",  hint: "Shown on slider and list"
+      f.input :thumbnail, :label => "URL to small image",  hint: "500x250 dimensions. Shown on slider and list"
       f.input :excerpt, as: :simplemde_editor,  :label => "Excerpt", hint: "Markdown format. Shown for slider and list", :input_html => { :rows => 4, :class => 'excerpt', "data-options" => '{"status": true, "toolbarTips":true}'}
       f.input :body, as: :simplemde_editor,  :label => "Body" , hint: "Markdown format. Shown in full view"
     end

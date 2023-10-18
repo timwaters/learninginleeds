@@ -43,9 +43,9 @@
   <% if @topic && !@topic.promotion.blank? && index == 0 %>
     <div class="row course-result topic-promotion">
       <div class="col-md-12">
-        <p>
+        <div class="promotion-markdown">
           <%= sanitizemarkdown(Kramdown::Document.new(@topic.promotion).to_html)%>
-        </p>
+        </div>
       </div>
     </div>
   <% end %> 

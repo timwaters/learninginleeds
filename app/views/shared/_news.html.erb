@@ -16,7 +16,10 @@
 
             <div class="news-slide-text slide-text ">
               <h4><%= news_item.title %></h4>
-              <p><%= sanitizemarkdown(news_item.excerpt) %></p>
+              <div class="excerpt">
+                <%= sanitizemarkdown(Kramdown::Document.new(news_item.excerpt).to_html)%>
+              </div>
+       
             </div>
           </a>
         </div>

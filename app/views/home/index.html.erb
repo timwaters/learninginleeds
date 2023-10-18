@@ -71,7 +71,9 @@
 
             <div class="story-slide-text slide-text ">
               <h4><%= story.title %></h4>
-              <p><%= sanitizemarkdown(story.excerpt) %></p>
+              <div class="excerpt">
+                <%= sanitizemarkdown(Kramdown::Document.new(story.excerpt).to_html)%>
+              </div>
             </div>
           </a>
         </div>

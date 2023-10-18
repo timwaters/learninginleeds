@@ -2,9 +2,9 @@
 
   <div class="col-md-12">
    
-    <p>
+    <div class="welcome-markdown">
       <%= sanitizemarkdown(Kramdown::Document.new( @welcome.body).to_html)%>
-    </p>
+    </div>
 
   </div>
 

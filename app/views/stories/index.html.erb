@@ -10,7 +10,8 @@
       <h3><%=link_to story.title, story%></h3>
       <img src="<%= story.thumbnail %>" > <br />
       <div class="story-excerpt">
-        <p><%= sanitizemarkdown(story.excerpt) %></p>
+        <%= sanitizemarkdown(Kramdown::Document.new(story.excerpt).to_html)%>
+        
         <p><%=link_to "Read more", story, class: "btn btn-lil" %></p>
       </div>
     </div>

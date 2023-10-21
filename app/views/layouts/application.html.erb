@@ -74,19 +74,7 @@
   <a href="#main-content" class="sr-only sr-only-focusable skip-to-content" data-turbolinks="false">Skip to main content</a>
   <%= render partial: 'shared/navbar' %>
   <main role="main">
-    <div id="cookie_directive_container" class="container" style="display: none">
-      <nav class="navbar navbar-default navbar-fixed-bottom">
-        <div class="container">
-        
-          <div class="navbar-inner navbar-content-center" id="cookie_accept">
-          <button id="accept-button" class="btn btn-primary pull-right"> Accept </button>
-            <p class="credit"><span class="cookie-h">Cookies</span>
-We use cookies on this website. We use them to understand how you use the site and give added features. Cookies are also set by Google Analytics. To consent to this use click on the Accept button. You can view <a id="privacy-button" target="_blank" href="/privacy" class="">our privacy, data and terms page</a> for more information about cookies, your data and your options. 
-            </p>
-          </div>
-        </div>
-      </nav>
-    </div>
+    <%= render partial: 'shared/cookiebanner' %> 
     
     <div class="container container-fluid">
       

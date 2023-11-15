@@ -130,7 +130,8 @@ h1 a.rootlink:hover {
       font-size: 35px !important;
     }
     .lal-logo {
-      height: 120px;
+      max-width: 100%;
+      height: auto;
     }
 }
 @media screen and (max-width: 340px) {
@@ -440,4 +441,16 @@ footer {
  hr.accessibility-end {
   width: 50%;
   padding-bottom: 50px;
+ }
+
+ .accessibility-statement {
+  @media screen and (max-width: 360px) {
+    a{
+      overflow-wrap: break-word;
+    }
+    ul{
+      margin-right: 0.4em;
+      padding-left: 0.5em;
+    }
+  }
  }

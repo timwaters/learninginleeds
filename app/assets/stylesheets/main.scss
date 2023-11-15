@@ -147,7 +147,8 @@ h1 a.rootlink:hover {
       font-size: 30px !important;
     }
     .lal-logo {
-      height: 100px;
+      max-width: 100%;
+      height: auto;
     }
 }
 
@@ -359,6 +360,12 @@ footer {
     height: 40px;
     width:100px;
     margin-top: 12px;
+    @media screen and (max-width: 340px) {
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    }
   }
   
   // .footer {

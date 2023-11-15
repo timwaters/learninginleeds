@@ -411,7 +411,11 @@ footer {
       background-color: $purple !important ;
     }
     .navbar-toggle:focus  {
-      background-color: $purple !important ;
+      background-image: linear-gradient(180deg, #f87df8, #8e2a8d);
+      outline-color: rgb(255, 181, 43);
+      outline-offset: 4px;
+      outline-style: solid;
+      outline-width: 2px;
     }
   }
 

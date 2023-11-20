@@ -147,9 +147,6 @@ h1 a.rootlink:hover {
     .larger-head {
       font-size: 35px !important;
     }
-    .lal-logo {
-      height: 120px;
-    }
 }
 @media screen and (max-width: 340px) {
     h1 {
@@ -163,9 +160,6 @@ h1 a.rootlink:hover {
 
     .larger-head{
       font-size: 30px !important;
-    }
-    .lal-logo {
-      height: 100px;
     }
 }
 
@@ -550,8 +544,16 @@ footer {
     .navbar-toggle:active  {
       background-color: $iglblue !important ;
     }
+    .navbar-toggle:hover {
+      background-color: $iglmutedblue !important ;
+      
+    }
     .navbar-toggle:focus  {
-      background-color: $iglblue !important ;
+      background-color: $iglmutedblue !important ;
+      outline-color: rgb(255, 181, 43);
+      outline-offset: 4px;
+      outline-style: solid;
+      outline-width: 2px;
     }
 
     .navbar-header {
@@ -582,6 +584,14 @@ footer {
       .navbar-link:hover{
         background: $iglmutedblue;
         border-radius: 25px;
+      }
+      .navbar-link:focus{
+        background: $iglmutedblue;
+        border-radius: 25px;
+        outline-color: rgb(255, 181, 43);
+        outline-offset: 4px;
+        outline-style: solid;
+        outline-width: 2px;
       }
     }
 
@@ -760,6 +770,17 @@ height: auto;
   border-color: $hubpastelpink;
 }
 
+.accessibility-statement {
+  @media screen and (max-width: 360px) {
+    a{
+      overflow-wrap: break-word;
+    }
+    ul{
+      margin-right: 0.4em;
+      padding-left: 0.5em;
+    }
+  }
+}
 
 // bootstrap 3
 // @media only screen and (min-width : 320px) {

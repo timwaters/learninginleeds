@@ -12,6 +12,7 @@ default: &default
   osrm_url: http://localhost:5000
   form_template: "https://docs.google.com/forms/example/viewform?usp=pp_url&entry.123=%{course_title}&entry.123=%{course_code}&entry.123=%{start_date}&entry.123=%{end_date}"
   upload_hash_secret: 
+  app_hosts: ['127.0.0.1', 'localhost', 'www.leedsadultlearning.co.uk', 'leedsadultlearning.co.uk'] 
 
 development:
   <<: *default

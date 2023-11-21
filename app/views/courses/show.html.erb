@@ -34,8 +34,13 @@
 
   <% if @course.provider.application_form %>
   <p>  
-    <% template = AppConfig['form_template'] % {course_title: CGI.escape(@course.title), course_code: @course.lcc_code, start_date: @course.start_date.strftime("%Y-%m-%d"), end_date: @course.end_date.strftime("%Y-%m-%d")} 
-
+    <% 
+    if @course.lcc_code.match?(/MUL/)
+      form_template  = AppConfig['form_template_multiplier']
+    else
+      form_template  = AppConfig['form_template']
+    end
+    template = form_template % {course_title: CGI.escape(@course.title), course_code: @course.lcc_code, start_date: @course.start_date.strftime("%Y-%m-%d"), end_date: @course.end_date.strftime("%Y-%m-%d"), venue_name: @course.venue.name , venue_postcode: @course.venue.postcode } 
     form_url = template
     %>
    

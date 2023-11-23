@@ -199,7 +199,9 @@ CREATE TABLE public.courses (
     lonlat public.geography(Point,4326),
     category_1 character varying,
     category_2 character varying,
-    import_id bigint
+    import_id bigint,
+    description_rtf text,
+    description_html text
 );
 
 
@@ -981,6 +983,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231003150826'),
 ('20231005110840'),
 ('20231005114418'),
-('20231005164910');
+('20231005164910'),
+('20231123102925');
 
 

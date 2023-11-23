@@ -193,6 +193,7 @@ GEM
       racc (~> 1.4)
     orm_adapter (0.5.0)
     osrm_text_instructions (0.1.1)
+    pandoc-ruby (2.1.9)
     paperclip (5.2.1)
       activemodel (>= 4.2.0)
       activesupport (>= 4.2.0)
@@ -336,7 +337,9 @@ DEPENDENCIES
   kramdown
   leaflet-rails
   mimemagic (~> 0.3.10)
+  nokogiri
   osrm_text_instructions (~> 0.1)
+  pandoc-ruby
   paperclip (~> 5.2.0)
   pg
   pg_search

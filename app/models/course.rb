@@ -374,6 +374,55 @@ class Course < ApplicationRecord
             :parts => parts }
   end
 
+  #converts rtf to html
+  def convert_description
+    unless self.description_rtf.blank?
+      #change long blank spaces and tabs to bullet
+      #change small bullets to big
+      html = PandocRuby.convert(self.description_rtf.gsub("       ",'•').gsub("\\tab",'•'), from: :rtf, to: :html).gsub('·', '•')
+
+      require 'nokogiri'
+      doc = Nokogiri::HTML.fragment(html)
+
+      #change paragraphs to li and remove the bullets
+      doc.css('p:contains("•")').each do | n |
+        li = Nokogiri::XML::Node.new("li", doc)
+        li.content = n.content.gsub('•','').strip
+        n.replace li
+      end
+
+      html = doc.to_html
+
+      # group the li with ul
+      doc = Nokogiri::HTML.fragment(html)
+
+      group = nil
+      last_nonelement = nil
+      last = doc.element_children.last()
+      doc.element_children.each do | node |
+        if node.name == "li"
+            group =  Nokogiri::XML::Node.new "ul", doc if group.nil?
+            group.add_child(node)
+        end
+        if node.name != "li"
+          last_nonelement = node
+          node.add_next_sibling(group) unless group.nil?
+          group = nil
+        end
+        if last == node && group
+          last_nonelement.add_next_sibling(group)
+          group = nil
+        end
+
+      end
+      
+      return doc.to_html
+
+    else
+      nil
+    end
+  end
+
 end
 
 class ApiError < StandardError

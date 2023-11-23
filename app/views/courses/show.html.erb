@@ -6,7 +6,11 @@
     <h2><%= @course.title %></h2>
   </div>
   <div class="col-md-12">
-    <p><%= @course.description %></p>
+    <% if !@course.description_html.blank? %>
+      <p><%= sanitizemarkdown(@course.description_html)%></p>
+    <% else %>
+      <p><%= @course.description %></p>
+    <% end %>
   </div>
 </div>
   

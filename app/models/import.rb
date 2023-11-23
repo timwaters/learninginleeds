@@ -52,6 +52,7 @@ class Import < ApplicationRecord
 
       updated = course.update({title: row[:course_title], 
                           description: row[:course_description],
+                          description_rtf: row[:course_description_rtf],
                           hours: row[:learning_hours].to_f,
                           provider_code: row[:provider_course_code],
                           start_date: row[:start_date],
@@ -123,6 +124,7 @@ class Import < ApplicationRecord
       course.latitude = venue.latitude
       course.longitude = venue.longitude
       course.lonlat = "POINT(#{venue.longitude} #{venue.latitude})" unless venue.longitude.nil?
+      course.description_html = course.convert_description
      
       course.save
       count += 1

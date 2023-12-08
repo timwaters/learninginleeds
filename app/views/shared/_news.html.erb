@@ -15,7 +15,7 @@
             </div>
 
             <div class="news-slide-text slide-text ">
-              <h4><%= news_item.title %></h4>
+              <h3><%= news_item.title %></h3>
               <div class="excerpt">
                 <%= sanitizemarkdown(Kramdown::Document.new(news_item.excerpt).to_html)%>
               </div>
@@ -36,7 +36,7 @@
             </div>
 
             <div class="news-slide-text slide-text ">
-              <h4>View all news & events </h4>
+              <h3>View all news & events </h3>
              
             </div>
           </a>

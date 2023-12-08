@@ -8,7 +8,7 @@
   <div class="row story-result">
     <div class="col-md-12">
       <h3><%=link_to story.title, story%></h3>
-      <img src="<%= story.thumbnail %>" > <br />
+      <img src="<%= story.thumbnail %>" alt="<%= story.alt_text %>" > <br />
       <div class="story-excerpt">
         <%= sanitizemarkdown(Kramdown::Document.new(story.excerpt).to_html)%>
         

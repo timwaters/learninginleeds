@@ -54,6 +54,7 @@ ActiveAdmin.register Topic do
     column :icon do | t |
         image_tag(t.icon.url(:thumb), width:50)
       end
+    column :alt_text
     column :category_1
     column :category_2
     column :promotion do | t |

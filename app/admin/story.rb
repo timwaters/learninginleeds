@@ -1,5 +1,5 @@
 ActiveAdmin.register Story do
-  permit_params :body, :excerpt, :title, :visible, :thumbnail
+  permit_params :body, :excerpt, :title, :visible, :thumbnail, :alt_text
 
 
   form do |f|
@@ -7,6 +7,7 @@ ActiveAdmin.register Story do
       f.input :visible, :label => "Visible?", :hint => "Show story in list and slider?"
       f.input :title, :label => "Title", hint: "Shown on slider, list and full story"
       f.input :thumbnail, :label => "URL to small image",  hint: "500x250 dimensions. Shown on slider and list"
+      f.input :alt_text, :label => "Alt text for image",  hint: "Should describe what the image looks like"
       f.input :excerpt, as: :simplemde_editor,  :label => "Excerpt", hint: "Markdown format. Shown for slider and list", :input_html => { :rows => 4, :class => 'excerpt', "data-options" => '{"status": true, "toolbarTips":true}'}
       f.input :body, as: :simplemde_editor,  :label => "Body" , hint: "Markdown format. Shown in full view"
     end
@@ -24,6 +25,7 @@ ActiveAdmin.register Story do
       row :thumbnail do |img|
         image_tag img.thumbnail
       end
+      row :alt_text
       row :excerpt
       row :body
       row :created_at
@@ -41,6 +43,7 @@ ActiveAdmin.register Story do
     column :title
     column :excerpt
     column :thumbnail
+    column :alt_text
 
     column :created_at
     column :updated_at

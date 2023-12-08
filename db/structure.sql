@@ -277,7 +277,8 @@ CREATE TABLE public.news (
     excerpt text,
     title character varying,
     thumbnail character varying,
-    visible boolean DEFAULT false
+    visible boolean DEFAULT false,
+    alt_text character varying
 );
 
 
@@ -424,7 +425,8 @@ CREATE TABLE public.stories (
     excerpt text,
     visible boolean DEFAULT false,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    alt_text character varying
 );
 
 
@@ -984,6 +986,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231005110840'),
 ('20231005114418'),
 ('20231005164910'),
-('20231123102925');
+('20231123102925'),
+('20231208151754');
 
 

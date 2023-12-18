@@ -9,7 +9,7 @@ ActiveAdmin.register Story do
       f.input :thumbnail, :label => "URL to small image",  hint: "500x250 dimensions. Shown on slider and list"
       f.input :alt_text, :label => "Alt text for image",  hint: "Should describe what the image looks like"
       f.input :excerpt, as: :simplemde_editor,  :label => "Excerpt", hint: "Markdown format. Shown for slider and list", :input_html => { :rows => 4, :class => 'excerpt', "data-options" => '{"status": true, "toolbarTips":true}'}
-      f.input :body, as: :simplemde_editor,  :label => "Body" , hint: "Markdown format. Shown in full view"
+      f.input :body, as: :simplemde_editor,  :label => "Body" , hint: "Markdown format. Shown in full view <br /> Headings: <br />Start with level 4 and above for accessibility. e.g. <br /> #### Level 4 Heading".html_safe
     end
   f.actions
   end

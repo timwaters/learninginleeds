@@ -44,18 +44,23 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <script>
       $( document ).on('turbolinks:load', function (event) {
-        if (typeof (gtag) == "function") {
+
+        var consent = readCookie("cookies_consent");
+        var allow_cookies = true;
+        if (consent == 0 || consent == null || consent == "" || consent == undefined) {
+          allow_cookies = false;
+        }
+
+        if (typeof (gtag) == "function" && allow_cookies) {
           gtag('config', '<%= AppConfig["google_analytics_id"] %>', {
             page_title: event.target.title,
             page_path: window.location.pathname,
           });
         }
         $('.application-form').on('click', function () {
-          //console.log("click", new Date());
           var url = $(this).attr("href");
 
-          if (typeof (gtag) == "function") {
-            //console.log("sending event", new Date());
+          if (typeof (gtag) == "function" && allow_cookies) {
             gtag('event', 'apply-now-button', {
               'event_category': 'button-click',
               'event_label': url

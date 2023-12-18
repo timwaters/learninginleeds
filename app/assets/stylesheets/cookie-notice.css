@@ -11,7 +11,7 @@ border: 0px;
 }
 
 
-#accept-button {
+#accept-button, #decline-button {
 border: none;
 margin-bottom: 20px;
  margin-top:20px;
@@ -22,11 +22,12 @@ margin-bottom: 20px;
  padding: 12px 22px;
  border-radius: 50px;
  text-decoration: none;
+ text-shadow:none;
  background:#E9EDF0;
  transition: background 0.2s ease-in-out;
 }
 
-#accept-button:hover {
+#accept-button:hover, #decline-button:hover {
   box-shadow: 0 5px 15px #e0e0e0;
 }
 

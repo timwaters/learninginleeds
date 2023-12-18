@@ -19,6 +19,12 @@ $( document ).on('turbolinks:load', function() {
 
   });
 
+  $("#decline-button").click(function () {
+    createCookie("cookies_consent", 0, 30)
+    $('#cookie_directive_container').hide('fast');
+
+  });
+
 });
 
 

@@ -18,3 +18,11 @@
 //= require cookies_helper
 //= require leaflet
 //= require cookie-notice-loader.js
+
+
+L.Marker = L.Marker.extend({
+  options: {
+    alt: "Map pin",
+    title: "Map pin"
+  }
+});

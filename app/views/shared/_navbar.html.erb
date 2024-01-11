@@ -28,7 +28,7 @@
     <div class="collapse navbar-collapse" id="thenavbar">
 
     
-      <%= form_tag("/courses", method: "get", class: 'navbar-form navbar-left ', role: 'form') do %>
+      <%= form_tag("/courses", method: "get", class: 'navbar-form navbar-left ') do %>
         <div class="form-group">
            <%= text_field_tag(:q, params[:q], class:"form-control", id: "navq") %>
         </div>

@@ -19,3 +19,10 @@
 //= require leaflet
 //= require cookie-notice-loader.js
 //= require slick.js
+
+L.Marker = L.Marker.extend({
+  options: {
+    alt: "Map pin",
+    title: "Map pin"
+  }
+});

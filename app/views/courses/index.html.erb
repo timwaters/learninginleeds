@@ -36,7 +36,9 @@
   content_for :title, title
  %>
 
-<h2><%= heading %></h2>
+<% if !heading.blank? %>
+  <h2><%= heading %></h2>
+<% end %>
 
 <% @courses.each_with_index do | course, index | %>
 

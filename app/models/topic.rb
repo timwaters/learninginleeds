@@ -9,7 +9,7 @@ class Topic < ApplicationRecord
   validates_attachment :icon, content_type: { content_type: ["image/jpg", "image/jpeg","image/pjpeg", "image/png","image/x-png", "image/gif"] }
 
   before_save :update_count
-  after_save :clear_cache
+  after_commit :clear_cache
 
   def category_1=(values)
     values = values.delete_if{|v|v.blank? }
@@ -47,6 +47,10 @@ class Topic < ApplicationRecord
     ApplicationController.expire_home
     ActionController::Base.new.expire_fragment(%r{topicnav.*})
     ActionController::Base.new.expire_fragment(%r{topicnav_quick*})
+  rescue ArgumentError => e 
+    logger.error "ArgumentError clearing cache after topic commit " + e.inspect  
+    #rescue invalid % encoding errors where theres strange encoding in cache see bug #33201 in rails 
+    Rails.cache.clear
   end
 
 end

@@ -1,5 +1,5 @@
 class Story < ApplicationRecord
-  after_save :clear_cache
+  after_commit :clear_cache
 
   self.per_page = 20  #will paginate
 

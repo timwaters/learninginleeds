@@ -10,6 +10,7 @@ class CoursesController < ApplicationController
 
     route = params[:route] || "bus"
     if params[:near] && params[:lon_lat].blank?
+      params[:near] = I18n.transliterate params[:near] if params[:near]
       lon_lat =  Course.get_lon_lat(params[:near])
       
       if lon_lat.nil?
@@ -93,7 +94,7 @@ class CoursesController < ApplicationController
       @venue = Venue.find(params[:venue_id])
       @courses = @venue.courses.page(params[:page])
     elsif params[:q]
-      
+      params[:near] = I18n.transliterate params[:near] if params[:near]
       @lon_lat = Course.get_lon_lat(params[:near])
       flash.now[:notice] = "Sorry could not find a location for '#{params[:near]}' please try again" if !params[:near].blank? && @lon_lat.nil?
       

@@ -68,6 +68,11 @@ class Import < ApplicationRecord
         next
       end
 
+      if course.start_time.nil? or course.end_time.nil?
+        log_error "Error: Could not create or update course, no start or end time. #{course.inspect}"
+        next
+      end
+      
       provider = Provider.find_or_create_by(name: row[:provider])
       telephone = row[:contact_tel_no]
       telephone = nil if telephone && telephone[0] == "?"

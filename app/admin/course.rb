@@ -33,7 +33,7 @@ ActiveAdmin.register Course do
     end
     column :title
     column :description do | c |
-        c.description[0...50] + "..."
+        c.description[0...50] + "..." unless c.description.blank?
       end
       column :description_rtf do | c |
           c.description_rtf[0...50] + "..."  if c.description_rtf

@@ -67,7 +67,7 @@ class Import < ApplicationRecord
         next
       end
 
-      if course.start_time.nil? or course.end_time.nil?
+      if course.start_time.nil? || course.end_time.nil?
         log_error "Error: Could not create or update course, no start or end time. #{course.inspect}"
         next
       end

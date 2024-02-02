@@ -25,7 +25,7 @@ ActiveAdmin.register Course do
     end
     column :title
     column :description do | c |
-        c.description[0...50] + "..."
+        c.description[0...50] + "..." unless c.description.blank?
       end
     column :start_date
     column :end_date

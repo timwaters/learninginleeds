@@ -7,7 +7,9 @@ class HomeController < ApplicationController
   def index
     @welcome = Page.find_by(name: "welcome")
     @news = News.all.where(visible: true).order(updated_at: :desc).limit(16)
-    @stories = Story.all.where(visible: true).order(updated_at: :desc).limit(16)
+    @stories = []
+    #comment out stories temp
+    #@stories = Story.all.where(visible: true).order(updated_at: :desc).limit(16)
     render layout: "front"
   end
 

@@ -3,7 +3,7 @@
     <span id="nearhelp" class="help-block">Type in a place, postcode or address to show a journey plan by bus and by foot to arrive for the course start. Postcodes give best results.</span>
   <%= text_field_tag(:near, params[:near], aria: { describedby:  'nearhelp' }) %>
   <div class="input-group-btn">
-    <button class="btn btn-lil" type="submit" title="Search"><i class="glyphicon glyphicon-search"></i> Make Journey Plan</button>
+    <button class="btn btn-lil" type="submit" title="Search"><span class="glyphicon glyphicon-search"></span> Make Journey Plan</button>
   </div>
 
 <% end #form %>

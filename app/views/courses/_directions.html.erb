@@ -6,14 +6,18 @@
   <% time = @directions[:duration].to_time 
       time_in_words = distance_of_time_in_words("00:00:00".to_time, time)
     %>
-  <p><%= image_tag 'bus-blue.png', :height=>20 %> <%= time_in_words%> by Bus.  (<%= link_to image_tag('foot-blue.png', :height=>20)+"Walking Directions", course_url(@course, :lcc_code => @course.lcc_code, :lon_lat => params[:lon_lat], :near => params[:near], :route => "walk", :anchor => "directions") %>)</p>
+  <p><%= image_tag 'bus-blue.png', :alt => "Bus icon", "aria-label": "Public bus", :height=>20 %> <%= time_in_words%> by Bus.  (<%= link_to image_tag('foot-blue.png', :alt => "Walking icon", "aria-label": "Walking", :height=>20)+"Walking Directions", course_url(@course, :lcc_code => @course.lcc_code, :lon_lat => params[:lon_lat], :near => params[:near], :route => "walk", :anchor => "directions") %>)</p>
+  <p>Start: <%= @directions[:departure_time] %>  End: <%= @directions[:arrival_time] %>  Duration: <%= time_in_words %></p>
   <table class="table-striped table-bordered table-hovered">
-    <th colspan="3">
-      Start: <%= @directions[:departure_time] %>  End: <%= @directions[:arrival_time] %>  Duration: <%= time_in_words %>
-    </th>
+    <th scope="col" colspan="2">
+      Directions
+     </th>
+     <th scope="col">
+      Distance and time
+     </th>
     <% @directions[:parts].each do | part | %>
       <tr>
-        <td class="text-center"><%= image_tag "foot-blue.png" if part["mode"] == "foot" %><%= image_tag 'bus-blue.png' if part["mode"] == "bus" %></td>
+        <td class="text-center"><%= image_tag("foot-blue.png", alt: "Walking icon", "aria-label": "Walking") if part["mode"] == "foot" %><%= image_tag('bus-blue.png',  alt: "Bus icon",  "aria-label": "Public bus") if part["mode"] == "bus" %></td>
         <td><span class="line_name"><%= "Bus  #{part['line_name']}."  unless part['line_name'].blank? %></span>  
           <%= "Walk from " if part["mode"] == "foot"%>
         <%= part["from"] %> to <%= part["to"] %><br />
@@ -43,14 +47,19 @@
   <% 
       time_in_words = distance_of_time_in_words("00:00:00".to_time, "00:00:00".to_time + @directions[:duration])
     %>
-  <p><%= image_tag 'bus-blue.png', :height=>20 %> <%= time_in_words%> by Bus.(<%= link_to image_tag('foot-blue.png', :height=>20)+"Walking Directions", course_url(@course, :lcc_code => @course.lcc_code, :lon_lat => params[:lon_lat], :near => params[:near], :route => "walk", :anchor => "directions") %>)</p>
+  <p><%= image_tag 'bus-blue.png', :alt => "Bus icon", "aria-label": "Public bus", :height=>20 %> <%= time_in_words%> by Bus.(<%= link_to image_tag('foot-blue.png', :alt => "Walking icon", "aria-label": "Walking", :height=>20)+"Walking Directions", course_url(@course, :lcc_code => @course.lcc_code, :lon_lat => params[:lon_lat], :near => params[:near], :route => "walk", :anchor => "directions") %>)</p>
+  <p> Start: <%= @directions[:departure_time].strftime("%I:%M %p")  %>  End: <%= @directions[:arrival_time].strftime("%I:%M %p")  %>  Duration: <%= time_in_words %>. Distance: <%= @directions[:length] %> km </p>
   <table class="table-striped table-bordered table-hovered">
-    <th colspan="3">
-      Start: <%= @directions[:departure_time].strftime("%I:%M %p")  %>  End: <%= @directions[:arrival_time].strftime("%I:%M %p")  %>  Duration: <%= time_in_words %>. <%= @directions[:length] %> km
-    </th>
+
+    <th scope="col" colspan="2">
+      Directions
+     </th>
+     <th scope="col">
+      Distance and time
+     </th>
     <% @directions[:parts].each do | part | %>
       <tr>
-        <td class="text-center"><%= image_tag "foot-blue.png" if part["mode"] == "Walk" %><%= image_tag 'bus-blue.png' if part["mode"] == "TakeTransit" %></td>
+        <td class="text-center"><%= image_tag("foot-blue.png", alt: "Walking icon", "aria-label": "Walking") if part["mode"] == "Walk" %><%= image_tag('bus-blue.png',  alt: "Bus icon",  "aria-label": "Public bus") if part["mode"] == "TakeTransit" %></td>
         <td>
           
           <% part["instruction"].gsub!(/Source Location/, params[:near]) 
@@ -81,15 +90,20 @@
   <h3 id="directions" role="status">Journey Plan to Arrive At <%= @course.start_time.strftime("%I:%M %p") %></h3>
 
   <p>From <%= params[:near] %> to <%= @course.venue.name.titlecase %></p>
-  <p><%= image_tag('foot-blue.png', :height=>15) %> <%= distance_of_time_in_words(@directions[:duration])%> by Walking. (<%= link_to image_tag('bus-blue.png', :height=>20)+" By Bus", course_url(@course, :lcc_code => @course.lcc_code, :lon_lat => params[:lon_lat], :near => params[:near], :route => "bus" ,:anchor => "directions") %>)</p>
+  <p><%= image_tag('foot-blue.png', :alt => "Walking icon", "aria-label": "Walking", :height=>15) %> <%= distance_of_time_in_words(@directions[:duration])%> by Walking. (<%= link_to image_tag('bus-blue.png',  :alt => "Bus icon", "aria-label": "Public bus", :height=>20)+" By Bus", course_url(@course, :lcc_code => @course.lcc_code, :lon_lat => params[:lon_lat], :near => params[:near], :route => "bus" ,:anchor => "directions") %>)</p>
+  <p>
+    Start: <%= @directions[:departure_time].to_time.strftime("%H:%M") %>  End: <%= @directions[:arrival_time].to_time.strftime("%H:%M") %>  Duration: <%= distance_of_time_in_words(@directions[:duration])%>. Distance: <%= (@directions[:length] / 1000).round(2) %> km
+  </p>
   <table class="table-striped table-bordered table-hovered">
-    <th colspan="3">
-      Start: <%= @directions[:departure_time].to_time.strftime("%H:%M") %>  End: <%= @directions[:arrival_time].to_time.strftime("%H:%M") %>  Duration: <%= distance_of_time_in_words(@directions[:duration])%>.
-      <%= (@directions[:length] / 1000).round(2) %> km
-    </th>
+    <th scope="col" colspan="2">
+      Directions
+     </th>
+     <th scope="col">
+      Distance and time
+     </th>
     <% @directions[:parts].each do | part | %>
       <tr>
-        <td class="text-center"><%= image_tag "foot-blue.png" if part["mode"] == "foot" %></td>
+        <td class="text-center"><%= image_tag("foot-blue.png",  alt: "Walking icon", "aria-label": "Walking") if part["mode"] == "foot" %></td>
         <td><%= part["pre_instruction"] %> <%= "(#{part['ref']})" unless part["ref"].blank? %>
           <%= part["post_instruction"] %>
           <br />

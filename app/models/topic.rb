@@ -7,6 +7,7 @@ class Topic < ApplicationRecord
     default_url: ->(attachment) { ActionController::Base.helpers.asset_path('generic.png') }
 
   validates_attachment :icon, content_type: { content_type: ["image/jpg", "image/jpeg","image/pjpeg", "image/png","image/x-png", "image/gif"] }
+  validates :alt_text, presence: true, unless: -> { icon.blank? }
 
   before_save :update_count
   after_commit :clear_cache

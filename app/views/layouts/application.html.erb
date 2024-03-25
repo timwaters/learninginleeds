@@ -108,6 +108,7 @@
       </div>
       
       <div class="content" id="main-content">
+        <%= link_to "Back to Inclusive Growth Leeds", session[:referer] if session[:referer] && URI(session[:referer]).host == "www.inclusivegrowthleeds.com"  %>
         <%= yield %>
       </div>
 

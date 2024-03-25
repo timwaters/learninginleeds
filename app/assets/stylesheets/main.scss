@@ -395,7 +395,7 @@ footer {
       height: 250px;
     }
 
-    @media (min-width: 480px) {
+    @media (min-width: 538px) {
       width: 400px;
       height: 400px;
       bottom: 30%;
@@ -781,6 +781,11 @@ height: auto;
       padding-left: 0.5em;
     }
   }
+}
+
+.site-map {
+  li {padding-top: 0.5em;padding-bottom: 1em;}
+  font-size: larger;
 }
 
 // bootstrap 3

@@ -2,6 +2,7 @@ class HomeController < ApplicationController
   caches_page :index
   caches_page :privacy
   caches_page :accessibility
+  caches_page :site_map
   before_action :get_topics
 
   def index
@@ -9,6 +10,7 @@ class HomeController < ApplicationController
     @news = News.all.where(visible: true).order(updated_at: :desc).limit(16)
     @stories = []
     #comment out stories temp
+    #NOTE: also comment out in site map and footer <---
     #@stories = Story.all.where(visible: true).order(updated_at: :desc).limit(16)
     render layout: "front"
   end

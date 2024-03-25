@@ -1,9 +1,14 @@
 
-#cookie_directive_container nav  {
-color: #092F44;
-background-color: #ED7218;;
-border-radius: 25px;
-border: 0px;
+#cookie_directive_container {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+#cookie_directive_container  nav  {
+  color: #092F44;
+  background-color: #ED7218;
+  border-radius: 25px;
+  border: 0px;
 }
 
 #cookie_accept{
@@ -28,7 +33,14 @@ margin-bottom: 20px;
 }
 
 #accept-button:hover, #decline-button:hover {
-  box-shadow: 0 5px 15px #e0e0e0;
+  background-color: #F5A027 ;
+}
+
+#accept-button:focus, #decline-button:focus {
+  outline-color: white;
+  outline-offset: 4px;
+  outline-style: solid;
+  outline-width: 2px;
 }
 
 

@@ -64,7 +64,7 @@
     <div>
       <div class="slide-wrapper">
         <div class="story-slide slide-main">
-          <a href="<%= url_for(story) %>" class="slide-link" aria-label="Read story: <%= story.title %>">
+          <a href="<%= url_for(story) %>" class="slide-link">
             <div class="story-slide-image slide-image">
               <img src="<%= story.thumbnail %>" class="image-style-card-slider-"  alt="<%= story.alt_text %>">
             </div>
@@ -84,7 +84,7 @@
     <div>
       <div class="slide-wrapper">
         <div class="story-slide slide-main">
-          <a href="<%= url_for(stories_path) %>" class="slide-link" aria-label="View all learner stories">
+          <a href="<%= url_for(stories_path) %>" class="slide-link">
             <div class="story-slide-image slide-image">
               <img src="<%= asset_path("AdultLearningPicture_cropped.jpg") %>" class="image-style-card-slider-" alt="Tutor supporting a learner" >
             </div>

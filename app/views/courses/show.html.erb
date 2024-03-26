@@ -1,9 +1,10 @@
 <% content_for :title, @course.title %>
+<% content_for :rootlink, "false" %>
 <% content_for :meta_description, @course.description %>
 
 <div class="row course-main">
   <div class="col-md-12">
-    <h2><%= @course.title %></h2>
+    <h1><%= @course.title %></h1>
   </div>
   <div class="col-md-12">
     <% if !@course.description_html.blank? %>
@@ -108,7 +109,7 @@
         </p>
 
         <% unless @course.target_group.blank? %>
-        <h3 class="interested">Who is it for?</h3>
+        <h2 class="interested">Who is it for?</h2>
         <p>
           <% @course.target_group += "." if @course.target_group[-1] != "." %>
           <%= @course.target_group %> <br />
@@ -134,7 +135,7 @@
         <%= render :partial => 'directions', object: @directions %>
         <%= render partial: 'directions_form' %>
       <% elsif !params[:near].blank? && @directions.nil? %>
-        <h3 id="directions">Journey Plan</h3>
+        <h2 id="directions">Journey Plan</h2>
         <p  role="alert" class="alert alert-success alert-dismissable">Sorry couldn't find a journey plan for '<%= params[:near] %>'
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times;</button>
         </p>
@@ -144,7 +145,7 @@
         </div>
 
       <% else %>
-        <h3 id="directions">Journey Plan</h3>
+        <h2 id="directions">Journey Plan</h2>
 
         <%= render partial: 'directions_form' %>
 

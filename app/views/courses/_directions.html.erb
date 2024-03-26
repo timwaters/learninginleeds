@@ -1,6 +1,6 @@
 <% if @directions[:type] == "transit"%>
 
-  <h3 id="directions" role="status">Journey Plan to Arrive At <%= @course.start_time.strftime("%I:%M %p") %></h3>
+  <h2 id="directions" role="status">Journey Plan to Arrive At <%= @course.start_time.strftime("%I:%M %p") %></h2>
 
   <p>From <%= params[:near] %> to <%= @course.venue.name.titlecase %></p>
   <% time = @directions[:duration].to_time 
@@ -41,7 +41,7 @@
 <%elsif @directions[:type] == "transit_bing" %>
 
 
-  <h3 id="directions" role="status">Journey Plan to Arrive At <%= @course.start_time.strftime("%I:%M %p") %></h3>
+  <h2 id="directions" role="status">Journey Plan to Arrive At <%= @course.start_time.strftime("%I:%M %p") %></h2>
 
   <p>From <%= params[:near] %> to <%= @course.venue.name.titlecase %></p>
   <% 
@@ -87,7 +87,7 @@
 
 <%elsif @directions[:type] == "foot"%>
 
-  <h3 id="directions" role="status">Journey Plan to Arrive At <%= @course.start_time.strftime("%I:%M %p") %></h3>
+  <h2 id="directions" role="status">Journey Plan to Arrive At <%= @course.start_time.strftime("%I:%M %p") %></h2>
 
   <p>From <%= params[:near] %> to <%= @course.venue.name.titlecase %></p>
   <p><%= image_tag('foot-blue.png', :alt => "Walking icon", "aria-label": "Walking", :height=>15) %> <%= distance_of_time_in_words(@directions[:duration])%> by Walking. (<%= link_to image_tag('bus-blue.png',  :alt => "Bus icon", "aria-label": "Public bus", :height=>20)+" By Bus", course_url(@course, :lcc_code => @course.lcc_code, :lon_lat => params[:lon_lat], :near => params[:near], :route => "bus" ,:anchor => "directions") %>)</p>

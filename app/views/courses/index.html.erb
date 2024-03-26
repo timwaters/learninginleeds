@@ -10,13 +10,15 @@
  
 <div class="row">
   <div class="col-md-12">
-    Sorted by:
+    <span id="sort-by-hint">
+      Sorted by:
+    </span>
     <span class="sort-links">
       <% sort = params[:sort].blank? ? "relevance" : params[:sort] %> 
-      <%= link_to_unless sort == "relevance", "Best Match", courses_url(near: params[:near], q: params[:q], sort: "relevance"), :class=>"sort-link" %> |
-      <%= link_to_unless sort == "start_date", "Course Start Date", courses_url(near: params[:near], q: params[:q], sort: "start_date"), :class=>"sort-link" %> 
+      <%= link_to_unless sort == "relevance", "Best Match", courses_url(near: params[:near], q: params[:q], sort: "relevance"), :class=>"sort-link", aria: { describedby: 'sort-by-hint'} %> |
+      <%= link_to_unless sort == "start_date", "Course Start Date", courses_url(near: params[:near], q: params[:q], sort: "start_date"), :class=>"sort-link", aria: { describedby: 'sort-by-hint'} %> 
       <% unless params[:near].blank? %>
-        | <%= link_to_unless sort == "distance", "Distance", courses_url(near: params[:near], q: params[:q], sort: "distance"), :class=>"sort-link" %>
+        | <%= link_to_unless sort == "distance", "Distance", courses_url(near: params[:near], q: params[:q], sort: "distance"), :class=>"sort-link", aria: { describedby: 'sort-by-hint'} %>
       <% end %>
     </span>
   </div>

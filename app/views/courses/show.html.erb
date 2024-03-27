@@ -62,13 +62,19 @@
     <div class="col-sm-6">
 
         <div class="venue-map">
-              <%= map(center:  {
-                latlng: [@course.venue.latitude, @course.venue.longitude],
-                zoom: 18 
-                },
-                markers: [{ latlng: [@course.venue.latitude, @course.venue.longitude] }]
-              ) %>
-  
+          <div id="map"></div>
+          <script>
+            var map = L.map("map");
+            map.setView(<%= [@course.venue.latitude,@course.venue.longitude] %>, 18);
+            marker = L.marker(<%= [@course.venue.latitude,@course.venue.longitude]%>).addTo(map);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
+              maxZoom: 19,
+            }).addTo(map);
+            L.control.pan().addTo(map)
+
+          </script>
+
             <% if browser.device.mobile? %>
               <%= link_to("Open this area on your Mobile Maps", "geo:#{@course.venue.latitude},#{@course.venue.longitude};u=10")  %>
             <% else %>

@@ -2,12 +2,12 @@
 
 <div class="container">
 
-  <h2>Learner Stories</h2>
+  <h1>Learner Stories</h1>
 
   <% @stories.each do | story | %>
   <div class="row story-result">
     <div class="col-md-12">
-      <h3><%=link_to story.title, story%></h3>
+      <h2><%=link_to story.title, story%></h2>
       <img src="<%= story.thumbnail %>" alt="<%= story.alt_text %>" > <br />
       <div class="story-excerpt">
         <%= sanitizemarkdown(Kramdown::Document.new(story.excerpt).to_html)%>

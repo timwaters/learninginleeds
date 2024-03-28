@@ -87,7 +87,7 @@
         <div class="text-center">
          
           <%= link_to "Back to Inclusive Growth Leeds", session[:referer] if session[:referer] && URI(session[:referer]).host == "www.inclusivegrowthleeds.com"  %>
-          <% if (yield(:rootlink) != "false") %>
+          <% if (yield(:rootlink) == "true") %>
             <h1 class="page-head"> <a class="rootlink" href="/"><span class="slight">Leeds</span> Adult Learning</a></h1>
           <% end  %>
                   

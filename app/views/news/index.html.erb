@@ -2,12 +2,12 @@
 
 <div class="container">
 
-  <h2>News & Events</h2>
+  <h1>News & Events</h1>
 
   <% @news.each do | news_item | %>
   <div class="row news-result">
     <div class="col-md-12">
-      <h3><%=link_to news_item.title, news_item%></h3>
+      <h2><%=link_to news_item.title, news_item%></h2>
       <img src="<%= news_item.thumbnail %>" alt="<%= news_item.alt_text %>" > <br />
       <div class="news_item-excerpt">
         <%= sanitizemarkdown(Kramdown::Document.new(news_item.excerpt).to_html)%>

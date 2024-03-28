@@ -1,7 +1,8 @@
+<% content_for :rootlink, "false" %>
 <% content_for :title, @story.title + " - Learner Story" %>
 
 <div class="story container">
-  <h2><%= @story.title %></h2>
+  <h1><%= @story.title %></h1>
   <%= sanitizemarkdown(Kramdown::Document.new(@story.body).to_html)%>
  
 </div>

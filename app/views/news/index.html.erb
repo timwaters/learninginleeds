@@ -11,7 +11,7 @@
       <img src="<%= news_item.thumbnail %>" alt="<%= news_item.alt_text %>" > <br />
       <div class="news_item-excerpt">
         <%= sanitizemarkdown(Kramdown::Document.new(news_item.excerpt).to_html)%>
-        <p><%=link_to "Read more", news_item, class: "btn btn-lil" %></p>
+        <p><%=link_to "Read more about "+news_item.title, news_item, class: ""%></p>
       </div>
     </div>
   </div>

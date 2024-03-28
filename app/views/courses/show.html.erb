@@ -62,7 +62,7 @@
     <div class="col-sm-6">
 
         <div class="venue-map">
-          <div id="map"></div>
+          <div id="map" aria-label="Map showing <%=@course.venue.name.titlecase %> location"></div>
           <script>
             var map = L.map("map");
             map.setView(<%= [@course.venue.latitude,@course.venue.longitude] %>, 18);

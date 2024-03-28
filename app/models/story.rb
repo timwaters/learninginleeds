@@ -1,5 +1,8 @@
 class Story < ApplicationRecord
   validates :alt_text, presence: true, unless: -> { thumbnail.blank? }
+  validates :body, presence: true
+  validates :excerpt, presence: true
+  validates :title, presence: true
   
   after_commit :clear_cache
 

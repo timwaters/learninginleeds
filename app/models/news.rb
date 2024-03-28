@@ -1,5 +1,7 @@
 class News < ApplicationRecord
-  validates :body, length: { maximum: 600 }
+  validates :body, presence: true
+  validates :excerpt, presence: true
+  validates :title, presence: true
   validates :alt_text, presence: true, unless: -> { thumbnail.blank? }
 
   after_commit :clear_cache

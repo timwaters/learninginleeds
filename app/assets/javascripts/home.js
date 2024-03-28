@@ -16,8 +16,8 @@ $( document ).on('turbolinks:load', function (event) {
     dots: false,
     cssEase: 'ease-in-out',
     autoplay: false,
-    prevArrow: "<button type='button' class='slick-prev pull-left' role='img' aria-label='Previous arrow'></button>",
-    nextArrow: "<button type='button' class='slick-next pull-right' role='img' aria-label='Next arrow'></button>",
+    prevArrow: "<button type='button' class='slick-prev pull-left'  aria-label='Previous slide'></button>",
+    nextArrow: "<button type='button' class='slick-next pull-right' aria-label='Next slide'></button>",
     regionLabel: "news carousel",
     arrowsPlacement: "split",
     responsive: [
@@ -57,8 +57,8 @@ $( document ).on('turbolinks:load', function (event) {
     dots: false,
     cssEase: 'ease-in-out',
     autoplay: false,
-    prevArrow: "<button type='button' class='slick-prev pull-left' role='img' aria-label='Previous arrow'></button>",
-    nextArrow: "<button type='button' class='slick-next pull-right' role='img' aria-label='Next arrow'></button>",
+    prevArrow: "<button type='button' class='slick-prev pull-left'  aria-label='Previous slide'></button>",
+    nextArrow: "<button type='button' class='slick-next pull-right' aria-label='Next slide'></button>",
     regionLabel: "Learner stories carousel",
     responsive: [
       {

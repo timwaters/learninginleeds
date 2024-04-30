@@ -388,16 +388,22 @@ class Course < ApplicationRecord
       end
       require 'nokogiri'
       doc = Nokogiri::HTML.fragment(html)
-
+    
       #change paragraphs to li and remove the bullets
       doc.css('p:contains("•")').each do | n |
         li = Nokogiri::XML::Node.new("li", doc)
         li.content = n.content.gsub('•','').strip
-        n.replace li
+       
+        if li.content.empty?
+          pp = Nokogiri::XML::Node.new("p", doc)
+          n.replace pp
+        else 
+          n.replace li
+        end 
       end
 
       html = doc.to_html
-
+   
       # group the li with ul
       doc = Nokogiri::HTML.fragment(html)
 
@@ -420,8 +426,14 @@ class Course < ApplicationRecord
         end
 
       end
+
+      doc.element_children.each do | node |
+        if node.name == "p" && node.content.empty? 
+          node.remove
+        end
+      end
       
-      return doc.to_html
+      return doc.to_html.strip()
 
     else
       nil

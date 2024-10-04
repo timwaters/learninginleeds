@@ -94,7 +94,7 @@
           url = nil
         end
            %>
-          This course is <strong><%= link_to_unless(url.nil?, "provided by #{@course.provider.name}", url) %> </strong>
+          This course is <strong><%= link_to_unless(url.nil?, "provided by #{@course.provider.name}", url, target:"_blank", rel: "noopener") %> </strong>
          
           <% unless @course.provider.telephone.blank? %> 
             <br />
@@ -109,7 +109,7 @@
         <% if @course.venue.is_online? %>
           View a list of <%= link_to "all courses for #{@course.venue.name.titlecase}", @course.venue %>.
         <% else %>
-          View a list of  <%= link_to "courses near #{@course.venue.name.titlecase}'s", courses_path(q: "", near: "#{@course.venue.longitude},#{@course.venue.latitude}") %> area
+          View a list of  <%= link_to "courses near #{@course.venue.name.titlecase}'s", courses_path(q: "", near: "#{@course.venue.longitude},#{@course.venue.latitude}", c:"venue") %> area
         <% end %>
         </p>
 

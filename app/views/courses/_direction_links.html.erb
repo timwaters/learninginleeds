@@ -1,6 +1,18 @@
-For public transport planning visit the <%= link_to "West Yorkshire Metro Journey Planner (Moovit)", "https://moovitapp.com/yorkshire-2109/poi/en-gb?customerId=11187" %> <br />
+<%
+moovit_url = "https://moovitapp.com/yorkshire-2109/poi/en-gb?customerId=11187"
+if params[:lon_lat] && (@course.venue.longitude && @course.venue.latitude) && params[:c] != "venue"
+  origin_ll = params[:lon_lat].split(",").reverse.join("_")
+  venue_ll = "#{@course.venue.latitude}_#{@course.venue.longitude}"
+
+  time =  Time.new(@course.start_date.year, @course.start_date.month, @course.start_date.day, @course.start_time.hour).to_i * 1000
+
+  moovit_url = "https://moovitapp.com/yorkshire-2109/poi/#{@course.venue.name.titlecase}/Your Location/en-gb?customerId=11187&tll=#{venue_ll}&fll=#{origin_ll}&timeType=arrive&time=#{time}"
+end
+%>
+
+For public transport planning visit the <%= link_to "West Yorkshire Metro Journey Planner (Moovit)", moovit_url, target:"_blank", rel: "noopener" %> <br />
 <% if @course.venue.latitude && @course.venue.longitude %>
-  For walking, driving directions visit: <%= link_to("Google Maps", "https://maps.google.co.uk/?q=#{@course.venue.latitude},#{@course.venue.longitude}") %>
+  For walking or driving directions visit: <%= link_to("Google Maps", "https://maps.google.co.uk/?q=#{@course.venue.latitude},#{@course.venue.longitude}", target:"_blank", rel: "noopener") %>
 <% else %>
-  For walking, driving directions visit: <%= link_to "Google Maps", "https://maps.google.co.uk" %>
+  For walking or driving directions visit: <%= link_to "Google Maps", "https://maps.google.co.uk", target:"_blank", rel: "noopener" %>
 <% end %>

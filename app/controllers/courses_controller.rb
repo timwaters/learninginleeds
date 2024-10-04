@@ -9,6 +9,9 @@ class CoursesController < ApplicationController
     end
 
     route = params[:route] || "bus"
+    if params[:c] == "venue"
+      params[:near] = nil
+    end
     if params[:near] && params[:lon_lat].blank?
       params[:near] = I18n.transliterate params[:near] if params[:near]
       lon_lat =  Course.get_lon_lat(params[:near])
@@ -105,6 +108,7 @@ class CoursesController < ApplicationController
         sort = params[:sort]
       end
       params[:sort] = sort
+      params[:c] = params[:c] == "venue" ? "venue" : nil
       
       @courses = Course.search(params[:q], {lon_lat: @lon_lat, sort: sort, page: params[:page]})
     else

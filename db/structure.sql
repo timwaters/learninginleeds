@@ -381,7 +381,9 @@ CREATE TABLE public.providers (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     email character varying,
-    application_form boolean DEFAULT true
+    application_form boolean DEFAULT true,
+    visible boolean DEFAULT false,
+    body text
 );
 
 
@@ -987,6 +989,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231005114418'),
 ('20231005164910'),
 ('20231123102925'),
-('20231208151754');
+('20231208151754'),
+('20241120154841');
 
 

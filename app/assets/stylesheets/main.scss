@@ -571,7 +571,7 @@ footer {
       }
       .navbar-link {
         color:white !important;
-        padding: 14px 15px;
+        padding: 14px 12px;
         font-size: 18px;
         font-weight: bold;
         line-height: normal;
@@ -581,6 +581,7 @@ footer {
         margin-top: 12px;
         @media screen and (max-width: 545px) {
           visibility: hidden;
+       
         }
         @media screen and (min-width: 768px) {
           
@@ -798,6 +799,21 @@ height: auto;
 .site-map {
   li {padding-top: 0.5em;padding-bottom: 1em;}
   font-size: larger;
+}
+
+.providers {
+  @media screen and (min-width: 1200px) {
+    margin-bottom: 5em;
+  }
+  .provider-name {
+    overflow-wrap: break-word;
+  }
+
+  a {
+    font-size: unset;
+    font-weight: normal;
+    overflow-wrap: break-word;
+  }
 }
 
 // bootstrap 3

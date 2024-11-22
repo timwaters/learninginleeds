@@ -16,4 +16,9 @@ class ApplicationController < ActionController::Base
   def self.expire_home
     expire_page('index.html')
   end
+
+  def self.expire_providers
+    expire_page('partners.html')
+  end
+  
 end

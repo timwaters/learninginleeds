@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   get 'venues/:venue_id', to: 'courses#index', :as => 'venue'
   get 'providers/:provider_id', to: 'courses#index', :as => 'provider'
+  get 'partners', to: 'providers#index', :as => 'partners'
   get 'topics/:topic_id', to: 'courses#index', :as => 'topic'
   resources :stories, only: [:index, :show]
   resources :news, only: [:index, :show]

@@ -1,0 +1,43 @@
+<% content_for :title, "Partners" %>
+
+<div class="container providers">
+
+  <h1>Partners</h1>
+
+  <% @providers.each do | provider | %>
+  <div class="row story-result">
+    <div class="col-md-12">
+      <h2 class="provider-name"><%= provider.name %></h2>
+      
+      <div class="story-excerpt">
+        <%= sanitizemarkdown(Kramdown::Document.new(provider.body).to_html)%>
+      </div>
+      <% unless provider.url.blank? &&  provider.telephone.blank? &&  provider.email.blank? %>
+    
+        <div class="provider-contact">
+          
+        <% unless provider.url.blank? 
+          url = provider.url
+            unless url.split(':')[0] == 'http' || url.split(':')[0] == 'https'
+              url = "http://" + url
+            end
+          %>
+          Website:  <%= link_to("Visit the website for " + provider.name, url, target:"_blank", rel: "noopener") %> <br />
+        <% end %>
+          
+      <% unless provider.telephone.blank? %> 
+     
+        Telephone:  <%= link_to "Call "+ provider.name + " on " + phone_format(provider.telephone), "tel:#{provider.telephone}" %> <br />
+      <% end %>
+      <% unless provider.email.blank? %> 
+        Email:  <%= mail_to "Email " + provider.name + " at " + provider.email %> 
+      <% end %>
+    </div>
+     <% end %>
+    </div>
+  </div>
+
+  <% end %>
+
+
+</div>

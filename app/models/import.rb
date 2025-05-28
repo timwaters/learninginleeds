@@ -164,11 +164,13 @@ class Import < ApplicationRecord
       io = open(URI.parse(upload_url))
       def io.original_filename
         filename =  base_uri.path.split('/').last
-        
+
         if  !filename.blank?
           basename = File.basename(filename,File.extname(filename)) + '_'+('a'..'z').to_a.shuffle[0,8].join
           extname = File.extname(filename)
           filename = basename + extname
+        elsif base_uri.host && base_uri.host.include?("s3-website") && (["/", ""].include? base_uri.path)
+          filename = "courses_"+('a'..'z').to_a.shuffle[0,8].join + ".csv"
         end
         
         filename

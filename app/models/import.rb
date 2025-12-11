@@ -131,8 +131,10 @@ class Import < ApplicationRecord
       course.longitude = venue.longitude
       course.lonlat = "POINT(#{venue.longitude} #{venue.latitude})" unless venue.longitude.nil?
       course.description_html = course.convert_description
-     
-      course.save
+
+      course.short_link = course.generate_short_url rescue nil
+  
+      course.save 
       count += 1
       print "."
 

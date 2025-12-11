@@ -1,3 +1,8 @@
+\restrict 5OBfsIyhcOJaOMRmsLnd2nrGbIaYGa6Dh2qb2OMSG5sPYSJSdWXJiofXCltD2Rs
+
+-- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+-- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -8,20 +13,6 @@ SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
-
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
 
 --
 -- Name: fuzzystrmatch; Type: EXTENSION; Schema: -; Owner: -
@@ -62,7 +53,7 @@ CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA public;
 -- Name: EXTENSION postgis; Type: COMMENT; Schema: -; Owner: -
 --
 
-COMMENT ON EXTENSION postgis IS 'PostGIS geometry, geography, and raster spatial types and functions';
+COMMENT ON EXTENSION postgis IS 'PostGIS geometry and geography spatial types and functions';
 
 
 --
@@ -78,7 +69,7 @@ $_$;
 
 SET default_tablespace = '';
 
-SET default_with_oids = false;
+SET default_table_access_method = heap;
 
 --
 -- Name: active_admin_comments; Type: TABLE; Schema: public; Owner: -
@@ -201,7 +192,8 @@ CREATE TABLE public.courses (
     category_2 character varying,
     import_id bigint,
     description_rtf text,
-    description_html text
+    description_html text,
+    short_link character varying
 );
 
 
@@ -947,6 +939,8 @@ ALTER TABLE ONLY public.courses
 -- PostgreSQL database dump complete
 --
 
+\unrestrict 5OBfsIyhcOJaOMRmsLnd2nrGbIaYGa6Dh2qb2OMSG5sPYSJSdWXJiofXCltD2Rs
+
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
@@ -990,6 +984,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231005164910'),
 ('20231123102925'),
 ('20231208151754'),
-('20241120154841');
+('20241120154841'),
+('20251210143850');
 
 

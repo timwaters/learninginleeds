@@ -440,8 +440,60 @@ class Course < ApplicationRecord
     end
   end
 
+  def application_form_url
+    if self.lcc_code.match?(/MUL/)
+      form_template  = AppConfig['form_template_multiplier']
+    else
+      form_template  = AppConfig['form_template']
+    end
+    template = form_template % {course_title: CGI.escape(self.title), course_code: self.lcc_code, start_date: self.start_date.strftime("%Y-%m-%d"), end_date: self.end_date.strftime("%Y-%m-%d"), venue_name: self.venue.name , venue_postcode: self.venue.postcode } 
+    form_url = template
+
+    return form_url
+  end
+
+  # generates a short url for the course from url shortener using httparty
+  def generate_short_url
+    unless AppConfig["url_shortener_url"].blank? || AppConfig["url_shortener_key"].blank? || AppConfig["url_shortener_enabled"] == false
+      long_url = self.application_form_url
+
+      base_url = AppConfig["url_shortener_url"] + "/api/v2/links"
+      api_key = AppConfig["url_shortener_key"]
+
+      # setting reuse means that if it sends it again it will get one already created
+      response = HTTParty.post(
+        base_url,
+        headers: {
+          "Content-Type" => "application/json",
+          "Accept" => "application/json",
+          "X-API-Key" => api_key
+        },
+        body: {
+          target: long_url,
+          reuse: true
+        }.to_json
+      )
+      # 201 = (created new), 200 = OK (already exists)
+      if response.code != 201 && response.code != 200
+        msg = "Problem with URL Shortener: Code: #{response.code.to_s} Body: " + response.body.inspect
+        raise ApiError, msg
+      end
+
+      body = JSON.parse(response.body)
+
+      if body["link"].blank?
+        msg = "Problem with URL Shortener: Code: #{response.code.to_s} Body: " + response.body.inspect
+        raise ApiError, msg
+      end
+
+      return body["link"]
+    else
+      # logger.debug "No URL shortener configured"
+      return nil
+    end
+  end
+
 end
 
 class ApiError < StandardError
 end
-

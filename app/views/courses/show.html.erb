@@ -37,21 +37,17 @@
     <% end %>
   </p>
 
-  <% if @course.provider.application_form %>
-  <p>  
-    <% 
-    if @course.lcc_code.match?(/MUL/)
-      form_template  = AppConfig['form_template_multiplier']
-    else
-      form_template  = AppConfig['form_template']
-    end
-    template = form_template % {course_title: CGI.escape(@course.title), course_code: @course.lcc_code, start_date: @course.start_date.strftime("%Y-%m-%d"), end_date: @course.end_date.strftime("%Y-%m-%d"), venue_name: @course.venue.name , venue_postcode: @course.venue.postcode } 
-    form_url = template
+  <% if @course.provider.application_form 
+    form_url = @course.application_form_url
+    short_url = @course.short_link.blank? ? nil : @course.short_link
     %>
-   
-    <%= link_to "Apply Now", form_url,  :class => "application-form enrol btn btn-lil ", :target => '_blank'%>
-   
-  </p>
+    <p>     
+      <%= link_to "Apply Now", form_url,  :class => "application-form enrol btn btn-lil ", :target => '_blank'%>
+      <% unless short_url.nil? %>
+        <br />
+        <small>Application short link: <%= link_to short_url, short_url, target: "_blank", rel: "noopener nofollow", "aria-label":"Apply now short link" %></small>
+      <% end %>
+    </p>
   <% end %>
 
   </div>
@@ -125,6 +121,10 @@
         <% if @course.provider.application_form %>
         <p>
          <%= link_to "Apply Now", form_url,  :class => "application-form enrol btn btn-lil ", :target => '_blank'%>
+        <% unless short_url.nil? %>
+          <br />
+          <small>Application short link: <%= link_to short_url, short_url, target: "_blank", rel: "noopener nofollow", "aria-label":"Apply now short link" %></small>
+        <% end %>
         </p>
         <% end %>
        

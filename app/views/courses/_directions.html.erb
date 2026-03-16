@@ -38,6 +38,50 @@
      <%= render partial: 'courses/direction_links' %>
   </div>
 
+<%elsif @directions[:type] = "transit_google"%>
+
+  <h2 id="directions" role="status">Journey Plan</h2>
+
+  <p>From <%= params[:near] %> to <%= @course.venue.name.titlecase %></p>
+
+  <p><%= image_tag 'bus-blue.png', :alt => "Bus icon", "aria-label": "Public bus", :height=>20 %> <%= @directions[:duration] %> by Bus.(<%= link_to image_tag('foot-blue.png', :alt => "Walking icon", "aria-label": "Walking", :height=>20)+"Walking Directions", course_url(@course, :lcc_code => @course.lcc_code, :lon_lat => params[:lon_lat], :near => params[:near], :route => "walk", :anchor => "directions") %>)</p>
+  <p> Duration: <%= @directions[:duration] %>. Distance: <%= @directions[:distance] %>  </p>
+  <table class="table-striped table-bordered table-hovered">
+
+    <th scope="col" colspan="2">
+      Directions
+     </th>
+     <th scope="col">
+      Distance and time
+     </th>
+    <% @directions[:parts].each do | part | %>
+      <tr>
+        <td class="text-center"><%= image_tag("foot-blue.png", alt: "Walking icon", "aria-label": "Walking") if part["mode"] == "WALKING" %><%= image_tag('bus-blue.png',  alt: "Bus icon",  "aria-label": "Public bus") if part["mode"] == "TRANSIT" %></td>
+        <td>
+          <span class="line_name">
+          <%= "Bus  #{part['line_name']}." unless part['line_name'].blank? %></span>
+          <%= part["html_instructions"]%> <br />
+          <%= "From #{part['from']} to #{part['to']} <br />".html_safe unless part["from"].blank? %> 
+          <% if part["num_stops"] %>
+            For <%= part["num_stops"]  %> stops <br />
+          <% end %>
+          <span class="approx">approx <%= part["duration"] %> </span>
+        </td>
+        <td>
+          <%= part["duration"] %> <br />
+          <%= part["distance"] %>  
+        </td>
+
+      </tr>
+    <% end %>
+  </table>
+    
+  <div class="direction_links">
+     <%= render partial: 'courses/direction_links' %>
+  </div>
+
+
+
 <%elsif @directions[:type] == "transit_bing" %>
 
 

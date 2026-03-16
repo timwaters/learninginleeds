@@ -59,10 +59,10 @@ class CoursesController < ApplicationController
               break
             end
           end 
-        else
-          @directions = Rails.cache.fetch(@course.id.to_s + params[:lon_lat] + route + "tapi", :expires => 14.days) do
+        elsif AppConfig["transit_routing"] == "google"
+          @directions = Rails.cache.fetch(@course.id.to_s + params[:lon_lat] + route + "google", :expires => 20.days) do
             begin  
-              @course.transit_route_tapi({:lon_lat => params[:lon_lat]}) 
+              @course.transit_route_google({:lon_lat => params[:lon_lat]}) 
             rescue ApiError => e
               logger.error "Api Error #{e.message}"
               break

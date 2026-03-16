@@ -233,6 +233,105 @@ class Course < ApplicationRecord
 
   end
 
+  def transit_route_google(params={})
+    lon_lat = Course.get_lon_lat(params[:lon_lat])
+  
+    return nil if lon_lat.nil?
+
+    origin = "#{lon_lat[:latitude]},#{lon_lat[:longitude]}"
+
+    destination = "#{self.latitude},#{self.longitude}"
+
+    if self.start_date < Time.now
+      course_start_date ||= Time.now # today
+    else
+      course_start_date ||= self.start_date 
+    end
+
+    utc_time = Time.utc(
+      course_start_date.year,
+      course_start_date.month,
+      course_start_date.day,
+      start_time.hour,
+      start_time.min,
+      start_time.sec
+    )
+
+    arrival_time = utc_time.to_i.to_s
+
+    base_url = "https://maps.googleapis.com/maps/api/directions/json"
+    query_params = "?" + {
+      "origin" => origin,
+      "destination" => destination,
+      "arrival_time"=> arrival_time,
+      "language" => "en-GB",
+      "region" => "uk",
+      "mode" => "transit",
+      "transit_mode" => "bus",
+      "key" => AppConfig['google_key']
+    }.map {|k,v| "#{k}=#{CGI.escape(v)}"}*"&"
+    url = URI.parse(base_url+query_params)
+
+    logger.debug "Calling #{url}"
+
+    response = HTTParty.get(url)
+
+    if response.code != 200
+      msg = "Problem with Google Directions: Code: #{response.code.to_s} Body: " + response.body.inspect
+      raise ApiError, msg
+    end
+        
+    body = JSON.parse(response.body)
+
+
+    return nil unless body["status"] == "OK"
+
+    route = body["routes"][0]["legs"][0]
+    departure_time = Time.new(body["routes"][0]["legs"][0]["departure_time"]["value"]).strftime("%I:%M %p")
+    arrival_time = Time.new(body["routes"][0]["legs"][0]["arrival_time"]["value"]).strftime("%I:%M %p")
+    
+    duration = body["routes"][0]["legs"][0]["duration"]["text"]
+    distance = body["routes"][0]["legs"][0]["distance"]["text"]
+
+    parts = body["routes"][0]["legs"][0]["steps"].map { | part | 
+
+      line_name = ""
+      short_name = part.dig("transit_details", "line", "short_name")
+      long_name =  part.dig("transit_details", "line", "name")
+      line_name =  "#{short_name} #{long_name}"
+      part_departure_time = nil
+      part_arrival_time = nil
+      if part.dig("transit_details", "departure_time", "value") && part.dig("transit_details", "arrival_time", "value")
+        part_departure_time = Time.new(part["transit_details"]["departure_time"]["value"]).strftime("%I:%M %p")
+        part_arrival_time = Time.new(part["transit_details"]["arrival_time"]["value"]).strftime("%I:%M %p")
+      end
+      
+      {
+        "mode" => part["travel_mode"],
+        "html_instructions" => part["html_instructions"],
+        "duration" => part["duration"]["text"],
+        "distance" => part["distance"]["text"],
+        "line_name" => line_name,
+        "num_stops" => part.dig("transit_details", "num_stops"),
+        "from" =>  part.dig("transit_details", "departure_stop", "name"),
+        "to" => part.dig("transit_details", "arrival_stop", "name"),
+        "departure_time" => part_departure_time,
+        "arrival_time" => part_arrival_time
+      }
+
+    }
+
+    return  {
+      :type => "transit_google",
+      :duration => duration,
+      :distance => distance,
+      :departure_time => departure_time,
+      :arrival_time => arrival_time,
+      :parts => parts 
+    }
+ 
+
+  end
 
    #gets a bus route based using transport API
   def transit_route_tapi(params={})

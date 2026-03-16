@@ -29,6 +29,8 @@ namespace :import do
       #derived from the ONS Postcode Directory which is licenced under the Open Government Licence and the Ordnance Survey OpenData Licence. 
 
       #using subset of just W.Yorks postcodes, around 11mb, 97804 records
+      # open_postcode_geo_yorkshire_and_the_humber.csv  219310 records
+      # NOTE: This will APPEND data. so be sure to "truncate postcodes" in the database before if you want to overwrite
     file = ENV['FILE']
     unless !file.blank? && File.exist?(file)
       puts "Could not find #{file.to_s}"

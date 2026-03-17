@@ -38,7 +38,7 @@
      <%= render partial: 'courses/direction_links' %>
   </div>
 
-<%elsif @directions[:type] = "transit_google"%>
+<%elsif @directions[:type] == "transit_google"%>
 
   <h2 id="directions" role="status">Journey Plan</h2>
 

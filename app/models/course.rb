@@ -356,7 +356,7 @@ class Course < ApplicationRecord
       "app_id" => AppConfig["transportapi_id"],
       "app_key" => AppConfig["transportapi_key"],
       "modes" => "bus",
-      "service" => "southeast"
+      "service" => "silverrail"
     }.map {|k,v| "#{k}=#{CGI.escape(v)}"}*"&"
   
     url=URI.parse(base_url+rest_params+query_params)

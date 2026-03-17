@@ -75,7 +75,24 @@ class CoursesController < ApplicationController
               break
             end
           end 
-        end
+        elsif AppConfig["transit_routing"] == "transportapi"
+          @directions = Rails.cache.fetch(@course.id.to_s + params[:lon_lat] + route + "tapi", :expires => 20.days) do
+            begin  
+              @course.transit_route_tapi({:lon_lat => params[:lon_lat]}) 
+            rescue ApiError => e
+              logger.error "Api Error #{e.message}"
+              break
+            rescue HTTParty::Error => e
+              logger.error "HttpParty Error #{e.message}"
+              break
+            rescue StandardError => e
+              logger.error "Standard Error  #{e.message}"
+              logger.error(e.backtrace)
+              break
+            end
+          end
+
+        end #if params[:near] && params[:lon_lat]
         
       else
         @directions = nil

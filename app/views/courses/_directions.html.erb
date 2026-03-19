@@ -32,6 +32,7 @@
         </td>
       </tr>
     <% end %>
+    <tr><td colspan="3"> Journey directions: Powered by Transport API </td></tr>
   </table>
     
   <div class="direction_links">
@@ -82,10 +83,10 @@
 
       </tr>
     <% end %>
+     <tr><td colspan="3"> Journey directions: Powered by Google, ©<%= Time.now.year %> Google. </td></tr>
   </table>
     
   <div class="direction_links">
-      Journey plan directions: Powered by Google, ©2026 Google.  <br />
      <%= render partial: 'courses/direction_links' %>
   </div>
 

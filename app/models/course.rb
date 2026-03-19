@@ -248,7 +248,7 @@ class Course < ApplicationRecord
       course_start_date ||= self.start_date 
     end
 
-    utc_time = Time.utc(
+    local_time = Time.new(
       course_start_date.year,
       course_start_date.month,
       course_start_date.day,
@@ -257,7 +257,7 @@ class Course < ApplicationRecord
       start_time.sec
     )
 
-    arrival_time = utc_time.to_i.to_s
+    arrival_time = local_time.to_i.to_s
 
     base_url = "https://maps.googleapis.com/maps/api/directions/json"
     query_params = "?" + {

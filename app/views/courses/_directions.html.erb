@@ -1,4 +1,4 @@
-<% if @directions[:type] == "transit"%>
+<% if @directions[:type] == "transportapi"  %>
 
   <h2 id="directions" role="status">Journey Plan to Arrive At <%= @course.start_time.strftime("%I:%M %p") %></h2>
 
@@ -13,7 +13,7 @@
       Directions
      </th>
      <th scope="col">
-      Distance and time
+      Times
      </th>
     <% @directions[:parts].each do | part | %>
       <tr>
@@ -40,19 +40,19 @@
 
 <%elsif @directions[:type] == "transit_google"%>
 
-  <h2 id="directions" role="status">Journey Plan</h2>
+  <h2 id="directions" role="status">Journey Plan to Arrive At <%= @course.start_time.strftime("%I:%M %p") %></h2>
 
   <p>From <%= params[:near] %> to <%= @course.venue.name.titlecase %></p>
 
   <p><%= image_tag 'bus-blue.png', :alt => "Bus icon", "aria-label": "Public bus", :height=>20 %> <%= @directions[:duration] %> by Bus.(<%= link_to image_tag('foot-blue.png', :alt => "Walking icon", "aria-label": "Walking", :height=>20)+"Walking Directions", course_url(@course, :lcc_code => @course.lcc_code, :lon_lat => params[:lon_lat], :near => params[:near], :route => "walk", :anchor => "directions") %>)</p>
-  <p> Duration: <%= @directions[:duration] %>. Distance: <%= @directions[:distance] %>  </p>
+  <p> Start: <%= @directions[:departure_time]  %>  End: <%= @directions[:arrival_time]  %> Duration: <%= @directions[:duration] %>. Distance: <%= @directions[:distance] %>  </p>
   <table class="table-striped table-bordered table-hovered">
 
     <th scope="col" colspan="2">
       Directions
      </th>
      <th scope="col">
-      Distance and time
+      Times
      </th>
     <% @directions[:parts].each do | part | %>
       <tr>
@@ -68,58 +68,18 @@
           <span class="approx">approx <%= part["duration"] %> </span>
         </td>
         <td>
-          <%= part["duration"] %> <br />
-          <%= part["distance"] %>  
+          <% if part == @directions[:parts].first %>
+            Depart at <%= @directions[:departure_time] %><br />
+          <% elsif part["departure_time"] %>
+            Depart at <%= part["departure_time"] %><br />
+          <% end %> 
+          <% if part == @directions[:parts].last %>
+            To arrive at <%= @directions[:arrival_time] %><br />
+          <% elsif part["arrival_time"] %>
+            To arrive at <%= part["arrival_time"] %>  <br />
+          <% end %>
         </td>
 
-      </tr>
-    <% end %>
-  </table>
-    
-  <div class="direction_links">
-     <%= render partial: 'courses/direction_links' %>
-  </div>
-
-
-
-<%elsif @directions[:type] == "transit_bing" %>
-
-
-  <h2 id="directions" role="status">Journey Plan to Arrive At <%= @course.start_time.strftime("%I:%M %p") %></h2>
-
-  <p>From <%= params[:near] %> to <%= @course.venue.name.titlecase %></p>
-  <% 
-      time_in_words = distance_of_time_in_words("00:00:00".to_time, "00:00:00".to_time + @directions[:duration])
-    %>
-  <p><%= image_tag 'bus-blue.png', :alt => "Bus icon", "aria-label": "Public bus", :height=>20 %> <%= time_in_words%> by Bus.(<%= link_to image_tag('foot-blue.png', :alt => "Walking icon", "aria-label": "Walking", :height=>20)+"Walking Directions", course_url(@course, :lcc_code => @course.lcc_code, :lon_lat => params[:lon_lat], :near => params[:near], :route => "walk", :anchor => "directions") %>)</p>
-  <p> Start: <%= @directions[:departure_time].strftime("%I:%M %p")  %>  End: <%= @directions[:arrival_time].strftime("%I:%M %p")  %>  Duration: <%= time_in_words %>. Distance: <%= @directions[:length] %> km </p>
-  <table class="table-striped table-bordered table-hovered">
-
-    <th scope="col" colspan="2">
-      Directions
-     </th>
-     <th scope="col">
-      Distance and time
-     </th>
-    <% @directions[:parts].each do | part | %>
-      <tr>
-        <td class="text-center"><%= image_tag("foot-blue.png", alt: "Walking icon", "aria-label": "Walking") if part["mode"] == "Walk" %><%= image_tag('bus-blue.png',  alt: "Bus icon",  "aria-label": "Public bus") if part["mode"] == "TakeTransit" %></td>
-        <td>
-          
-          <% part["instruction"].gsub!(/Source Location/, params[:near]) 
-             part["instruction"].gsub!(/Destination Location/,  @course.venue.name.titlecase) 
-          %>
-         
-          <span class="line_name">
-          <%= "Bus  #{part['line_name']}."  unless part['line_name'].blank? %></span>
-          <%= part["instruction"]%> <br />
-          <%= "From #{part['from']} to #{part['to']} <br />".html_safe unless part["from"].blank? %> 
-          <span class="approx">approx <%= ("00:00:00".to_time + part["duration"]).strftime("%-M")  %> minutes</span>
-        </td>
-        <td>
-          <%= distance_of_time_in_words(part["duration"])%> <br />
-          <%= part["length"].round(1) %> km 
-        </td>
       </tr>
     <% end %>
   </table>

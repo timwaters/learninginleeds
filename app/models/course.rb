@@ -274,6 +274,12 @@ class Course < ApplicationRecord
 
     logger.debug "Calling #{url}"
 
+    # require 'benchmark'
+    # response = nil
+    # time = Benchmark.realtime do
+    # response = HTTParty.get(url)
+    # end
+    # puts "Request took #{time.round(3)} seconds"
     response = HTTParty.get(url)
 
     if response.code != 200
@@ -287,8 +293,8 @@ class Course < ApplicationRecord
     return nil unless body["status"] == "OK"
 
     route = body["routes"][0]["legs"][0]
-    departure_time = Time.new(body["routes"][0]["legs"][0]["departure_time"]["value"]).strftime("%I:%M %p")
-    arrival_time = Time.new(body["routes"][0]["legs"][0]["arrival_time"]["value"]).strftime("%I:%M %p")
+    departure_time = Time.at(body["routes"][0]["legs"][0]["departure_time"]["value"]).strftime("%I:%M %p")
+    arrival_time = Time.at(body["routes"][0]["legs"][0]["arrival_time"]["value"]).strftime("%I:%M %p")
     
     duration = body["routes"][0]["legs"][0]["duration"]["text"]
     distance = body["routes"][0]["legs"][0]["distance"]["text"]
@@ -302,8 +308,8 @@ class Course < ApplicationRecord
       part_departure_time = nil
       part_arrival_time = nil
       if part.dig("transit_details", "departure_time", "value") && part.dig("transit_details", "arrival_time", "value")
-        part_departure_time = Time.new(part["transit_details"]["departure_time"]["value"]).strftime("%I:%M %p")
-        part_arrival_time = Time.new(part["transit_details"]["arrival_time"]["value"]).strftime("%I:%M %p")
+        part_departure_time = Time.at(part["transit_details"]["departure_time"]["value"]).strftime("%I:%M %p")
+        part_arrival_time = Time.at(part["transit_details"]["arrival_time"]["value"]).strftime("%I:%M %p")
       end
       
       {
@@ -356,12 +362,18 @@ class Course < ApplicationRecord
       "app_id" => AppConfig["transportapi_id"],
       "app_key" => AppConfig["transportapi_key"],
       "modes" => "bus",
-      "service" => "silverrail"
+      "service" => "traveline"
     }.map {|k,v| "#{k}=#{CGI.escape(v)}"}*"&"
   
     url=URI.parse(base_url+rest_params+query_params)
     logger.debug "calling #{url}"
 
+    # require 'benchmark'
+    # response = nil
+    # time = Benchmark.realtime do
+    # response = HTTParty.get(url)
+    # end
+    # puts "Request took #{time.round(3)} seconds"
     response = HTTParty.get(url)
     
     if response.code != 200
@@ -389,7 +401,7 @@ class Course < ApplicationRecord
                  "arrival_time" => part["arrival_time"],
                  "duration" => part["duration"]}    }
     
-    return  {:type => "transit",
+    return  {:type => "transportapi",
             :duration => duration,
             :date => params[:start_date],
             :departure_time => departure_time,
@@ -397,81 +409,7 @@ class Course < ApplicationRecord
             :parts => parts }
   end
 
-  def transit_route_bing(params={})
-    lon_lat = Course.get_lon_lat(params[:lon_lat])
-    lat_lon = "#{lon_lat[:latitude]},#{lon_lat[:longitude]}" if lon_lat
-    origin = params[:origin] || lat_lon || "53.797678,-1.5359008"  #lonlat:-1.5359008,53.797678  bus station!
 
-    params[:destination] ||= "#{self.latitude},#{self.longitude}"
-
-    if self.start_date < Time.now
-      params[:start_date] ||= Time.now.strftime("%Y-%m-%d")
-    else
-      params[:start_date] ||= self.start_date.strftime("%Y-%m-%d")
-    end
-
-    params[:start_time]  ||= self.start_time.strftime("%H:%M")
-
-    base_url="https://dev.virtualearth.net/REST/V1/Routes/Transit"
-
-    query_params = "?" + {
-      "userRegion" => "GB",
-      "wp.0" => origin,
-      "wp.1" => params[:destination],
-      "timeType" => "Arrival",
-      "dateTime" => params[:start_time],
-      "maxSolutions" => "1",
-      "key" => AppConfig["bing_maps_key"]
-    }.map {|k,v| "#{k}=#{CGI.escape(v)}"}*"&"
-  
-    url=URI.parse(base_url+query_params)
-    logger.debug "calling #{url}"
-
-    response = HTTParty.get(url)
-
-    if response.code != 200
-     msg = "Problem with Bing API transit routing: Code: #{response.code.to_s} Body: " + response.body.inspect
-     raise ApiError, msg
-    end
-   
-    body = JSON.parse(response.body)
-   
-    route = body["resourceSets"][0]["resources"][0]
-
-    length = route["travelDistance"]
-    duration = route["travelDuration"].to_i 
-
-    departure_time =  Time.strptime(route["routeLegs"][0]["startTime"], "/Date(%Q%z)/")
-    arrival_time = Time.strptime(route["routeLegs"][0]["endTime"], "/Date(%Q%z)/") 
-
-
-    parts = route["routeLegs"][0]["itineraryItems"].map {| part | 
-      from = nil
-      to = nil
-      unless part["childItineraryItems"].blank?
-        from = part["childItineraryItems"][0]["details"][0]["names"][0]
-        to = part["childItineraryItems"][1]["details"][0]["names"][0]
-      end
-
-       line_name = part["transitLine"].blank? ? nil : part["transitLine"]["abbreviatedName"]
-       instruction = part["instruction"]["text"]
-       instruction = part["transitLine"].blank? ? instruction : part["transitLine"]["verboseName"]
-                {"mode" => part["details"][0]["maneuverType"],
-                 "instruction" => instruction,
-                 "from"=> from, 
-                 "to" => to, 
-                 "line_name" => line_name, 
-                 "length" => part["travelDistance"],
-                 "duration" => part["travelDuration"]}    }
-    
-    return  {:type => "transit_bing",
-            :duration => duration,
-            :length => length,
-            :date => params[:start_date],
-            :departure_time => departure_time,
-            :arrival_time => arrival_time,
-            :parts => parts }
-  end
 
   #converts rtf to html
   def convert_description

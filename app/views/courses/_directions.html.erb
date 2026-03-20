@@ -90,6 +90,60 @@
      <%= render partial: 'courses/direction_links' %>
   </div>
 
+<% elsif @directions[:type] == "transit_here"%>
+
+  <h2 id="directions" role="status">Journey Plan to Arrive At <%= @course.start_time.strftime("%I:%M %p") %></h2>
+
+  <p>From <%= params[:near] %> to <%= @course.venue.name.titlecase %></p>
+
+  <p><%= image_tag 'bus-blue.png', :alt => "Bus icon", "aria-label": "Public bus", :height=>20 %> <%= @directions[:duration] %> by Bus.(<%= link_to image_tag('foot-blue.png', :alt => "Walking icon", "aria-label": "Walking", :height=>20)+"Walking Directions", course_url(@course, :lcc_code => @course.lcc_code, :lon_lat => params[:lon_lat], :near => params[:near], :route => "walk", :anchor => "directions") %>)</p>
+
+  <table class="table-striped table-bordered table-hovered">
+
+    <th scope="col" colspan="2">
+      Directions
+     </th>
+     <th scope="col">
+      Times
+     </th>
+    <% @directions[:parts].each do | part | %>
+      <tr>
+        <td class="text-center"><%= image_tag("foot-blue.png", alt: "Walking icon", "aria-label": "Walking") if part["mode"] == "pedestrian" %><%= image_tag('bus-blue.png',  alt: "Bus icon",  "aria-label": "Public bus") if part["mode"] == "transit" %></td>
+        <td>
+          <span class="line_name">
+            <%= "Bus  #{part['line_name']}." unless part['line_name'].blank? %>
+          </span>
+
+          <% if part["mode"] == "pedestrian" && part["to"]%>
+            Walk to <%= part["to"] %>
+          <% end %>
+
+          <% if part["mode"] == "pedestrian" && part["from"]%>
+            Walk from <%= part["from"] %>
+          <% end %>
+          <br />
+
+          <span class="approx"><%= distance_of_time_in_words(part["duration"]) %>  <br />
+            approx <%= format_distance(part["distance"]) %>
+          </span>
+        </td>
+        <td>
+          <% if part["departure_time"] %>
+            Depart at <%= part["departure_time"].to_time.strftime("%H:%M") %><br />
+          <% end %> 
+          <% if part["arrival_time"] %>
+            To arrive at <%= part["arrival_time"].to_time.strftime("%H:%M") %>  <br />
+          <% end %>
+        </td>
+
+      </tr>
+    <% end %>
+     <tr><td colspan="3"> Journey directions: Transit data © <%= Time.now.year %> HERE. </td></tr>
+  </table>
+    
+  <div class="direction_links">
+     <%= render partial: 'courses/direction_links' %>
+  </div>
 
 <%elsif @directions[:type] == "foot"%>
 

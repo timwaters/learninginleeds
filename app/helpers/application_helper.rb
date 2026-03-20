@@ -68,4 +68,13 @@ module ApplicationHelper
     )).html_safe
   end
 
+  #helper used to convert metres into km for more readable display
+  def format_distance(metres)
+    if metres >= 1000
+      "#{number_with_precision(metres / 1000.0, precision: 2, strip_insignificant_zeros: true)} km"
+    else
+      "#{metres} m"
+    end
+  end
+
 end

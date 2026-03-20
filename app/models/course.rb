@@ -271,7 +271,6 @@ class Course < ApplicationRecord
         
     body = JSON.parse(response.body)
 
-
     return nil unless body["status"] == "OK"
 
     route = body["routes"][0]["legs"][0]
@@ -323,6 +322,102 @@ class Course < ApplicationRecord
     }
  
 
+  end
+
+  
+  # bus route via here
+  def transit_route_here(params={})
+    lon_lat = Course.get_lon_lat(params[:lon_lat])
+  
+    return nil if lon_lat.nil?
+
+    origin = "#{lon_lat[:latitude]},#{lon_lat[:longitude]}"
+    destination = "#{self.latitude},#{self.longitude}"
+
+    if self.start_date < Time.now
+      course_start_date ||= Time.now # today
+    else
+      course_start_date ||= self.start_date 
+    end
+
+    local_time = Time.new(
+      course_start_date.year,
+      course_start_date.month,
+      course_start_date.day,
+      start_time.hour,
+      start_time.min,
+      start_time.sec
+    )
+
+    arrival_time = local_time.rfc3339
+
+    base_url = "https://transit.router.hereapi.com/v8/routes"
+    query_params = "?" + {
+      "origin" => origin,
+      "destination" => destination,
+      "arrivalTime"=> arrival_time,
+      "lang" => "en-gb",
+      "modes" => "bus",
+      "return" => "actions,travelSummary",
+      "apiKey" => AppConfig['here_key']
+    }.map {|k,v| "#{k}=#{CGI.escape(v)}"}*"&"
+    url = URI.parse(base_url+query_params)
+
+    logger.debug "Calling #{url}"
+
+    response = HTTParty.get(url)
+
+    if response.code != 200
+      msg = "Problem with Here Directions: Code: #{response.code.to_s} Body: " + response.body.inspect
+      raise ApiError, msg
+    end
+
+    body = JSON.parse(response.body)
+
+    if body.dig("notices")
+      #logger.debug body.dig("notices") 
+      return nil
+    end
+
+    sections = body.dig("routes", 0, "sections")
+    return nil unless sections
+
+    parts = sections.map {| part | 
+
+      line_name = ""
+      short_name = part.dig("transport", "name")
+      long_name =  part.dig("transport", "headsign")
+      line_name =  "#{short_name} #{long_name}"
+
+      instructions = nil
+      actions = part.dig("actions")
+      if actions
+        instructions = actions.map {| action |
+          action.dig("instruction")
+        }
+      end
+
+      {"mode" => part["type"],
+        "from"=> part.dig("departure", "place", "name"), 
+        "to" => part.dig("arrival", "place", "name"), 
+        "line_name" => line_name, 
+        "instructions" => instructions,
+        "departure_time" => part.dig("departure","time"),
+        "arrival_time" =>  part.dig("arrival","time"),
+        "duration" => part.dig("travelSummary", "duration"),
+        "distance" => part.dig("travelSummary", "length") }      
+
+    } #part
+
+    return  {
+      :type => "transit_here",
+      :duration => nil,
+      :distance => nil,
+      :departure_time => nil,
+      :arrival_time => nil,
+      :parts => parts 
+    }
+    
   end
 
    #gets a bus route based using transport API

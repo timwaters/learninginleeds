@@ -55,6 +55,11 @@ class Course < ApplicationRecord
     return courses
   end 
 
+  def self.in_bounds?(lat, lon, bbox)
+    lat.between?(bbox[:min_lat], bbox[:max_lat]) && 
+    lon.between?(bbox[:min_lon], bbox[:max_lon])
+  end
+
   #postcode, lat,lon, place/address
   def self.get_lon_lat(near, geocode_service="google")
     return nil if near.blank?
@@ -97,7 +102,6 @@ class Course < ApplicationRecord
     return lon_lat
   end
 
-
   require 'httparty'
 
   def self.geocode(near, service="google")
@@ -132,37 +136,15 @@ class Course < ApplicationRecord
         msg = "Problem with Google Geocoding: Code: #{response.code.to_s} Status: " + body["status"].inspect
         raise ApiError, msg
       end
-
-      lon_lat = {:longitude => body["results"][0]["geometry"]["location"]["lng"].round(6), :latitude =>body["results"][0]["geometry"]["location"]["lat"].round(6)} if body["results"].size > 0
-
-    elsif service == "mapzen"
-
-      query_params = "?" + {
-        "text" => near,
-        "api_key" => AppConfig['mapzen_key'],
-        "size" => "1",
-        "boundary.country" => "GBR",
-        "focus.point.lat" => "53.797678",
-        "focus.point.lon" => "-1.5359008",
-        "boundary.circle.lat"  => "53.797678",
-        "boundary.circle.lon" =>  "-1.5359008",
-        "boundary.circle.radius" => "50"
-      }.map {|k,v| "#{k}=#{CGI.escape(v)}"}*"&"
-      base_url = "https://search.mapzen.com/v1/search"
     
-      url=URI.parse(base_url+query_params)
-      logger.debug "calling #{url}"
+     
+      bbox = { min_lon: -1.8787, min_lat: 53.5613, max_lon: -1.0603, max_lat: 54.0334 }
+      lat  = body["results"][0]["geometry"]["location"]["lat"]
+      lon = body["results"][0]["geometry"]["location"]["lng"]
+      # only return if its around Leeds
+      return nil unless in_bounds?(lat,lon, bbox)
 
-      response = HTTParty.get(url)
-
-      if response.code != 200
-        msg = "Problem with Mapzen Geocoding: Code: #{response.code.to_s} Body: " + response.body.inspect
-        raise ApiError, msg 
-      end
-    
-      body = JSON.parse(response.body)
-
-      lon_lat = {:longitude => body["features"][0]["geometry"]["coordinates"][0].round(6), :latitude =>body["features"][0]["geometry"]["coordinates"][1].round(6)} if body["features"].size > 0
+      lon_lat = {:longitude => lon.round(6), :latitude =>lat.round(6)} if body["results"].size > 0
 
     else
       lon_lat = nil
@@ -293,8 +275,12 @@ class Course < ApplicationRecord
     return nil unless body["status"] == "OK"
 
     route = body["routes"][0]["legs"][0]
-    departure_time = Time.at(body["routes"][0]["legs"][0]["departure_time"]["value"]).strftime("%I:%M %p")
-    arrival_time = Time.at(body["routes"][0]["legs"][0]["arrival_time"]["value"]).strftime("%I:%M %p")
+    
+    departure_timestamp = body.dig("routes", 0, "legs", 0, "departure_time", "value")
+    departure_time = departure_timestamp ? Time.at(departure_timestamp).strftime("%I:%M %p") : nil
+
+    arrival_timestamp = body.dig("routes", 0, "legs", 0, "arrival_time", "value")
+    arrival_time = arrival_timestamp ? Time.at(arrival_timestamp).strftime("%I:%M %p") : nil
     
     duration = body["routes"][0]["legs"][0]["duration"]["text"]
     distance = body["routes"][0]["legs"][0]["distance"]["text"]

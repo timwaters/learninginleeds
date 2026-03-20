@@ -46,7 +46,7 @@
   <p>From <%= params[:near] %> to <%= @course.venue.name.titlecase %></p>
 
   <p><%= image_tag 'bus-blue.png', :alt => "Bus icon", "aria-label": "Public bus", :height=>20 %> <%= @directions[:duration] %> by Bus.(<%= link_to image_tag('foot-blue.png', :alt => "Walking icon", "aria-label": "Walking", :height=>20)+"Walking Directions", course_url(@course, :lcc_code => @course.lcc_code, :lon_lat => params[:lon_lat], :near => params[:near], :route => "walk", :anchor => "directions") %>)</p>
-  <p> Start: <%= @directions[:departure_time]  %>  End: <%= @directions[:arrival_time]  %> Duration: <%= @directions[:duration] %>. Distance: <%= @directions[:distance] %>  </p>
+  <p>  <%= "Start: #{@directions[:departure_time]}" unless @directions[:departure_time].nil? %>   <%= "End: #{@directions[:arrival_time]}" unless @directions[:arrival_time].nil? %> Duration: <%= @directions[:duration] %>. Distance: <%= @directions[:distance] %>  </p>
   <table class="table-striped table-bordered table-hovered">
 
     <th scope="col" colspan="2">
@@ -69,12 +69,12 @@
           <span class="approx">approx <%= part["duration"] %> </span>
         </td>
         <td>
-          <% if part == @directions[:parts].first %>
+          <% if part == @directions[:parts].first && @directions[:departure_time] %>
             Depart at <%= @directions[:departure_time] %><br />
           <% elsif part["departure_time"] %>
             Depart at <%= part["departure_time"] %><br />
           <% end %> 
-          <% if part == @directions[:parts].last %>
+          <% if part == @directions[:parts].last  && @directions[:arrival_time]%>
             To arrive at <%= @directions[:arrival_time] %><br />
           <% elsif part["arrival_time"] %>
             To arrive at <%= part["arrival_time"] %>  <br />

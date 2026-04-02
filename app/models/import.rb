@@ -45,9 +45,9 @@ class Import < ApplicationRecord
     rows = CSV.read(file, :headers => true, :header_converters => :symbol,  :col_sep => "," , encoding: "ISO8859-1:utf-8")
     log_info "preparing to import courses from CSV with #{rows.size} rows"
     count = 0
-    errors = 0
+    error_log = []
     
-    rows.each do | row |
+    rows.each_with_index do | row, index |
       course = Course.find_or_create_by(lcc_code: row[:lcc_course_code].strip)
 
       updated = course.update({title: row[:course_title], 
@@ -65,11 +65,13 @@ class Import < ApplicationRecord
       })
       unless updated
         log_error "Could not update course: #{course.inspect}" 
+        error_log << {row_number: index+1, message: "Could not create or update course", course_lcc_code: row[:lcc_course_code], course_title: row[:course_title], errors: course.errors.full_messages }
         next
       end
 
       if course.start_time.nil? || course.end_time.nil?
         log_error "Error: Could not create or update course, no start or end time. #{course.inspect}"
+        error_log << { row_number: index+1, message: "Could not create or update course. no start or end time", course_lcc_code: row[:lcc_course_code], course_title: row[:course_title], errors: course.errors.full_messages }
         course.destroy
         next
       end
@@ -84,6 +86,7 @@ class Import < ApplicationRecord
       updated = provider.update({ url: row[:provider_url], telephone: telephone, email: email })
       unless updated
         log_error "Could not update provider: #{provider.inspect}" 
+        error_log << { row_number: index+1, message: "Could not create or update provider", provider: row[:provider], course_lcc_code: row[:lcc_course_code], course_title: row[:course_title], errors: provider.errors.full_messages }
       end
   
       venue = Venue.find_or_create_by(name: row[:venue])
@@ -96,7 +99,7 @@ class Import < ApplicationRecord
       })
 
       if venue.saved_changes?
-        log_error "venue changed #{venue.name}"
+        log_info "venue changed #{venue.name}"
 
         lookup_address = [row[:venue],row[:address_1],row[:address_2],row[:address_3],row[:venue_postcode].strip].select {|a| !a.blank?}.join(", ")
         lon_lat = Course.get_lon_lat(lookup_address, "google")
@@ -115,11 +118,14 @@ class Import < ApplicationRecord
       end
 
       unless updated
-        log_error "Could not update venue: #{venue.inspect}" 
+        log_error "Could not create or update venue: #{venue.inspect}" 
+        error_log << { row_number: index+1, message: "Could not create or update venue", provider: row[:venue], course_lcc_code: row[:lcc_course_code], course_title: row[:course_title], errors: venue.errors.full_messages }
       end
       
       #if the venue doesn't have a name or a postcode, or is otherwise invalid, make sure that the corresponding course is not saved
       if venue.invalid?
+        log_error "Venue invalid, course not saved: #{venue.inspect}" 
+        error_log << { row_number: index+1, message: "Venue invalid, course not saved", provider: row[:venue], course_lcc_code: row[:lcc_course_code], course_title: row[:course_title], errors: venue.errors.full_messages }
         course.destroy
         next
       end
@@ -130,7 +136,11 @@ class Import < ApplicationRecord
       course.latitude = venue.latitude
       course.longitude = venue.longitude
       course.lonlat = "POINT(#{venue.longitude} #{venue.latitude})" unless venue.longitude.nil?
-      course.description_html = course.convert_description
+      begin
+        course.description_html = course.convert_description
+      rescue => e
+        error_log << { row_number: index+1, message: "Error converting RTF description, using plain text instead", course_lcc_code: row[:lcc_course_code], course_title: row[:course_title], errors: e.message }
+      end
 
       course.short_link = course.generate_short_url rescue nil
   
@@ -140,8 +150,11 @@ class Import < ApplicationRecord
 
       self.courses << course
     end
-
-    self.update_attribute(:imported_num, count)
+    self.update_columns(
+      rows_num: rows.size,
+      imported_num: count,
+      error_log: error_log
+    )
     Topic.update_counts
 
     log_info " "

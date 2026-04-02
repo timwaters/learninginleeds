@@ -1,7 +1,7 @@
-\restrict 5OBfsIyhcOJaOMRmsLnd2nrGbIaYGa6Dh2qb2OMSG5sPYSJSdWXJiofXCltD2Rs
+\restrict glOEHj7IEwhsw8Jg59d76XywkOpRXqfRZIari4ChslM1fVR6Uv62E5j9gr7XrYr
 
--- Dumped from database version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
--- Dumped by pg_dump version 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
+-- Dumped from database version 16.13 (Ubuntu 16.13-0ubuntu0.24.04.1)
+-- Dumped by pg_dump version 16.13 (Ubuntu 16.13-0ubuntu0.24.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -234,7 +234,9 @@ CREATE TABLE public.imports (
     finished_at timestamp without time zone,
     imported_num integer,
     note text,
-    upload_url character varying
+    upload_url character varying,
+    rows_num integer,
+    error_log jsonb
 );
 
 
@@ -939,7 +941,7 @@ ALTER TABLE ONLY public.courses
 -- PostgreSQL database dump complete
 --
 
-\unrestrict 5OBfsIyhcOJaOMRmsLnd2nrGbIaYGa6Dh2qb2OMSG5sPYSJSdWXJiofXCltD2Rs
+\unrestrict glOEHj7IEwhsw8Jg59d76XywkOpRXqfRZIari4ChslM1fVR6Uv62E5j9gr7XrYr
 
 SET search_path TO "$user", public;
 
@@ -985,6 +987,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231123102925'),
 ('20231208151754'),
 ('20241120154841'),
-('20251210143850');
+('20251210143850'),
+('20260402110043');
 
 

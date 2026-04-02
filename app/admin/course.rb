@@ -3,7 +3,12 @@ ActiveAdmin.register Course do
   permit_params :title, :description, :category_1, :category_2, :lonlat, :venue_id, :provider_id, :description_rtf
 
   before_save do | course |
-    course.description_html = course.convert_description
+    begin
+      course.description_html = course.convert_description
+    rescue => e
+      Rails.logger.error "Error converting description for course #{e.inspect} #{course.inspect}"
+      course.description_html = nil
+    end
   end
 
   form do | f| 

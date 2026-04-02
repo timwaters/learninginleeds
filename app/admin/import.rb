@@ -24,7 +24,11 @@ ActiveAdmin.register Import do
     id_column
     column :note
     column :status
+    column :rows_num
     column :imported_num
+    column "Errors?" do |import|
+      import.error_log.present? && import.error_log.any?
+    end
     column :upload_url
     column :csv_file_file_name
     column :created_at
@@ -32,5 +36,50 @@ ActiveAdmin.register Import do
 
     actions
   end
+
+
+
+
+
+  show do
+    attributes_table do
+      row :status
+      row :csv_file_file_name
+      row "num of rows in csv" do | i |
+        i.rows_num 
+      end 
+      row :imported_num
+
+      row :note
+      row "errors" do |import|
+        if import.error_log.present? && import.error_log.any?
+          true
+        else
+          false
+        end
+      end
+      row :created_at
+    end
+
+    if import.error_log.present? && import.error_log.any?
+      panel "Error Log" do
+        import.error_log.each do |entry|
+          entry = entry.stringify_keys 
+          sorted_entry = entry.sort_by { |key, _| key == "message" ? 0 : 1 }
+          div class: "attributes_table" do
+            dl do
+              sorted_entry.each do |key, value|
+                dt key.humanize
+                dd value.presence || "-"
+              end
+            end
+          end
+          "--"
+        end
+      end
+    end
+
+  end #show
+  
 
 end

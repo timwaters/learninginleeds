@@ -497,13 +497,8 @@ class Course < ApplicationRecord
     unless self.description_rtf.blank?
       #change long blank spaces and tabs to bullet
       #change small bullets to big
-      begin
-        html = PandocRuby.convert(self.description_rtf.gsub("       ",'•').gsub("\\tab",'•'), from: :rtf, to: :html).gsub('·', '•')
-      rescue => e
-        logger.error "Error in panodoc convert #{e.inspect}"
-        logger.error "Setting description_rtf to nil for #{self.inspect}"
-        return nil
-      end
+      html = PandocRuby.convert(self.description_rtf.gsub("       ",'•').gsub("\\tab",'•'), from: :rtf, to: :html).gsub('·', '•')
+      
       require 'nokogiri'
       doc = Nokogiri::HTML.fragment(html)
     

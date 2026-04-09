@@ -62,22 +62,25 @@ ActiveAdmin.register Import do
     end
 
     if import.error_log.present? && import.error_log.any?
+
       panel "Error Log" do
-        import.error_log.each do |entry|
-          entry = entry.stringify_keys 
-          sorted_entry = entry.sort_by { |key, _| key == "message" ? 0 : 1 }
-          div class: "attributes_table" do
-            dl do
+        div class: "attributes_table" do
+          import.error_log.each do |entry|
+            table class:"error_log" do
+              entry = entry.stringify_keys 
+              sorted_entry = entry.sort_by { |key, _| key == "message" ? 0 : 1 }
               sorted_entry.each do |key, value|
-                dt key.humanize
-                dd value.presence || "-"
-              end
-            end
-          end
-          "--"
-        end
-      end
-    end
+                tr do
+                  th key.humanize
+                  td value.presence || "-"
+                end #tr
+              end #k,v
+            end # table
+          end #entry
+        end #div attributes_table
+      end # panel
+
+    end # if import log
 
   end #show
   

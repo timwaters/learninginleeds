@@ -516,33 +516,44 @@ class Course < ApplicationRecord
       end
 
       html = doc.to_html
-   
+
+      # add br for empty newlines
+      html = html.gsub(/(\r?\n\s*){2,}/, "<br>")  
+
       # group the li with ul
       doc = Nokogiri::HTML.fragment(html)
 
       group = nil
-      last_nonelement = nil
-      last = doc.element_children.last()
-      doc.element_children.each do | node |
-        if node.name == "li"
-            group =  Nokogiri::XML::Node.new "ul", doc if group.nil?
-            group.add_child(node)
-        end
-        if node.name != "li"
-          last_nonelement = node
-          node.add_next_sibling(group) unless group.nil?
-          group = nil
-        end
-        if last == node && group
-          last_nonelement.add_next_sibling(group)
-          group = nil
-        end
 
+      doc.element_children.each do |node|
+        if node.name == "li"
+          group ||= Nokogiri::XML::Node.new("ul", doc)
+          group.add_child(node)
+        else
+          if group
+            node.add_previous_sibling(group)
+            group = nil
+          end
+        end
       end
+
+    # append trailing group
+    doc.add_child(group) if group
 
       doc.element_children.each do | node |
         if node.name == "p" && node.content.empty? 
           node.remove
+        end
+      end
+
+      # if theres only 1 list, remove it
+      uls = doc.css('ul')
+
+      if uls.length == 1
+        lis = uls.first.css('> li')
+
+        if lis.length == 1
+          uls.first.replace(lis.first.children)
         end
       end
       

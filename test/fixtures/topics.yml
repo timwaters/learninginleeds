@@ -2,8 +2,10 @@
 
 one:
   name: Topic One
-  subjects: one
+  category_1: [cat1]
+  category_2: [cat2]  
 
 two:
   name: Empty Topic
-  subjects: three
+  category_1: []
+  category_2: []

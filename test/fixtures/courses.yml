@@ -16,9 +16,10 @@ one:
   lcc_code: MyString
   provider_code: MyString
   academic_year: MyString
-  subject: one
   venue: one
   provider: one
+  category_1: cat1
+  category_2: cat2
 
 two:
   title: Course Two
@@ -36,6 +37,7 @@ two:
   lcc_code: MyString
   provider_code: MyString
   academic_year: MyString
-  subject: two
   venue: two
   provider: two
+  category_1: cat1
+  category_2: cat2

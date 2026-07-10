@@ -1,7 +1,7 @@
-\restrict glOEHj7IEwhsw8Jg59d76XywkOpRXqfRZIari4ChslM1fVR6Uv62E5j9gr7XrYr
+\restrict exq20umJZk62hjfvHcngCTG3n0d5GdTBeCFEABon8MycZRmofIdEDQ3AY9PhFFg
 
--- Dumped from database version 16.13 (Ubuntu 16.13-0ubuntu0.24.04.1)
--- Dumped by pg_dump version 16.13 (Ubuntu 16.13-0ubuntu0.24.04.1)
+-- Dumped from database version 16.14 (Ubuntu 16.14-0ubuntu0.24.04.1)
+-- Dumped by pg_dump version 16.14 (Ubuntu 16.14-0ubuntu0.24.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -941,7 +941,7 @@ ALTER TABLE ONLY public.courses
 -- PostgreSQL database dump complete
 --
 
-\unrestrict glOEHj7IEwhsw8Jg59d76XywkOpRXqfRZIari4ChslM1fVR6Uv62E5j9gr7XrYr
+\unrestrict exq20umJZk62hjfvHcngCTG3n0d5GdTBeCFEABon8MycZRmofIdEDQ3AY9PhFFg
 
 SET search_path TO "$user", public;
 

@@ -7,11 +7,11 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2'
+gem 'rails', '~> 6.1'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails', '~> 6.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -27,8 +27,9 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'activeadmin'
-gem 'devise', '~> 4.6'
+gem 'activeadmin', '~> 2.14'
+gem 'has_scope', '~> 0.8.0'
+gem 'devise', '~> 4.9'
 gem 'cancancan', '~> 1.10'
 
 gem 'activerecord-import'
@@ -39,8 +40,11 @@ gem 'text'
 gem 'will_paginate', '~> 3.1.0'
 
 gem 'pg'
-gem 'activerecord-postgis-adapter'
+gem 'activerecord-postgis-adapter', '~> 7.1'
+#gem 'activerecord-postgis-adapter'
 gem 'pg_search'
+
+gem 'coffee-rails'
 
 gem 'httparty'
 gem "paperclip", "~> 5.2.0"
@@ -68,9 +72,9 @@ end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem 'web-console', '>= 3.3.0'
+  gem 'web-console', '>= 3.7.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
+  gem 'spring', "~> 4.2.1"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

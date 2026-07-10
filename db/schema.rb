@@ -2,15 +2,21 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170529162452) do
+ActiveRecord::Schema.define(version: 2026_04_02_110043) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "fuzzystrmatch"
+  enable_extension "pg_trgm"
+  enable_extension "plpgsql"
+  enable_extension "postgis"
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -46,7 +52,7 @@ ActiveRecord::Schema.define(version: 20170529162452) do
   create_table "courses", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.string "target_group"
+    t.text "target_group"
     t.string "status"
     t.string "qualification"
     t.date "start_date"
@@ -64,20 +70,26 @@ ActiveRecord::Schema.define(version: 20170529162452) do
     t.integer "venue_id"
     t.integer "provider_id"
     t.integer "subject_id"
+    t.float "latitude"
+    t.float "longitude"
+    t.geography "lonlat", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
+    t.string "category_1"
+    t.string "category_2"
+    t.bigint "import_id"
+    t.text "description_rtf"
+    t.text "description_html"
+    t.string "short_link"
+    t.index ["import_id"], name: "index_courses_on_import_id"
+    t.index ["lcc_code"], name: "index_courses_on_lcc_code"
+    t.index ["lonlat"], name: "index_courses_on_lonlat", using: :gist
     t.index ["provider_id"], name: "index_courses_on_provider_id"
     t.index ["subject_id"], name: "index_courses_on_subject_id"
     t.index ["venue_id"], name: "index_courses_on_venue_id"
   end
 
-# Could not dump table "fts_courses" because of following StandardError
-#   Unknown type '' for column 'title'
-
-# Could not dump table "fts_courses_content" because of following StandardError
-#   Unknown type '' for column 'c0title'
-
   create_table "fts_courses_segdir", primary_key: ["level", "idx"], force: :cascade do |t|
-    t.integer "level"
-    t.integer "idx"
+    t.integer "level", null: false
+    t.integer "idx", null: false
     t.integer "start_block"
     t.integer "leaves_end_block"
     t.integer "end_block"
@@ -87,6 +99,42 @@ ActiveRecord::Schema.define(version: 20170529162452) do
 
   create_table "fts_courses_segments", primary_key: "blockid", force: :cascade do |t|
     t.binary "block"
+  end
+
+  create_table "imports", force: :cascade do |t|
+    t.string "status"
+    t.integer "course_count"
+    t.string "filename"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "csv_file_file_name"
+    t.string "csv_file_content_type"
+    t.integer "csv_file_file_size"
+    t.datetime "csv_file_updated_at"
+    t.datetime "finished_at"
+    t.integer "imported_num"
+    t.text "note"
+    t.string "upload_url"
+    t.integer "rows_num"
+    t.jsonb "error_log"
+  end
+
+  create_table "news", force: :cascade do |t|
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "excerpt"
+    t.string "title"
+    t.string "thumbnail"
+    t.boolean "visible", default: false
+    t.string "alt_text"
+  end
+
+  create_table "pages", force: :cascade do |t|
+    t.string "name"
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "postcodes", force: :cascade do |t|
@@ -106,6 +154,21 @@ ActiveRecord::Schema.define(version: 20170529162452) do
     t.string "telephone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email"
+    t.boolean "application_form", default: true
+    t.boolean "visible", default: false
+    t.text "body"
+  end
+
+  create_table "stories", force: :cascade do |t|
+    t.string "title"
+    t.string "thumbnail"
+    t.text "body"
+    t.text "excerpt"
+    t.boolean "visible", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "alt_text"
   end
 
   create_table "subjects", force: :cascade do |t|
@@ -126,6 +189,23 @@ ActiveRecord::Schema.define(version: 20170529162452) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "category_1", default: [], array: true
+    t.text "category_2", default: [], array: true
+    t.integer "count_courses"
+    t.string "icon_file_name"
+    t.string "icon_content_type"
+    t.integer "icon_file_size"
+    t.datetime "icon_updated_at"
+    t.text "promotion"
+    t.string "alt_text"
+    t.integer "position"
+  end
+
+  create_table "uploads", force: :cascade do |t|
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "venues", force: :cascade do |t|
@@ -141,6 +221,10 @@ ActiveRecord::Schema.define(version: 20170529162452) do
     t.integer "easting"
     t.integer "northing"
     t.string "postcode_no_space"
+    t.string "address_1"
+    t.string "address_2"
+    t.string "address_3"
   end
 
+  add_foreign_key "courses", "imports"
 end

@@ -5,7 +5,7 @@ class Course < ApplicationRecord
   
   validates :lcc_code, uniqueness: { case_sensitive: false }
   
-  include PgSearch
+  include PgSearch::Model
   pg_search_scope :full_search, 
                   :against =>  {:title => 'A', :description => 'B', :category_1 => 'C', :category_2 => 'C'} , 
                   :using => { :trigram => {:only => [:title, :description]},
@@ -123,7 +123,7 @@ class Course < ApplicationRecord
       url=URI.parse(base_url+query_params)
       logger.debug "calling #{url}"
 
-      response = HTTParty.get(url)
+      response = HTTParty.get(url, verify: false)
 
       if response.code != 200
         msg = "Problem with Google Geocoding: Code: #{response.code.to_s} Body: " + response.body.inspect
@@ -176,7 +176,7 @@ class Course < ApplicationRecord
     logger.debug "calling #{url}"
 
     response = HTTParty.get(url, {
-      headers: {"User-Agent" => "Leeds-Adult-Learning;Contact osm @chippy"} 
+      headers: {"User-Agent" => "Leeds-Adult-Learning;Contact osm @chippy"}, verify: false
     })
 
     if response.code != 200
@@ -262,7 +262,7 @@ class Course < ApplicationRecord
     # response = HTTParty.get(url)
     # end
     # puts "Request took #{time.round(3)} seconds"
-    response = HTTParty.get(url)
+    response = HTTParty.get(url, verify: false)
 
     if response.code != 200
       msg = "Problem with Google Directions: Code: #{response.code.to_s} Body: " + response.body.inspect
@@ -365,7 +365,7 @@ class Course < ApplicationRecord
 
     logger.debug "Calling #{url}"
 
-    response = HTTParty.get(url)
+    response = HTTParty.get(url, verify: false)
 
     if response.code != 200
       msg = "Problem with Here Directions: Code: #{response.code.to_s} Body: " + response.body.inspect
@@ -455,7 +455,7 @@ class Course < ApplicationRecord
     # response = HTTParty.get(url)
     # end
     # puts "Request took #{time.round(3)} seconds"
-    response = HTTParty.get(url)
+    response = HTTParty.get(url, verify: false)
     
     if response.code != 200
      msg =  "Problem with Transport API transit routing: Code: #{response.code.to_s} Body: " + response.body.inspect

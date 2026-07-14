@@ -7,16 +7,18 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1'
+gem 'rails', '~> 7.0'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+# em 'sqlite3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
-gem 'therubyracer'
+#gem 'therubyracer', '~> 0.12.3'
+
+#gem 'mini_racer', '~> 0.8.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -40,14 +42,16 @@ gem 'text'
 gem 'will_paginate', '~> 3.1.0'
 
 gem 'pg'
-gem 'activerecord-postgis-adapter', '~> 7.1'
+gem 'activerecord-postgis-adapter', '~> 8.0.3'
 #gem 'activerecord-postgis-adapter'
 gem 'pg_search'
+gem 'ffi', '~> 1.17.4'
 
 gem 'coffee-rails'
 
 gem 'httparty'
-gem "paperclip", "~> 5.2.1"
+#gem "paperclip", "~> 5.2.1"
+gem "kt-paperclip", "~> 6.4.1"
 
 gem "actionpack-page_caching"
 gem "browser"

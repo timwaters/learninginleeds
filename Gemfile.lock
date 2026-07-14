@@ -354,7 +354,7 @@ DEPENDENCIES
   nokogiri
   osrm_text_instructions (~> 0.1)
   pandoc-ruby
-  paperclip (~> 5.2.0)
+  paperclip (~> 5.2.1)
   pg
   pg_search
   rails (~> 6.1)
@@ -363,6 +363,7 @@ DEPENDENCIES
   sass-rails (~> 6.0)
   selenium-webdriver
   spring (~> 4.2.1)
+  sprockets-rails
   sqlite3
   text
   therubyracer

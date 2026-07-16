@@ -12,6 +12,8 @@ gem 'rails', '~> 7.0'
 # em 'sqlite3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 6.0'
+
+gem 'terser'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -66,6 +68,7 @@ gem 'activeadmin_simplemde'
 gem 'pandoc-ruby'
 gem 'nokogiri'
 
+gem "mini_magick"
 gem "image_processing", ">= 1.2"
 
 group :development, :test do

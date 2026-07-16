@@ -49,3 +49,42 @@
     padding: 10px;
     margin-bottom: 20px;
 }
+
+
+
+.active_admin {
+  form trix-editor {
+    margin-left: 20%;
+    width: calc(80% - 22px);
+    border: 1px solid #c9d0d6;
+    border-radius: 3px;
+    min-height: 200px;
+    &:focus {
+      border: 1px solid #99a2aa;
+      box-shadow: 0 0 4px #99a2aa;
+      outline: none;
+    }
+  }
+
+  form trix-toolbar {
+    margin-left: 20%;
+    width: calc(80% - 22px);
+  }
+
+  form .trix-dialogs .trix-dialog--link {
+    margin-left: 20%;
+    width: calc(80% - 22px);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #eeeeee;
+
+    .trix-button-group {
+      margin-top: 10px;
+    }
+  }
+}
+
+
+@import "actiontext";
+@import "trix_custom";

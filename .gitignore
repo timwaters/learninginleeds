@@ -36,3 +36,5 @@ public/lil/*
 public/icons
 public/assets
 public/uploads
+
+storage/*

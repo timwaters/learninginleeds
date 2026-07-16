@@ -1,4 +1,7 @@
 class News < ApplicationRecord
+
+  has_rich_text :content
+
   validates :body, presence: true
   validates :excerpt, presence: true
   validates :title, presence: true

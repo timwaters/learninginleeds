@@ -1,5 +1,5 @@
 ActiveAdmin.register News do
-  permit_params :body,  :excerpt, :title, :visible, :thumbnail, :alt_text
+  permit_params :body,  :excerpt, :title, :visible, :thumbnail, :alt_text, :content
   
 
   form do |f|
@@ -10,6 +10,8 @@ ActiveAdmin.register News do
       f.input :alt_text, :label => "Alt text for image",  hint: "Should describe what the image looks like"
       f.input :excerpt, as: :simplemde_editor, :label => "Excerpt", hint: "Markdown format. Shown for slider and list"
       f.input :body, as: :simplemde_editor,  :label => "Body" , hint: "Markdown format. Shown in full view <br /> Headings: <br />Start with level 2 and above for accessibility. e.g. <br /> ## Level 2 Heading".html_safe
+      li "<strong>Content</strong>".html_safe
+      f.rich_text_area :content, :label => "Content", hint: "Rich text format. Shown in full view"
     end
   f.actions
   end

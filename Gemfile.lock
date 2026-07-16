@@ -322,6 +322,8 @@ GEM
       sprockets (>= 3.0.0)
     terrapin (0.6.0)
       climate_control (>= 0.0.3, < 1.0)
+    terser (1.2.8)
+      execjs (>= 0.3.0, < 3)
     text (1.3.1)
     thor (1.5.0)
     tilt (2.8.0)
@@ -375,6 +377,7 @@ DEPENDENCIES
   kt-paperclip (~> 6.4.1)
   leaflet-rails
   mimemagic (~> 0.3.10)
+  mini_magick
   nokogiri
   osrm_text_instructions (~> 0.1)
   pandoc-ruby
@@ -387,6 +390,7 @@ DEPENDENCIES
   selenium-webdriver
   spring (~> 4.2.1)
   sprockets-rails
+  terser
   text
   turbolinks (~> 5)
   tzinfo-data

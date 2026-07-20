@@ -19,8 +19,6 @@
 //= require leaflet
 //= require cookie-notice-loader.js
 //= require slick.js
-//= require "trix_custom"
-//= require "actiontext"
 
 L.Marker = L.Marker.extend({
   options: {

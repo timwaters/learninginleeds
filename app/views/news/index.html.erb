@@ -7,10 +7,18 @@
   <% @news.each do | news_item | %>
   <div class="row news-result">
     <div class="col-md-12">
-      <h2><%=link_to news_item.title, news_item%></h2>
+      <h2><%=link_to news_item.title, news_item %></h2>
+      <% if news_item.header.attached? %>
+      <%= image_tag(news_item.header.variant(:banner), alt: news_item.alt_text) %> <br />
+      <% else %>
       <img src="<%= news_item.thumbnail %>" alt="<%= news_item.alt_text %>" > <br />
+      <% end %>
       <div class="news_item-excerpt">
+        <% if news_item.header.attached? %>
+        <%= news_item.summary %>
+        <% else %>
         <%= sanitizemarkdown(Kramdown::Document.new(news_item.excerpt).to_html)%>
+        <% end %>
         <p><%=link_to "Read more about "+news_item.title, news_item, class: ""%></p>
       </div>
     </div>

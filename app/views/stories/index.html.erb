@@ -7,10 +7,18 @@
   <% @stories.each do | story | %>
   <div class="row story-result">
     <div class="col-md-12">
-      <h2><%=link_to story.title, story%></h2>
+      <h2><%=link_to story.title, story %></h2>
+      <% if story.header.attached? %>
+      <%= image_tag(story.header.variant(:banner), alt: story.alt_text) %> <br /
+      <% else %>
       <img src="<%= story.thumbnail %>" alt="<%= story.alt_text %>" > <br />
+      <% end %>
       <div class="story-excerpt">
+      <% if story.header.attached? %>
+        <%= story.summary %>
+      <% else %>
         <%= sanitizemarkdown(Kramdown::Document.new(story.excerpt).to_html)%>
+      <% end %>
         <p><%=link_to "Read more about "+story.title, story, class: ""%></p>
       </div>
     </div>

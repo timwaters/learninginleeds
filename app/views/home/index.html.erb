@@ -67,13 +67,21 @@
         <div class="story-slide slide-main">
           <a href="<%= url_for(story) %>" class="slide-link">
             <div class="story-slide-image slide-image">
+            <% if story.header.attached? %>
+              <%= image_tag(story.header.variant(:banner), class: "image-style-card-slider-", alt: story.alt_text) %>
+            <% else %>
               <img src="<%= story.thumbnail %>" class="image-style-card-slider-"  alt="<%= story.alt_text %>">
+            <% end %>
             </div>
 
             <div class="story-slide-text slide-text ">
               <h3><%= story.title %></h3>
               <div class="excerpt">
+              <% if story.header.attached? %>
+                <p><%= story.summary %></p>
+              <% else %>
                 <%= sanitizemarkdown(Kramdown::Document.new(story.excerpt).to_html)%>
+              <% end %>
               </div>
             </div>
           </a>

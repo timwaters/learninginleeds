@@ -2,11 +2,11 @@
 
 <div class="news container">
   <h1><%= @news_item.title %></h1>
-  <%= sanitizemarkdown(Kramdown::Document.new(@news_item.body).to_html) if @news_item.body%>
-</div>
-
-<div>
+  <% if @news_item.header.attached? %>
   <%= @news_item.content %>
+  <% else %>
+  <%= sanitizemarkdown(Kramdown::Document.new(@news_item.body).to_html) if @news_item.body%>
+  <% end %>
 </div>
 
 <div class="container">

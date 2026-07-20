@@ -748,6 +748,9 @@ height: auto;
     height: auto;
     display: block;
   }
+   figcaption {
+  text-align: left !important;
+ }
 }
 .story {
   border-color: $hubcyan;

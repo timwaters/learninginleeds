@@ -92,3 +92,12 @@
 .row-content img{
   display: block;
 }
+
+trix-editor .attachment--preview{
+ img {
+  display: block;
+ }
+ figcaption {
+  text-align: left !important;
+ }
+}

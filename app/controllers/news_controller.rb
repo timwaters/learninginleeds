@@ -2,7 +2,7 @@ class NewsController < ApplicationController
   before_action :get_topics
 
   def index
-    @news = News.all.where(visible: true).page(params[:page])
+    @news = News.all.where(visible: true).order(created_at: :desc).page(params[:page])
   end
 
   def show
